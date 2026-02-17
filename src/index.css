@@ -45,6 +45,25 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+body {
+  font-family: "Google Sans", sans-serif;
+}
+
+button,
+a {
+  cursor: pointer;
+}
+
+li {
+  list-style: disc;
+  margin-left: 1.5rem;
+}
+
+li.content-sidebar {
+  list-style: none;
+  margin-left: 0;
+}
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);

@@ -8,7 +8,7 @@ import { Label } from "~/components/ui/label";
 import { Settings } from "lucide-react";
 import { Separator } from "~/components/ui/separator";
 import { SEPERATOR_STYLE } from "~/style/homeStyle";
-import { Avatar, AvatarFallback } from "~/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { cn } from "~/lib/utils";
 import { Progress } from "~/components/ui/progress";
 import {
@@ -50,16 +50,25 @@ export default function SettingsPage() {
 
       <Card className="relative w-full max-w-sm p-6 mt-20">
         <div className="flex items-center gap-4">
-          <Avatar className={cn("w-10 h-10 ")}>
+          <Avatar
+            className={cn("w-10 h-10 cursor-pointer border border-gray-200")}
+          >
+            {currentUser?.photoURL && (
+              <AvatarImage
+                src={currentUser.photoURL}
+                alt={currentUser.name}
+                className="object-cover"
+              />
+            )}
+
             <AvatarFallback className="bg-black text-white select-none">
-              <span className="">
+              <span>
                 {currentUser?.name
                   ? currentUser?.name.charAt(0).toUpperCase()
                   : "?"}
               </span>
             </AvatarFallback>
           </Avatar>
-
           <Label className="text-lg">
             {currentUser?.name} ({currentUser?.nickname})
           </Label>

@@ -11,8 +11,12 @@ import { Label } from "~/components/ui/label";
 import { signUp } from "~/lib/auth";
 import { firestore } from "~/lib/firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 const SignUp = () => {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -41,12 +45,13 @@ const SignUp = () => {
         grade: "Bronze",
         exp: 0,
         authority: "user",
+        photoURL: user.photoURL || null,
       });
-      alert("サインアップに成功しました！ようこそ！");
+      toast.success(t("auth.signup_success"));
       navigate("/");
     } catch (err: any) {
       setError(err.message);
-      alert(`サインアップに失敗しました: ${err.message}`);
+      toast.error(`${t("auth.signup_fail")}${err.message}`);
     }
   };
 

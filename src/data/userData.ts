@@ -9,6 +9,7 @@ export type User = {
   grade: Grade;
   exp: number;
   authority: Authority;
+  photoURL?: string | null;
   contentStatus: Set<string>;
 };
 

@@ -21,7 +21,7 @@ export type PostOrderType = "new" | "popular";
 
 export const postOrderAtom = atom<PostOrderType>("new");
 
-export const MAX_FILE_SIZE = 0.5 * 1024 * 1024; // 0.5MB
+export const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1MB
 
 export const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 

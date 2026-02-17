@@ -1,15 +1,14 @@
-import type { Content } from '~/data/contentData';
-import { ALLOWED_TYPES, MAX_FILE_SIZE } from '~/data/postData';
-import type { Grade, User } from '~/data/userData';
+import type { Content } from "~/data/contentData";
+import type { Grade, User } from "~/data/userData";
 // images
-import bronzeBadge from '~/assets/images/grades/bronze.png';
-import silverBadge from '~/assets/images/grades/silver.png';
-import goldBadge from '~/assets/images/grades/gold.png';
-import platinumBadge from '~/assets/images/grades/platinum.png';
-import diamondBadge from '~/assets/images/grades/diamond.png';
+import bronzeBadge from "~/assets/images/grades/bronze.png";
+import silverBadge from "~/assets/images/grades/silver.png";
+import goldBadge from "~/assets/images/grades/gold.png";
+import platinumBadge from "~/assets/images/grades/platinum.png";
+import diamondBadge from "~/assets/images/grades/diamond.png";
 
 interface GradeInfo {
-  nextGrade: Grade | 'Max';
+  nextGrade: Grade | "Max";
   maxExp: number;
   minExp: number;
   color: string;
@@ -65,25 +64,25 @@ export const getPreviousContentId = (
 export const mappingTitlebySection = (section: number) => {
   switch (section) {
     case 1:
-      return 'Section 1 : What is React?';
+      return "Section 1 : What is React?";
     case 2:
-      return 'Section 2 : Basic React Concepts';
+      return "Section 2 : Basic React Concepts";
     case 3:
-      return 'Section 3 : State';
+      return "Section 3 : State";
     case 4:
-      return 'Section 4 : Props';
+      return "Section 4 : Props";
     case 5:
-      return 'Section 5 : Events';
+      return "Section 5 : Events";
     case 6:
-      return 'Section 6 : Lists / Objects';
+      return "Section 6 : Lists / Objects";
     case 7:
-      return 'Section 7 : Forms';
+      return "Section 7 : Forms";
     case 8:
-      return 'Section 8 : Todo List Project';
+      return "Section 8 : Todo List Project";
     case 9:
-      return '*Bonus : Lifecycle';
+      return "*Bonus : Lifecycle";
     default:
-      return '';
+      return "";
   }
 };
 
@@ -117,7 +116,7 @@ export const checkShortAnswer = (
   userAnswer: string,
 ) => {
   const possibleAnswers = correctAnswerString
-    .split(',,')
+    .split(",,")
     .map((ans) => ans.trim().toLowerCase());
 
   const normalizedUserAnswer = userAnswer.trim().toLowerCase();
@@ -125,74 +124,62 @@ export const checkShortAnswer = (
   const isCorrect = possibleAnswers.some((ans) => ans === normalizedUserAnswer);
 
   // Return the first possible answer for feedback
-  const firstCorrectAnswer = possibleAnswers[0] || '';
+  const firstCorrectAnswer = possibleAnswers[0] || "";
 
   return { isCorrect, firstCorrectAnswer };
 };
 
-export const validateImageFile = (file: File) => {
-  if (!ALLOWED_TYPES.includes(file.type)) {
-    return 'JPEG, PNG, WEBP 形式の画像のみアップロード可能です。';
-  }
-
-  if (file.size > MAX_FILE_SIZE) {
-    return '画像のサイズは5MB以下でなければなりません。';
-  }
-
-  return null;
-};
-
 export const GRADE_CONFIG: Record<Grade, GradeInfo> = {
   Bronze: {
-    nextGrade: 'Silver',
+    nextGrade: "Silver",
     minExp: 0,
     maxExp: 500,
-    color: 'text-orange-800',
+    color: "text-orange-800",
     badge: bronzeBadge,
   },
   Silver: {
-    nextGrade: 'Gold',
+    nextGrade: "Gold",
     minExp: 500,
     maxExp: 1200,
-    color: 'text-slate-400',
+    color: "text-slate-400",
     badge: silverBadge,
   },
   Gold: {
-    nextGrade: 'Platinum',
+    nextGrade: "Platinum",
     minExp: 1200,
     maxExp: 2800,
-    color: 'text-yellow-500',
+    color: "text-yellow-500",
     badge: goldBadge,
   },
   Platinum: {
-    nextGrade: 'Diamond',
+    nextGrade: "Diamond",
     minExp: 2800,
     maxExp: 5000,
-    color: 'text-purple-400',
+    color: "text-purple-400",
     badge: platinumBadge,
   },
   Diamond: {
-    nextGrade: 'Max',
+    nextGrade: "Max",
     minExp: 5000,
     maxExp: 5000,
-    color: 'text-blue-400',
+    color: "text-blue-400",
     badge: diamondBadge,
   },
 };
 
 export const calculateGrade = (totalExp: number): Grade => {
-  if (totalExp >= 5000) return 'Diamond';
-  if (totalExp >= 2800) return 'Platinum';
-  if (totalExp >= 1200) return 'Gold';
-  if (totalExp >= 500) return 'Silver';
-  return 'Bronze';
+  if (totalExp >= 5000) return "Diamond";
+  if (totalExp >= 2800) return "Platinum";
+  if (totalExp >= 1200) return "Gold";
+  if (totalExp >= 500) return "Silver";
+  return "Bronze";
 };
 
 export const getGradeInfo = (grade: Grade) => GRADE_CONFIG[grade];
 
 export const getProgress = (grade: Grade, exp: number) => {
   const config = GRADE_CONFIG[grade];
-  if (grade === 'Diamond') return 100;
+  if (grade === "Diamond") return 100;
 
   const currentRangeExp = exp;
   const totalRangeExp = config.maxExp;

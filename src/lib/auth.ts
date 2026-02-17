@@ -5,8 +5,8 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { auth } from "./firebase";
-import { getUserProfile } from "./firestore_utils";
-import { authLoadingAtom, currentUserAtom } from "~/data/userData";
+import { getAllUsers, getUserProfile } from "./firestore_utils";
+import { authLoadingAtom, currentUserAtom, usersAtom } from "~/data/userData";
 import { appStore } from "~/data/store";
 
 // 회원가입
@@ -27,17 +27,28 @@ export const logout = () => {
 let authListenerInitialized = false;
 
 export function initAuthListener() {
-  if (authListenerInitialized) return;
-  authListenerInitialized = true;
+  try {
+    if (authListenerInitialized) return;
+    authListenerInitialized = true;
 
-  onAuthStateChanged(auth, async (firebaseUser) => {
-    if (firebaseUser) {
-      const profile = await getUserProfile(firebaseUser.uid);
-      appStore.set(currentUserAtom, profile);
-    } else {
-      appStore.set(currentUserAtom, null);
-    }
+    onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        const [profile, allUsers] = await Promise.all([
+          getUserProfile(firebaseUser.uid),
+          getAllUsers(),
+        ]);
+        appStore.set(currentUserAtom, profile);
+        appStore.set(usersAtom, allUsers);
+      } else {
+        appStore.set(currentUserAtom, null);
+        appStore.set(usersAtom, []);
+      }
 
+      appStore.set(authLoadingAtom, false);
+    });
+  } catch (error) {
+    console.error("Failed to initialize auth listener:", error);
+  } finally {
     appStore.set(authLoadingAtom, false);
-  });
+  }
 }

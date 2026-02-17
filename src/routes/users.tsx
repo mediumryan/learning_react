@@ -1,5 +1,5 @@
 // react
-import { useEffect, useState } from "react";
+import { useState } from "react";
 // react-router
 import { Navigate } from "react-router";
 // atoms
@@ -21,12 +21,11 @@ import { Badge } from "~/components/ui/badge";
 import { toast } from "sonner";
 // components
 import UserForm from "~/components/Users/UserForm";
-import { BackgroundSpinner } from "~/components/Common/BackgroundSpinner";
+import { CommonAlert } from "~/components/Common/ConfirmDialog";
 // icons
 import { Search, UserCog, Trash2 } from "lucide-react";
 // firebase
 import {
-  getAllUsers,
   updateUserInFirestore,
   deleteUserFromFirestore,
 } from "~/lib/firestore_utils";
@@ -38,31 +37,10 @@ export default function UsersPage() {
 
   const [openAdd, setOpenAdd] = useState(false);
   const [_, setOpenEdit] = useState(false);
-  const [isLoading, setIsLoading] = useState(true); // Loading state for initial fetch
-  const [error, setError] = useState<string | null>(null); // Error state for initial fetch
 
   const [users, setUsers] = useAtom(usersAtom); // Standard atom usage
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [search, setSearch] = useState("");
-
-  // Fetch users on component mount
-  useEffect(() => {
-    const fetchUsers = async () => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const fetchedUsers = await getAllUsers();
-        setUsers(fetchedUsers);
-      } catch (err: any) {
-        console.error("Failed to fetch users:", err);
-        setError(t("users.users_fetch_error"));
-        setUsers(null); // Clear users on error
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchUsers();
-  }, [setUsers]); // Dependency array for useEffect
 
   const filteredUsers = users?.filter(
     (user) =>
@@ -72,9 +50,8 @@ export default function UsersPage() {
   );
 
   const handleDelete = async (id: string) => {
-    if (!window.confirm(t("users.users_delete_confirm"))) return;
-
-    const prevUsers = users; // Store current state for potential rollback
+    // Store current state for potential rollback
+    const prevUsers = users;
 
     // Optimistic UI update
     setUsers((currentUsers) =>
@@ -86,7 +63,6 @@ export default function UsersPage() {
       toast.success(t("users.users_delete_success"));
     } catch (err: any) {
       toast.error(t("users.users_delete_fail"));
-      setError(t("users.users_delete_fail"));
       setUsers(prevUsers); // Rollback optimistic update
     }
   };
@@ -146,18 +122,6 @@ export default function UsersPage() {
     return <Navigate to="/" replace />;
   }
 
-  if (isLoading) {
-    return <BackgroundSpinner />;
-  }
-
-  if (error) {
-    return (
-      <div className="p-6 max-w-7xl mx-auto text-center text-red-500 text-lg">
-        ERROR: {error}
-      </div>
-    );
-  }
-
   // Ensure users is not null before rendering the table content
   if (!users) {
     return (
@@ -184,11 +148,6 @@ export default function UsersPage() {
           </div>
 
           <Dialog open={openAdd} onOpenChange={setOpenAdd}>
-            {/* <DialogTrigger asChild>
-              <Button>
-                <Plus className="h-4 w-4 mr-2" /> ユーザーを追加
-              </Button>
-            </DialogTrigger> */}
             <UserForm onSave={handleSave} />
           </Dialog>
         </div>
@@ -260,15 +219,17 @@ export default function UsersPage() {
                         setOpen={setOpenEdit}
                       />
                     </Dialog>
-
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="text-destructive"
-                      onClick={() => handleDelete(user.uid)}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
+                    <CommonAlert
+                      buttonLabel={<Trash2 className="h-4 w-4" />}
+                      triggerVariant="ghost"
+                      triggerDisabled={false}
+                      triggerSize="icon"
+                      title={t("users.users_delete_confirm")}
+                      titleWithIcon="warning"
+                      cancleButtonLabel={t("common.cancel")}
+                      confirmButtonLabel={t("common.delete")}
+                      onConfirm={() => handleDelete(user.uid)}
+                    />
                   </div>
                 </TableCell>
               </TableRow>

@@ -91,7 +91,7 @@ export function AppSidebar() {
                   <SidebarMenuItem
                     key={content.id}
                     ref={lectureId === content.id ? sideBarItemRef : null}
-                    className="px-2"
+                    className="content-sidebar px-2"
                   >
                     <Link
                       to={`/contents/${content.id}`}

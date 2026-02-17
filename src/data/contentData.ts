@@ -6,6 +6,7 @@ import todoSampleImg_kr from "~/assets/images/contents/todo-sample-kr.png";
 import helloReact from "~/assets/images/contents/hello-react.png";
 import componentsSample from "~/assets/images/contents/components-sample.png";
 import refError from "~/assets/images/contents/ref-error.png";
+import { languageAtom } from "./commonData";
 
 // 0: 설명, 1: 객관식, 2: 주관식
 export type ContentType = 0 | 1 | 2;
@@ -66,7 +67,7 @@ export const contentsData: Content[] =
 
 React를 배우기 전, 아래와 같은 **기본적인 웹 개발 지식** 을 알고 계시면 훨씬 수월합니다.
 
-> 📌 **필요한 선수 지식** >
+> 📌 **필요한 선수 지식**
 > - 기본적인 **HTML 구조** (태그, 속성 등)
 > - **JavaScript 기초 문법** (변수, 함수, 배열)
 
@@ -2334,7 +2335,7 @@ export const contentDataJp: Content[] = [
 
 Reactを学ぶ前に、以下のような **基本的なウェブ開発の知識** を知っておくと、よりスムーズに進めることができます。
 
-> 📌 **必要な事前知識** >
+> 📌 **必要な事前知識**
 > - 基本的な **HTML構造** (タグ、属性など)
 > - **JavaScriptの基礎文法** (変数、関数、配列)
 
@@ -4562,8 +4563,6 @@ return (
 ];
 
 export type Content = DescriptiveContent | MultipleChoiceQuiz | ShortAnswerQuiz;
-
-export const languageAtom = atom("ja");
 
 export const contentsAtom = atom((get) => {
   const lang = get(languageAtom);

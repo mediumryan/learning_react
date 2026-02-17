@@ -1,31 +1,33 @@
 // react
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 // react-router
-import { Navigate } from "react-router";
+import { Navigate } from 'react-router';
 // atoms
-import { useSetAtom, useAtomValue, useAtom } from "jotai";
-import { currentUserAtom } from "~/data/userData";
-import { refetchAtom } from "~/data/commonData";
-import { postOrderAtom, postsAtom, type PostType } from "~/data/postData";
+import { useSetAtom, useAtomValue, useAtom } from 'jotai';
+import { currentUserAtom } from '~/data/userData';
+import { refetchAtom } from '~/data/commonData';
+import { postOrderAtom, postsAtom, type PostType } from '~/data/postData';
 // shadcn/ui
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "~/components/ui/dialog";
-import { toast } from "sonner";
+} from '~/components/ui/dialog';
+import { toast } from 'sonner';
 // components
-import { BackgroundSpinner } from "~/components/Common/BackgroundSpinner";
-import { CommunityHeader } from "~/components/Community/CommunityHeader";
-import { CommunityPost } from "~/components/Community/CommunityPost";
-import CommunityPostForm from "~/components/Community/CommunityPostForm";
+import { BackgroundSpinner } from '~/components/Common/BackgroundSpinner';
+import { CommunityHeader } from '~/components/Community/CommunityHeader';
+import { CommunityPost } from '~/components/Community/CommunityPost';
+import CommunityPostForm from '~/components/Community/CommunityPostForm';
 // helpers
-import { addPost, deletePost, likePost, updatePost } from "~/data/postApi";
+import { addPost, deletePost, likePost, updatePost } from '~/data/postApi';
 // i18n
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 function Community() {
+  const { t } = useTranslation();
+
   const currentUser = useAtomValue(currentUserAtom);
   const setRefetch = useSetAtom(refetchAtom);
   const [posts, setPosts] = useState<PostType[]>([]);
@@ -36,54 +38,30 @@ function Community() {
 
   const [{ data: initialPosts, isPending }] = useAtom(postsAtom);
 
-  const { t } = useTranslation();
-
-  useEffect(() => {
-    if (!initialPosts) return;
-
-    const sortPosts = async () => {
-      await Promise.resolve();
-
-      let sortedPosts = [...initialPosts];
-
-      if (postOrder === "new") {
-        sortedPosts.sort(
-          (a, b) => b.createdAt.getTime() - a.createdAt.getTime(),
-        );
-      } else if (postOrder === "popular") {
-        sortedPosts.sort((a, b) => b.likeCount - a.likeCount);
-      }
-
-      setPosts(sortedPosts);
-    };
-
-    sortPosts();
-  }, [initialPosts, postOrder]);
-
   const handleDelete = async (post: PostType) => {
     try {
       await deletePost(post);
       setRefetch((c) => c + 1);
 
-      toast.success("ポストが削除されました");
+      toast.success(t('community.community_post_deleted'));
     } catch (err) {
-      console.error("Failed to delete post:", err);
+      console.error('Failed to delete post:', err);
     }
   };
 
   const handleSave = async (
-    post: Omit<PostType, "id" | "createdAt" | "likeCount" | "likedUsers"> & {
+    post: Omit<PostType, 'id' | 'createdAt' | 'likeCount' | 'likedUsers'> & {
       userId: string;
     },
   ) => {
     if (editingPost) {
       await updatePost(editingPost.id, editingPost, post);
     } else {
-      await addPost(post, post.userId || "Anonymous");
+      await addPost(post, post.userId || 'Anonymous');
     }
 
     setRefetch((c) => c + 1);
-    toast.success(`ポストが${editingPost ? "更新" : "作成"}されました`);
+    toast.success(`ポストが${editingPost ? '更新' : '作成'}されました`);
   };
 
   const isNewPost = (post: PostType) => {
@@ -111,11 +89,33 @@ function Community() {
     try {
       await likePost(post.id, currentUser.uid);
     } catch (err) {
-      console.error("Like update failed, reverting:", err);
+      console.error('Like update failed, reverting:', err);
       // On error, refetch from the server to get the correct state
       setRefetch((c) => c + 1);
     }
   };
+
+  useEffect(() => {
+    if (!initialPosts) return;
+
+    const sortPosts = async () => {
+      await Promise.resolve();
+
+      let sortedPosts = [...initialPosts];
+
+      if (postOrder === 'new') {
+        sortedPosts.sort(
+          (a, b) => b.createdAt.getTime() - a.createdAt.getTime(),
+        );
+      } else if (postOrder === 'popular') {
+        sortedPosts.sort((a, b) => b.likeCount - a.likeCount);
+      }
+
+      setPosts(sortedPosts);
+    };
+
+    sortPosts();
+  }, [initialPosts, postOrder]);
 
   if (isPending) return <BackgroundSpinner />;
 
@@ -151,13 +151,13 @@ function Community() {
       {/* 게시글 작성 / 수정 다이얼로그 */}
       <Dialog open={showForm} onOpenChange={setShowForm}>
         <DialogContent
-          aria-describedby={t("community.community_post_add_label")}
+          aria-describedby={t('community.community_post_add_label')}
         >
           <DialogHeader>
             <DialogTitle>
               {editingPost
-                ? t("community.community_post_edit_label")
-                : t("community.community_post_add_label")}
+                ? t('community.community_post_edit_label')
+                : t('community.community_post_add_label')}
             </DialogTitle>
           </DialogHeader>
 

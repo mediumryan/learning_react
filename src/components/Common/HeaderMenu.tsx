@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 // shadcn/ui
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Avatar, AvatarFallback } from "~/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 // components
@@ -55,9 +55,19 @@ export function HeaderMenu() {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <div className="fixed top-3 right-8 w-10 h-10 z-50">
-          <Avatar className={cn("w-10 h-10 cursor-pointer")}>
+          <Avatar
+            className={cn("w-10 h-10 cursor-pointer border border-gray-200")}
+          >
+            {currentUser?.photoURL && (
+              <AvatarImage
+                src={currentUser.photoURL}
+                alt={currentUser.name}
+                className="object-cover"
+              />
+            )}
+
             <AvatarFallback className="bg-black text-white select-none">
-              <span className="">
+              <span>
                 {currentUser?.name
                   ? currentUser?.name.charAt(0).toUpperCase()
                   : "?"}

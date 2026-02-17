@@ -4,15 +4,13 @@ import { useState } from "react";
 import { useAtomValue } from "jotai";
 import { currentUserAtom } from "~/data/userData";
 // types
-import type { PostType } from "~/data/postData";
+import { ALLOWED_TYPES, MAX_FILE_SIZE, type PostType } from "~/data/postData";
 // shadcn/ui
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
 import { Label } from "~/components/ui/label";
 import { Badge } from "~/components/ui/badge";
-// helpers
-import { validateImageFile } from "~/lib/helper";
 // firebase
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "~/lib/firebase";
@@ -30,7 +28,6 @@ interface PostFormProps {
   ) => void;
 }
 
-const MAX_IMAGE_SIZE_MB = 0.5;
 const ALLOWED_IMAGE_TYPES = ["jpeg", "png", "webp"];
 const POST_FORM_TITLE_STYLE = "text-blue-500 mb-4";
 
@@ -78,18 +75,25 @@ export const CommunityPostForm = ({
     onClose();
   };
 
+  const validateImageFile = (file: File) => {
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      return t("community.community_post_image_error_invalid_type");
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      return t("community.community_post_image_error_too_large");
+    }
+
+    return null;
+  };
+
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     const error = validateImageFile(file);
     if (error) {
-      // await confirm({
-      //   icon: 0,
-      //   message: error,
-      //   size: "sm",
-      // });
-
+      toast.error(error);
       // 같은 파일 다시 선택 가능하게
       e.target.value = "";
       return;
@@ -157,7 +161,7 @@ export const CommunityPostForm = ({
           <span>{t("community.community_post_add_upload_limit_label")}:</span>
 
           <Badge variant="secondary">
-            {MAX_IMAGE_SIZE_MB}MB{" "}
+            {MAX_FILE_SIZE / (1024 * 1024)}MB{" "}
             {t("community.community_post_add_upload_limit_mb")}
           </Badge>
 

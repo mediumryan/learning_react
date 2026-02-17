@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Navigate, useParams } from "react-router";
 // atoms
 import { useAtomValue, useSetAtom } from "jotai";
-import { authLoadingAtom, currentUserAtom } from "~/data/userData";
+import { currentUserAtom } from "~/data/userData";
 import {
   displayedCorrectAnswerAtom,
   isCorrectAtom,
@@ -26,6 +26,7 @@ import ContentFooter from "~/components/Contents/ContentFooter";
 import Contents from "~/components/Contents/Contents";
 import { AppSidebar } from "~/components/Contents/Sidebar";
 import GoTopButton from "~/components/Contents/GoTopButton";
+import { isLoadingAtom } from "~/data/commonData";
 // helpers
 // import { migrateContentToFirestore } from "~/script/migrateContent";
 
@@ -36,7 +37,7 @@ export default function ContentsPage() {
 
   const contents = useAtomValue(contentsAtom);
 
-  const setIsLoading = useSetAtom(authLoadingAtom);
+  const setIsLoading = useSetAtom(isLoadingAtom);
 
   const currentLecture = contents.find((item) => item.id === lectureId);
   const headerTitle = currentLecture?.title || "";

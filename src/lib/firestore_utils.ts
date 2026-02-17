@@ -47,6 +47,7 @@ export const getUserProfile = async (uid: string): Promise<User | null> => {
       authority: userData.authority ?? "user",
       course: userData.course ?? "default",
       grade: userData.grade ?? "beginner",
+      photoURL: userData.photoURL ?? null,
       contentStatus,
     } as User;
   } else {

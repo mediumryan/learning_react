@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { initAuthListener } from "~/lib/auth";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue } from "jotai";
 import { authLoadingAtom, currentUserAtom } from "~/data/userData";
 import { HeaderMenu } from "~/components/Common/HeaderMenu";
 import { CommonFooter } from "~/components/Common/CommonFooter";
@@ -13,17 +13,20 @@ import UsersPage from "~/routes/users";
 import Login from "~/routes/login";
 import SignUp from "~/routes/signup";
 import Layout from "~/layout";
+import { BackgroundSpinner } from "./components/Common/BackgroundSpinner";
 
 function App() {
   const currentUser = useAtomValue(currentUserAtom);
 
-  const setLoading = useSetAtom(authLoadingAtom);
+  const isAuthLoading = useAtomValue(authLoadingAtom);
 
   useEffect(() => {
     initAuthListener();
-
-    setLoading(false);
   }, []);
+
+  if (isAuthLoading) {
+    return <BackgroundSpinner />;
+  }
 
   return (
     <Layout>

@@ -5,13 +5,13 @@ import { useLocation } from "react-router";
 // shadcn
 import { Toaster } from "~/components/ui/sonner";
 import { useAtomValue } from "jotai";
-import { authLoadingAtom } from "~/data/userData";
 import { BackgroundSpinner } from "./components/Common/BackgroundSpinner";
+import { isLoadingAtom } from "./data/commonData";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
 
-  const loading = useAtomValue(authLoadingAtom);
+  const loading = useAtomValue(isLoadingAtom);
 
   useEffect(() => {
     window.scrollTo(0, 0);
