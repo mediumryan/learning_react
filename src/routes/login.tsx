@@ -2,6 +2,9 @@
 import { useState } from "react";
 // react-router
 import { useNavigate } from "react-router";
+// atoms
+import { useSetAtom } from "jotai";
+import { isLoadingAtom } from "~/data/commonData";
 // styles
 import { H2_STYLE } from "~/style/commonStyle";
 // shadcn/ui
@@ -20,6 +23,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
+  const setIsLoading = useSetAtom(isLoadingAtom);
+
   const handleClickSignUp = () => {
     navigate("/signup");
   };
@@ -27,12 +32,15 @@ const Login = () => {
   const handleSignIn = async (e: React.SubmitEvent) => {
     e.preventDefault();
     setError(null);
+    setIsLoading(true);
     try {
       await signIn(email, password);
       toast.success(`Welcome!`);
     } catch (err: any) {
       setError(err.message);
       toast.error(`Sign-in Error: ${err.message}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 

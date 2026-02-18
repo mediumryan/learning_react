@@ -6,6 +6,7 @@ import silverBadge from "~/assets/images/grades/silver.png";
 import goldBadge from "~/assets/images/grades/gold.png";
 import platinumBadge from "~/assets/images/grades/platinum.png";
 import diamondBadge from "~/assets/images/grades/diamond.png";
+import type { PostType } from "~/data/postData";
 
 interface GradeInfo {
   nextGrade: Grade | "Max";
@@ -80,7 +81,9 @@ export const mappingTitlebySection = (section: number) => {
     case 8:
       return "Section 8 : Todo List Project";
     case 9:
-      return "*Bonus : Lifecycle";
+      return "Section 9 : Deployment";
+    case 10:
+      return "+ Bonus : Lifecycle";
     default:
       return "";
   }
@@ -197,12 +200,14 @@ export const getIsLevelUp = (
 ): boolean => {
   // 1. 기존 경험치 기준의 등급
   const previousGrade = calculateGrade(currentExp - earnedExp);
-  console.log(previousGrade);
-
   // 2. 경험치를 더한 후의 새로운 등급
   const newGrade = calculateGrade(currentExp);
-  console.log(newGrade);
   // 3. 두 등급이 다르면 승급(Level Up) 성공!
-  console.log(previousGrade !== newGrade);
   return previousGrade !== newGrade;
+};
+
+export const isNewPost = (post: PostType) => {
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+  return post.createdAt >= oneWeekAgo;
 };

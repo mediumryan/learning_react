@@ -65,7 +65,6 @@ export default function ContentsPage() {
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 0);
-
     return () => clearTimeout(timer);
   }, []);
 

@@ -56,19 +56,22 @@ export default function HomeNotice() {
                   onClick={() => setSelectedNotice(notice)}
                   className="cursor-pointer rounded-md border p-3 hover:bg-muted"
                 >
-                  <div className="flex items-center gap-2">
-                    {notice.isImportant && (
-                      <Badge variant="destructive">
-                        {t("notice.notice_important")}
-                      </Badge>
-                    )}
-                    {notice.isNew && <Badge variant="secondary">NEW</Badge>}
+                  {/* 공지 헤더 */}
+                  <div className="flex items-center justify-between gap-2">
+                    <div>
+                      {notice.isImportant && (
+                        <Badge variant="destructive">
+                          {t("notice.notice_important")}
+                        </Badge>
+                      )}
+                      {notice.isNew && <Badge variant="secondary">NEW</Badge>}
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      {notice.createdAt.toLocaleDateString()}
+                    </div>
                   </div>
-
+                  {/* 공지 제목 */}
                   <div className="font-medium">{notice.title}</div>
-                  <div className="text-xs text-muted-foreground">
-                    {notice.createdAt.toLocaleDateString()}
-                  </div>
                 </Card>
               ))}
 

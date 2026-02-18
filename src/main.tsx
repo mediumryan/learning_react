@@ -1,11 +1,17 @@
+// react
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "~/index.css";
-import App from "~/App.tsx";
+// react-router
 import { BrowserRouter } from "react-router";
-import "~/i18n";
+// atoms
 import { Provider } from "jotai";
 import { appStore } from "~/data/store.ts";
+// styles
+import "~/index.css";
+// components
+import App from "~/App.tsx";
+// i18n
+import "~/i18n";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

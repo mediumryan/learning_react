@@ -235,7 +235,6 @@ export const completeLectureForUser = async (
 
   // 이미 완료한 강의인지 확인 (경험치 중복 지급 방지)
   if (user.contentStatus && user.contentStatus.has(lecture.id)) {
-    console.log("이미 완료된 강의입니다.");
     return user;
   }
 

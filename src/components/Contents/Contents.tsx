@@ -114,13 +114,7 @@ export default function Contents({ lectureId }: ContentsProps) {
                 return (
                   <img
                     {...props}
-                    className="rounded-lg shadow-md my-6"
-                    style={{
-                      maxWidth: '100%',
-                      height: 'auto',
-                      display: 'block',
-                      margin: '1.5rem auto',
-                    }}
+                    className="block max-w-full h-auto max-h-96 mx-auto rounded-lg shadow-md my-6 object-cover"
                     alt={props.alt || 'content-image'}
                     src={props.src}
                   />

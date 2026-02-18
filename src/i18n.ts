@@ -76,6 +76,9 @@ const resources = {
           "JPG, PNG, SVG 형식만 업로드 가능합니다.",
         community_post_image_error_too_large:
           "파일 크기는 0.5MB 이하만 가능합니다.",
+        community_post_success_post: "포스트가",
+        community_post_success_add: "등록되었습니다.",
+        community_post_success_update: "수정되었습니다.",
       },
       users: {
         users_title: "유저 관리",
@@ -256,6 +259,10 @@ i18n
   .use(initReactI18next) // react-i18next와 연결
   .init({
     resources,
+    detection: {
+      caches: ["localStorage"],
+    },
+    lng: localStorage.getItem("i18nextLng") || "ja", // 초기 언어 설정
     fallbackLng: "ja", // 일치하는 언어가 없을 경우 기본값
     debug: false,
     interpolation: {

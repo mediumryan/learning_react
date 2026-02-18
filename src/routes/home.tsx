@@ -1,44 +1,24 @@
-// react-router
-import { Link } from "react-router";
 // atoms
 import { useAtomValue } from "jotai";
 import { currentUserAtom } from "~/data/userData";
 // shadcn/ui
-import { Button } from "~/components/ui/button";
-import { ButtonGroup } from "~/components/ui/button-group";
 import { Separator } from "~/components/ui/separator";
 // components
 import HomeSelectCourse from "~/components/Home/HomeSelectCourse";
 import HomeNotice from "~/components/Home/HomeNotice";
+import HomeBottom from "~/components/Home/HomeBottom";
 // icons
 import { FaReact } from "react-icons/fa";
-import { BookOpen, MessagesSquare } from "lucide-react";
 // styles
 import { H1_STYLE, H3_STYLE } from "~/style/commonStyle";
 import { SEPERATOR_STYLE } from "~/style/homeStyle";
-// helpers
-import { getFirstContentId } from "~/lib/helper";
-import { contentsAtom } from "~/data/contentData";
 // i18n
 import { useTranslation } from "react-i18next";
 
 export default function Home() {
-  const currentUser = useAtomValue(currentUserAtom);
-  const contents = useAtomValue(contentsAtom);
-
   const { t } = useTranslation();
 
-  // if (!currentUser) {
-  //   return <Navigate to="/login" replace />;
-  // }
-
-  if (!contents) {
-    return (
-      <main className="p-8 flex flex-col justify-center items-center gap-2">
-        <p>コンテンツを読み込み中...</p>
-      </main>
-    );
-  }
+  const currentUser = useAtomValue(currentUserAtom);
 
   return (
     <main className="p-8 flex flex-col justify-center items-center gap-2">
@@ -68,20 +48,7 @@ export default function Home() {
       <Separator className={SEPERATOR_STYLE} />
 
       {/* 메인화면 - 버튼그룹 */}
-      <ButtonGroup className="gap-2">
-        <Link to={`/contents/${getFirstContentId(contents)}`} prefetch="intent">
-          <Button>
-            <BookOpen className="w-4 h-4 mr-2" />
-            <span>{t("home_message.go_to_lecture")}</span>
-          </Button>
-        </Link>
-        <Link to="/community" prefetch="intent">
-          <Button>
-            <MessagesSquare className="w-4 h-4 mr-2" />
-            <span>{t("home_message.go_to_community")}</span>
-          </Button>
-        </Link>
-      </ButtonGroup>
+      <HomeBottom />
     </main>
   );
 }

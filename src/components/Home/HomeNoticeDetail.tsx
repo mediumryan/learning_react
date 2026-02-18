@@ -66,13 +66,12 @@ export default function HomeNoticeDetail({
           <>
             <DialogHeader>
               <DialogTitle>{selectedNotice.title}</DialogTitle>
+              <div className="text-sm text-muted-foreground mb-4">
+                {selectedNotice.createdAt.toLocaleDateString()}
+              </div>
             </DialogHeader>
 
-            <div className="text-sm text-muted-foreground mb-4">
-              {selectedNotice.createdAt.toLocaleDateString()}
-            </div>
-
-            <div className="whitespace-pre-wrap text-sm mb-6">
+            <div className="whitespace-pre-wrap text-sm mb-6 border rounded-md p-4 bg-muted">
               {selectedNotice.content}
             </div>
 

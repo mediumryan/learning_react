@@ -1,12 +1,21 @@
-import { atom } from "jotai";
+// atoms
+import { atom } from 'jotai';
+import { languageAtom } from './commonData';
 // images
-import firstStepImg from "~/assets/images/contents/first-step.png";
-import todoSampleImg_jp from "~/assets/images/contents/todo-sample-jp.png";
-import todoSampleImg_kr from "~/assets/images/contents/todo-sample-kr.png";
-import helloReact from "~/assets/images/contents/hello-react.png";
-import componentsSample from "~/assets/images/contents/components-sample.png";
-import refError from "~/assets/images/contents/ref-error.png";
-import { languageAtom } from "./commonData";
+import firstStepImg from '~/assets/images/contents/first-step.png';
+import todoSampleImg_jp from '~/assets/images/contents/todo-sample-jp.png';
+import todoSampleImg_kr from '~/assets/images/contents/todo-sample-kr.png';
+import helloReact from '~/assets/images/contents/hello-react.png';
+import componentsSample from '~/assets/images/contents/components-sample.png';
+import refError from '~/assets/images/contents/ref-error.png';
+import ghPages from '~/assets/images/contents/gh-pages.png';
+import reactIcon from '~/assets/images/contents/react-icon.png';
+import libraryFramework from '~/assets/images/contents/Library-and-Framework.jpg';
+import spa from '~/assets/images/contents/spa.webp';
+import vite from '~/assets/images/contents/vite.jpg';
+import component from '~/assets/images/contents/component.png';
+import componentUpper from '~/assets/images/contents/component-upper.jpg';
+import jsx from '~/assets/images/contents/jsx.gif';
 
 // 0: 설명, 1: 객관식, 2: 주관식
 export type ContentType = 0 | 1 | 2;
@@ -46,10 +55,10 @@ export const contentsData: Content[] =
   // Section 1: Introduction to React
   [
     {
-      id: "section1-orientation",
+      id: 'section1-orientation',
       section: 1,
       order: 0,
-      title: "강의 시작하기: 무엇을 만들게 될까요?",
+      title: '강의 시작하기: 무엇을 만들게 될까요?',
       type: 0,
       exp: 5,
       time: 5,
@@ -89,22 +98,24 @@ React를 배우기 전, 아래와 같은 **기본적인 웹 개발 지식** 을 
 자, 그럼 시작해볼까요?`,
     },
     {
-      id: "intro-what-is-react",
+      id: 'intro-what-is-react',
       section: 1,
       order: 1,
-      title: "React.js란 무엇인가?",
+      title: 'React.js란 무엇인가?',
       type: 0,
       exp: 10,
-      time: 7,
+      time: 10, // 예시 추가로 인해 학습 시간 소폭 상향
       content: `# ⚛️ React: UI를 만드는 강력한 도구
 
-**React** 는 사용자 인터페이스(UI)를 만들기 위한 **JavaScript 라이브러리** 입니다. Meta(구 Facebook)에서 개발하여 현재 가장 사랑받는 프론트엔드 기술이죠.
+**React** 는 사용자 인터페이스(UI) 를 만들기 위한 **JavaScript 라이브러리** 입니다. Meta(구 Facebook) 에서 개발하여 현재 가장 사랑받는 프론트엔드 기술이죠.
+
+![React Icon](${reactIcon})
 
 ---
 
 ### 💡 왜 React인가요?
 
-웹페이지에서 버튼을 클릭할 때, 화면 전체가 새로고침되지 않고 **필요한 부분만** 부드럽게 업데이트되는 경험을 해보셨나요? React는 이런 동적인 화면을 **효율적으로 구현** 하기 위해 태어났습니다.
+웹페이지에서 버튼을 클릭할 때, 화면 전체가 새로고침되지 않고 **필요한 부분만** 부드럽게 업데이트되는 경험을 해보셨나요? **React** 는 이런 동적인 화면을 **효율적으로 구현** 하기 위해 태어났습니다.
 
 ---
 
@@ -112,20 +123,35 @@ React를 배우기 전, 아래와 같은 **기본적인 웹 개발 지식** 을 
 
 많은 분이 헷갈려 하는 두 개념의 핵심은 **'누가 주도권을 가지고 있는가'** 입니다.
 
-- **라이브러리** : 개발자가 필요할 때마다 **직접 골라서 쓰는 도구 모음** 입니다. 내가 원할 때 필요한 기능만 꺼내 쓸 수 있죠.
-- **프레임워크** : 집을 지을 때 사용하는 **미리 짜인 틀** 입니다. 정해진 규칙과 흐름을 반드시 따라야 하며, 그 안에서 코드를 작성해야 합니다.
 
 
+#### 🛠️ 라이브러리 (Library)
+개발자가 필요할 때마다 **직접 골라서 쓰는 도구 모음** 입니다. 내가 주도권을 가지고 원할 때 필요한 기능만 꺼내 쓸 수 있죠.
+* **React** : UI 구성 요소를 만들기 위해 호출합니다.
+* **lodash** : 복잡한 데이터를 쉽게 다루기 위해 사용합니다.
+* **Axios** : 서버와 데이터를 주고받기 위해 선택적으로 사용합니다.
+
+#### 🏗️ 프레임워크 (Framework)
+집을 지을 때 사용하는 **미리 짜인 틀** 입니다. 프레임워크가 정한 규칙과 흐름을 반드시 따라야 하며, 그 안에서 코드를 작성해야 합니다.
+* **Angular** : 구글에서 만든 웹 개발을 위한 모든 도구가 갖춰진 틀입니다.
+* **Spring** : 자바 개발자들이 정해진 규칙에 따라 서버를 만들 때 사용합니다.
+* **Django** : 파이썬으로 웹 서비스를 만들 때 정해진 구조에 맞춰 개발해야 합니다.
+
+---
 
 **"그래서 리액트는 라이브러리입니다!"**
-React는 웹 전체를 관리하는 규칙을 강요하지 않습니다. 오직 **'UI를 만드는 도구'** 역할에 집중하죠. 
-따라서 개발자가 원하는 다른 도구들과 **자유롭게 조합** 해서 사용할 수 있다는 것이 가장 큰 매력입니다.`,
+
+**React** 는 웹 전체를 관리하는 규칙을 강요하지 않습니다. 오직 **'UI를 만드는 도구'** 역할에 집중하죠. 따라서 개발자가 원하는 다른 라이브러리들과 **자유롭게 조합** 해서 사용할 수 있다는 것이 가장 큰 매력입니다.
+
+![Library vs Framework](${libraryFramework})
+
+여러분이 주도권을 쥐고, 필요한 도구들을 하나씩 조립해 나가는 즐거움을 느껴보세요!`,
     },
     {
-      id: "intro-spa-concept",
+      id: 'intro-spa-concept',
       section: 1,
       order: 2,
-      title: "전체 페이지가 바뀌지 않는 이유 (SPA)",
+      title: '전체 페이지가 바뀌지 않는 이유 (SPA)',
       type: 0,
       exp: 10,
       time: 5,
@@ -137,6 +163,8 @@ React는 **SPA(Single Page Application)** 방식으로 동작합니다. 화면 �
 
 ### 📌 SPA란 무엇일까요?
 
+![single page application](${spa})
+
 전통적인 웹사이트는 다른 페이지로 이동할 때마다 서버에서 전체 화면을 다시 받아옵니다. 하지만 SPA는
 - 딱 **한 개의 페이지(HTML)** 만 로드합니다.
 - 이후에는 JavaScript를 이용해 **필요한 데이터만** 바꿔 끼웁니다.
@@ -146,23 +174,23 @@ React는 **SPA(Single Page Application)** 방식으로 동작합니다. 화면 �
 > 2. 서버 통신량이 줄어들어 **속도가 매우 빠릅니다.** `,
     },
     {
-      id: "quiz-react-definition",
+      id: 'quiz-react-definition',
       section: 1,
       order: 3,
-      title: "React의 정의 퀴즈",
+      title: 'React의 정의 퀴즈',
       type: 2,
-      question: "React는 JavaScript의 어떤 종류의 도구입니까? (ㄹㅇㅂㄹㄹ)",
-      correctAnswer: "라이브러리,,Library",
+      question: 'React는 JavaScript의 어떤 종류의 도구입니까? (ㄹㅇㅂㄹㄹ)',
+      correctAnswer: '라이브러리,,Library',
       explanation:
         "React는 UI 구축을 위한 전용 기능을 제공하는 '라이브러리'입니다.",
       exp: 20,
       time: 3,
     },
     {
-      id: "intro-why-react",
+      id: 'intro-why-react',
       section: 1,
       order: 4,
-      title: "왜 React를 배워야 할까요?",
+      title: '왜 React를 배워야 할까요?',
       type: 0,
       exp: 10,
       time: 6,
@@ -182,16 +210,18 @@ React는 **SPA(Single Page Application)** 방식으로 동작합니다. 화면 �
 > React를 배우는 것은 단순히 문법을 익히는 것이 아니라, **현대적인 개발자의 사고방식** 을 갖추는 과정입니다.`,
     },
     {
-      id: "app-creation-vite",
+      id: 'app-creation-vite',
       section: 1,
       order: 5,
-      title: "앱 생성하기 - Vite",
+      title: '앱 생성하기 - Vite',
       type: 0,
       exp: 15,
       time: 15, // 내용 추가에 따른 시간 조정
       content: `# 🛠️ 실전! 첫 리액트 앱 만들기
 
 이제 실제로 React 프로젝트를 생성해봅시다. 우리는 가장 빠르고 현대적인 도구인 **Vite** 를 사용합니다.
+
+![vite](${vite})
 
 ---
 
@@ -245,10 +275,10 @@ export default App
 `,
     },
     {
-      id: "section1-summary",
+      id: 'section1-summary',
       section: 1,
       order: 6,
-      title: "섹션 1 정리: React의 큰 그림",
+      title: '섹션 1 정리: React의 큰 그림',
       type: 0,
       exp: 5,
       time: 4,
@@ -272,16 +302,18 @@ export default App
     },
     // Section 2: Components & JSX
     {
-      id: "basic-understanding-components",
+      id: 'basic-understanding-components',
       section: 2,
       order: 0,
-      title: "컴포넌트(Components) 이해하기",
+      title: '컴포넌트(Components) 이해하기',
       type: 0,
       exp: 10,
       time: 6,
       content: `# 🧱 UI의 조각, 컴포넌트(Component)
 
 **컴포넌트** 는 UI를 구성하는 **독립적이고 재사용 가능한 블록** 입니다. 마치 레고 블록을 조립하듯 웹사이트를 만들 수 있게 해주죠.
+
+![component](${component})
 
 ---
 
@@ -313,56 +345,83 @@ function Welcome() {
 
 > ⚠️ **주의**
 > 컴포넌트 이름의 첫 글자는 반드시 **대문자** 여야 합니다. 
-> 소문자로 시작하면 React는 이를 일반 HTML 태그로 인식해버립니다.`,
+> 소문자로 시작하면 React는 이를 일반 HTML 태그로 인식해버립니다.
+
+![component must be uppercase](${componentUpper})
+
+`,
     },
     {
-      id: "basic-jsx-syntax",
+      id: 'basic-jsx-syntax',
       section: 2,
       order: 1,
-      title: "JSX: 자바스크립트 속 HTML",
+      title: 'JSX: 자바스크립트 속 HTML',
       type: 0,
       exp: 10,
-      time: 10,
+      time: 12,
       content: `# 🏗️ JavaScript 확장 문법, JSX
 
-**JSX** 는 **자바스크립트 안에서 HTML처럼 보이는 문법** 을 사용할 수 있게 해주는 React의 핵심 문법입니다.
+**JSX** 는 **자바스크립트** 안에서 **HTML** 처럼 보이는 문법을 사용할 수 있게 해주는 **React** 의 핵심 문법입니다.
+
+![jsx](${jsx})
 
 ---
 
 ### ❓ JSX는 왜 필요할까요?
 
-JSX가 없다면 우리는 일일이 복잡한 자바스크립트 함수를 호출해야 합니다.
+**JSX** 가 없다면 우리는 화면을 구성하는 모든 요소를 일일이 복잡한 자바스크립트 함수로 호출해야 합니다. 
+> 만약 우리가 클래스 이름을 가진 **<div>** 안에 **<h1>** 과 **<p>** 태그가 있는 구조를 만든다고 가정해 봅시다.
 
+#### 1. JSX 없이 작성할 때 (Pure JavaScript)
 \`\`\`js
-// JSX 없이 작성할 때
-React.createElement('h1', null, '안녕하세요');
+// 구조가 조금만 복잡해져도 읽기가 매우 힘들어집니다.
+return React.createElement(
+  'div',
+  { className: 'container' },
+  React.createElement('h1', null, '안녕하세요'),
+  React.createElement('p', null, '반갑습니다')
+);
 \`\`\`
+
+#### 2. JSX를 사용해 작성할 때
+\`\`\`jsx
+// HTML과 거의 흡사하여 한눈에 구조가 들어옵니다.
+return (
+  <div className="container">
+    <h1>안녕하세요</h1>
+    <p>반갑습니다</p>
+  </div>
+);
+\`\`\`
+
+**"어떤 코드가 더 직관적인가요?"**
+**JSX** 를 사용하면 코드의 양이 획기적으로 줄어들 뿐만 아니라, 개발자가 화면의 구조를 파악하는 시간을 대폭 단축해 줍니다. 이것이 우리가 **React** 에서 **JSX** 를 반드시 사용해야 하는 이유입니다.
 
 ---
 
 ### 🔀 자바스크립트 값 섞어 쓰기 
 
- JSX의 강력함은 자바스크립트의 변수를 **중괄호** \`{ }\`를 통해 화면에 바로 뿌릴 수 있다는 점입니다.
+**JSX** 의 또 다른 강력함은 자바스크립트의 변수를 **중괄호** \`{ }\` 를 통해 화면에 바로 뿌릴 수 있다는 점입니다.
 
 \`\`\`jsx
 function App() {
   const name = '철수';
   const age = 20;
 
-  return <h2>{name}님은{age}살입니다.</h2>;
+  return <h2>{name} 님은 {age} 살입니다.</h2>;
 }
 \`\`\`
 
 **🖥️ 브라우저 출력 결과:** 
-> **철수님은 20살입니다.** 
+> **철수 님은 20 살입니다.** 
  
-이렇게 중괄호 안의 자바스크립트 변수가 실제 데이터로 치환되어 화면에 나타납니다.`,
+ 이렇게 중괄호 안의 자바스크립트 변수가 실제 데이터로 치환되어 화면에 나타납니다.`,
     },
     {
-      id: "basic-jsx-rules",
+      id: 'basic-jsx-rules',
       section: 2,
       order: 2,
-      title: "JSX 작성 시 꼭 지켜야 할 규칙",
+      title: 'JSX 작성 시 꼭 지켜야 할 규칙',
       type: 0,
       exp: 15,
       time: 8,
@@ -399,68 +458,68 @@ return (
  위의 두 태그와 같이 HTML에서 닫지 않던 태그들도 JSX에서는 반드시 \`<img />\`와 같이 **Self-closing** 하거나 닫아주어야 합니다.`,
     },
     {
-      id: "quiz-jsx-definition",
+      id: 'quiz-jsx-definition',
       section: 2,
       order: 3,
-      title: "JSX의 개념 퀴즈",
+      title: 'JSX의 개념 퀴즈',
       type: 1,
       exp: 20,
       time: 3,
-      question: "다음 중 JSX에 대한 설명으로 가장 올바른 것은 무엇입니까?",
+      question: '다음 중 JSX에 대한 설명으로 가장 올바른 것은 무엇입니까?',
       options: [
-        "HTML 파일을 대체하기 위한 새로운 언어",
-        "브라우저에서 직접 실행되는 템플릿 언어",
-        "자바스크립트 안에서 HTML처럼 보이는 문법을 사용할 수 있게 해주는 문법",
-        "React 전용의 스타일링 문법",
+        'HTML 파일을 대체하기 위한 새로운 언어',
+        '브라우저에서 직접 실행되는 템플릿 언어',
+        '자바스크립트 안에서 HTML처럼 보이는 문법을 사용할 수 있게 해주는 문법',
+        'React 전용의 스타일링 문법',
       ],
       correctAnswerIndex: 2,
       explanation:
-        "JSX는 JavaScript XML의 약자로, 코드의 가독성을 높여주는 자바스크립트 확장 문법입니다.",
+        'JSX는 JavaScript XML의 약자로, 코드의 가독성을 높여주는 자바스크립트 확장 문법입니다.',
     },
     {
-      id: "quiz-jsx-expression",
+      id: 'quiz-jsx-expression',
       section: 2,
       order: 4,
-      title: "JSX 표현식 퀴즈",
+      title: 'JSX 표현식 퀴즈',
       type: 1,
       exp: 20,
       time: 3,
       question:
-        "JSX 안에서 자바스크립트 변수를 출력할 때 사용하는 올바른 방법은 무엇입니까?",
+        'JSX 안에서 자바스크립트 변수를 출력할 때 사용하는 올바른 방법은 무엇입니까?',
       options: [
-        "<p>name</p>",
-        "<p>${name}</p>",
-        "<p>{name}</p>",
-        "<p>(name)</p>",
+        '<p>name</p>',
+        '<p>${name}</p>',
+        '<p>{name}</p>',
+        '<p>(name)</p>',
       ],
       correctAnswerIndex: 2,
       explanation:
-        "JSX 내부에서 자바스크립트 변수나 표현식을 사용할 때는 반드시 중괄호 { }를 사용해야 합니다.",
+        'JSX 내부에서 자바스크립트 변수나 표현식을 사용할 때는 반드시 중괄호 { }를 사용해야 합니다.',
     },
     {
-      id: "quiz-jsx-statement-vs-expression",
+      id: 'quiz-jsx-statement-vs-expression',
       section: 2,
       order: 5,
-      title: "JSX 문법 이해 퀴즈",
+      title: 'JSX 문법 이해 퀴즈',
       type: 1,
       exp: 25,
       time: 4,
-      question: "다음 중 JSX 안에서 직접 사용할 수 없는 것은 무엇입니까?",
+      question: '다음 중 JSX 안에서 직접 사용할 수 없는 것은 무엇입니까?',
       options: [
-        "삼항 연산자 (condition ? A : B)",
-        "숫자 계산 (1 + 2)",
-        "if 문",
-        "변수 값 출력",
+        '삼항 연산자 (condition ? A : B)',
+        '숫자 계산 (1 + 2)',
+        'if 문',
+        '변수 값 출력',
       ],
       correctAnswerIndex: 2,
       explanation:
         "JSX 내의 중괄호에는 결과값이 즉시 반환되는 '표현식'만 올 수 있습니다. if문은 '문(statement)'이므로 중괄호 내부에서 직접 사용할 수 없습니다.",
     },
     {
-      id: "section2-summary",
+      id: 'section2-summary',
       section: 2,
       order: 6,
-      title: "섹션 2 정리: 컴포넌트와 JSX",
+      title: '섹션 2 정리: 컴포넌트와 JSX',
       type: 0,
       exp: 5,
       time: 4,
@@ -482,10 +541,10 @@ return (
     },
     // Section 3: State
     {
-      id: "state-what-is-state",
+      id: 'state-what-is-state',
       section: 3,
       order: 0,
-      title: "State란 무엇인가?",
+      title: 'State란 무엇인가?',
       type: 0,
       exp: 15,
       time: 8,
@@ -530,10 +589,10 @@ State는 단순한 데이터가 아니라, **"값이 바뀌었으니 화면을 �
 State가 변경되면 React는 자동으로 이 렌더링 과정을 수행하여 사용자가 바뀐 값을 볼 수 있게 합니다.`,
     },
     {
-      id: "state-counter-practice",
+      id: 'state-counter-practice',
       section: 3,
       order: 1,
-      title: "카운터 앱 실습: useState 사용법",
+      title: '카운터 앱 실습: useState 사용법',
       type: 0,
       exp: 25,
       time: 10,
@@ -567,58 +626,58 @@ function Counter() {
 3. **컴포넌트를 다시 실행(재렌더링)** 하여 화면에 새로운 숫자를 그립니다.`,
     },
     {
-      id: "quiz-state-description",
+      id: 'quiz-state-description',
       section: 3,
       order: 2,
-      title: "State 개념 이해 퀴즈",
+      title: 'State 개념 이해 퀴즈',
       type: 2,
       question:
-        "컴포넌트가 기억하고 있으며, 값이 변경되면 화면이 다시 렌더링되도록 만드는 React의 데이터는 무엇입니까?",
-      correctAnswer: "State,,state,,스테이트,,상태,,상태값",
+        '컴포넌트가 기억하고 있으며, 값이 변경되면 화면이 다시 렌더링되도록 만드는 React의 데이터는 무엇입니까?',
+      correctAnswer: 'State,,state,,스테이트,,상태,,상태값',
       explanation:
-        "State는 컴포넌트 내부에서 변할 수 있는 값을 관리하며, 변경 시 렌더링을 유발합니다.",
+        'State는 컴포넌트 내부에서 변할 수 있는 값을 관리하며, 변경 시 렌더링을 유발합니다.',
       exp: 20,
       time: 3,
     },
     {
-      id: "quiz-state-update-code",
+      id: 'quiz-state-update-code',
       section: 3,
       order: 3,
-      title: "State 변경 코드 퀴즈",
+      title: 'State 변경 코드 퀴즈',
       type: 2,
       question:
-        "다음 상태가 선언되어 있을 때, number의 값을 5로 변경하는 함수 호출 코드를 작성하세요.\n\nconst [number, setNumber] = useState(0);",
-      correctAnswer: "setNumber(5)",
+        '다음 상태가 선언되어 있을 때, number의 값을 5로 변경하는 함수 호출 코드를 작성하세요.\n\nconst [number, setNumber] = useState(0);',
+      correctAnswer: 'setNumber(5)',
       explanation:
-        "상태 변경 함수인 setNumber에 원하는 값을 인자로 전달합니다.",
+        '상태 변경 함수인 setNumber에 원하는 값을 인자로 전달합니다.',
       exp: 30,
       time: 4,
     },
     {
-      id: "quiz-state-change-effect",
+      id: 'quiz-state-change-effect',
       section: 3,
       order: 4,
-      title: "State 변경 결과 퀴즈",
+      title: 'State 변경 결과 퀴즈',
       type: 1,
       question:
-        "State의 값이 변경되면 React 컴포넌트에는 어떤 일이 발생합니까?",
+        'State의 값이 변경되면 React 컴포넌트에는 어떤 일이 발생합니까?',
       options: [
-        "아무 일도 일어나지 않는다",
-        "전체 페이지가 새로고침된다",
-        "해당 컴포넌트가 다시 렌더링된다",
-        "에러가 발생한다",
+        '아무 일도 일어나지 않는다',
+        '전체 페이지가 새로고침된다',
+        '해당 컴포넌트가 다시 렌더링된다',
+        '에러가 발생한다',
       ],
       correctAnswerIndex: 2,
       explanation:
-        "React는 State의 변화를 감지하여 해당 컴포넌트를 재렌더링합니다.",
+        'React는 State의 변화를 감지하여 해당 컴포넌트를 재렌더링합니다.',
       exp: 20,
       time: 3,
     },
     {
-      id: "state-common-mistakes",
+      id: 'state-common-mistakes',
       section: 3,
       order: 5,
-      title: "+ State에서 가장 많이 하는 실수들",
+      title: '+ State에서 가장 많이 하는 실수들',
       type: 0,
       exp: 20,
       time: 15,
@@ -651,10 +710,10 @@ console.log(count); // 🧐 여전히 이전 값이 찍힐 거예요!
 \`\`\` `,
     },
     {
-      id: "section3-summary",
+      id: 'section3-summary',
       section: 3,
       order: 6,
-      title: "Section 3 마무리: State 한 번에 정리하기",
+      title: 'Section 3 마무리: State 한 번에 정리하기',
       type: 0,
       exp: 15,
       time: 6,
@@ -677,10 +736,10 @@ console.log(count); // 🧐 여전히 이전 값이 찍힐 거예요!
     },
     // Section 4: Props
     {
-      id: "props-passing-data",
+      id: 'props-passing-data',
       section: 4,
       order: 0,
-      title: "Props로 데이터 전달하기",
+      title: 'Props로 데이터 전달하기',
       type: 0,
       exp: 20,
       time: 12,
@@ -721,10 +780,10 @@ function MyButton(props) {
  자식 컴포넌트는 이 값을 **사용만 할 수 있고, 직접 수정할 수는 없습니다.** `,
     },
     {
-      id: "props-destructuring-intro",
+      id: 'props-destructuring-intro',
       section: 4,
       order: 1,
-      title: "Props를 더 간단하게 받는 방법",
+      title: 'Props를 더 간단하게 받는 방법',
       type: 0,
       exp: 10,
       time: 10,
@@ -778,10 +837,10 @@ function UserProfile({ name, age, email, address, job, hobby }) {
 이처럼 함수의 매개변수 자리에 직접 \`{ }\` 를 적어주면, 마치 내 방에 있는 물건을 바로 꺼내 쓰듯 데이터 이름만으로 간편하게 사용할 수 있습니다. 읽기 편하고 쓰기 쉬운 코드를 만드는 가장 첫 걸음입니다!`,
     },
     {
-      id: "props-pass-setstate",
+      id: 'props-pass-setstate',
       section: 4,
       order: 2,
-      title: "함수도 Props로 전달할 수 있어요",
+      title: '함수도 Props로 전달할 수 있어요',
       type: 0,
       exp: 20,
       time: 15,
@@ -812,10 +871,10 @@ function CounterButton({ onIncrease }) {
 - 자식에서 버튼을 누르면 부모가 준 함수가 실행되어 부모의 State가 바뀝니다!`,
     },
     {
-      id: "props-common-mistakes",
+      id: 'props-common-mistakes',
       section: 4,
       order: 3,
-      title: "+ Props 사용 시 주의할 점",
+      title: '+ Props 사용 시 주의할 점',
       type: 0,
       exp: 10,
       time: 8,
@@ -840,43 +899,43 @@ Props는 부모가 주는 '선물'과 같아서 자식이 마음대로 바꿀 �
 \`\`\` `,
     },
     {
-      id: "quiz-props-definition",
+      id: 'quiz-props-definition',
       section: 4,
       order: 4,
-      title: "Props의 정의 퀴즈",
+      title: 'Props의 정의 퀴즈',
       type: 1,
-      question: "다음 중 Props의 올바른 설명은 무엇일까요?",
+      question: '다음 중 Props의 올바른 설명은 무엇일까요?',
       options: [
-        "컴포넌트가 스스로 관리하는 상태 값",
-        "부모 컴포넌트가 자식에게 전달하는 읽기 전용 데이터",
-        "자식 컴포넌트가 직접 수정할 수 있는 값",
-        "HTML 태그 속성을 의미하는 React 전용 문법",
+        '컴포넌트가 스스로 관리하는 상태 값',
+        '부모 컴포넌트가 자식에게 전달하는 읽기 전용 데이터',
+        '자식 컴포넌트가 직접 수정할 수 있는 값',
+        'HTML 태그 속성을 의미하는 React 전용 문법',
       ],
       correctAnswerIndex: 1,
       explanation:
-        "Props는 상위(부모) 컴포넌트가 하위(자식) 컴포넌트에게 전달하는 읽기 전용 데이터입니다.",
+        'Props는 상위(부모) 컴포넌트가 하위(자식) 컴포넌트에게 전달하는 읽기 전용 데이터입니다.',
       exp: 20,
       time: 5,
     },
     {
-      id: "quiz-props-vs-state",
+      id: 'quiz-props-vs-state',
       section: 4,
       order: 5,
-      title: "Props와 State 구분하기",
+      title: 'Props와 State 구분하기',
       type: 2,
       question:
-        "컴포넌트가 직접 관리하며 변경 시 렌더링을 유발하는 값은 무엇인가요? (Props 또는 State)",
-      correctAnswer: "State,,state,,스테이트,,상태,,상태값",
+        '컴포넌트가 직접 관리하며 변경 시 렌더링을 유발하는 값은 무엇인가요? (Props 또는 State)',
+      correctAnswer: 'State,,state,,스테이트,,상태,,상태값',
       explanation:
-        "State는 컴포넌트 내부 상태이며, Props는 외부로부터 받는 설정값입니다.",
+        'State는 컴포넌트 내부 상태이며, Props는 외부로부터 받는 설정값입니다.',
       exp: 20,
       time: 5,
     },
     {
-      id: "props-summary-review",
+      id: 'props-summary-review',
       section: 4,
       order: 6,
-      title: "Props 마무리 & 복습",
+      title: 'Props 마무리 & 복습',
       type: 0,
       exp: 15,
       time: 10,
@@ -899,10 +958,10 @@ Props는 부모가 주는 '선물'과 같아서 자식이 마음대로 바꿀 �
     },
     // Section 5: Events
     {
-      id: "event-what-is-event",
+      id: 'event-what-is-event',
       section: 5,
       order: 0,
-      title: "React에서 이벤트(Event)란?",
+      title: 'React에서 이벤트(Event)란?',
       type: 0,
       exp: 15,
       time: 8,
@@ -930,10 +989,10 @@ React에서 **이벤트** 란 사용자가 화면과 상호작용할 때 발생�
 \`\`\` `,
     },
     {
-      id: "event-html-vs-react",
+      id: 'event-html-vs-react',
       section: 5,
       order: 1,
-      title: "HTML 이벤트와 React 이벤트의 차이",
+      title: 'HTML 이벤트와 React 이벤트의 차이',
       type: 0,
       exp: 15,
       time: 7,
@@ -967,10 +1026,10 @@ React 이벤트는 HTML과 비슷해 보이지만 작성 방식이 엄격히 다
 > React는 "이 버튼이 클릭되면 **이 함수를 나중에 실행해줘**"라고 부탁하는 방식입니다.`,
     },
     {
-      id: "event-handler-function",
+      id: 'event-handler-function',
       section: 5,
       order: 2,
-      title: "이벤트 핸들러 함수 만들기",
+      title: '이벤트 핸들러 함수 만들기',
       type: 0,
       exp: 20,
       time: 10,
@@ -1004,10 +1063,10 @@ function App() {
  위와 같이 **어떤 동작을 하는지** 명확하게 짓는 것이 관습입니다.`,
     },
     {
-      id: "event-function-vs-execution",
+      id: 'event-function-vs-execution',
       section: 5,
       order: 3,
-      title: "함수를 전달할까? 실행할까?",
+      title: '함수를 전달할까? 실행할까?',
       type: 0,
       exp: 20,
       time: 12,
@@ -1055,10 +1114,10 @@ React 이벤트를 작성할 때 가장 흔히 저지르는 실수입니다.
 > 📌 **요약** : 함수 이름만 쓰거나, **화살표 함수(Arrow Function)** 로 감싸서 전달하세요. 그것이 리액트에서의 올바른 **'실행 예약'** 방법입니다!`,
     },
     {
-      id: "event-state-update",
+      id: 'event-state-update',
       section: 5,
       order: 4,
-      title: "이벤트로 State 변경하기",
+      title: '이벤트로 State 변경하기',
       type: 0,
       exp: 25,
       time: 12,
@@ -1086,43 +1145,43 @@ function Counter() {
 > [더하기] 클릭 시 숫자가 1씩 증가`,
     },
     {
-      id: "quiz-event-camelcase",
+      id: 'quiz-event-camelcase',
       section: 5,
       order: 5,
-      title: "React 이벤트 문법 퀴즈",
+      title: 'React 이벤트 문법 퀴즈',
       type: 1,
       exp: 20,
       time: 5,
-      question: "React에서 버튼 클릭 이벤트를 올바르게 작성한 것은 무엇인가요?",
+      question: 'React에서 버튼 클릭 이벤트를 올바르게 작성한 것은 무엇인가요?',
       options: [
         'onclick="handleClick()"',
-        "onClick={handleClick}",
+        'onClick={handleClick}',
         'onClick="handleClick"',
-        "onclick={handleClick()}",
+        'onclick={handleClick()}',
       ],
       correctAnswerIndex: 1,
       explanation:
-        "React 이벤트는 카멜 케이스(onClick)를 사용하며, 중괄호 안에 함수 이름을 전달합니다.",
+        'React 이벤트는 카멜 케이스(onClick)를 사용하며, 중괄호 안에 함수 이름을 전달합니다.',
     },
     {
-      id: "quiz-event-short-answer",
+      id: 'quiz-event-short-answer',
       section: 5,
       order: 6,
-      title: "이벤트 개념 단답 퀴즈",
+      title: '이벤트 개념 단답 퀴즈',
       type: 2,
       exp: 20,
       time: 5,
       question:
         "React 이벤트 핸들러에 전달해야 하는 것은 함수의 '실행 결과'일까요, '함수 그 자체'일까요?",
-      correctAnswer: "함수,,함수 그 자체,,function,,function itself",
+      correctAnswer: '함수,,함수 그 자체,,function,,function itself',
       explanation:
-        "이벤트가 발생했을 때 비로소 실행되도록 함수 자체를 넘겨주어야 합니다.",
+        '이벤트가 발생했을 때 비로소 실행되도록 함수 자체를 넘겨주어야 합니다.',
     },
     {
-      id: "event-summary-review",
+      id: 'event-summary-review',
       section: 5,
       order: 7,
-      title: "Section 5 마무리: 이벤트 정리",
+      title: 'Section 5 마무리: 이벤트 정리',
       type: 0,
       exp: 15,
       time: 7,
@@ -1143,10 +1202,10 @@ function Counter() {
     },
     // Section 6: Lists and Objects
     {
-      id: "list-intro",
+      id: 'list-intro',
       section: 6,
       order: 0,
-      title: "List와 Object 기초 이해하기",
+      title: 'List와 Object 기초 이해하기',
       type: 0,
       exp: 10,
       time: 5,
@@ -1167,10 +1226,10 @@ React 앱에서 다루는 대부분의 데이터는 **배열(List)** 과 **객�
 - **객체** : 한 명의 사용자 정보처럼 **복합적인 데이터** 를 관리할 때 사용합니다.`,
     },
     {
-      id: "list-render",
+      id: 'list-render',
       section: 6,
       order: 1,
-      title: "배열 데이터를 화면에 반복 렌더링하기",
+      title: '배열 데이터를 화면에 반복 렌더링하기',
       type: 0,
       exp: 15,
       time: 12,
@@ -1209,10 +1268,10 @@ React는 **key** 를 보고 "아, 이 항목이 수정됐구나"를 판단합니
 > 단순히 **1, 2, 3...** 처럼 순서대로 매겨지는 숫자(**index**) 는 리스트의 순서가 뒤바뀌면 React가 어떤 항목이 진짜 바뀌었는지 찾지 못해 **버그의 원인** 이 됩니다! `,
     },
     {
-      id: "list-reference-concept",
+      id: 'list-reference-concept',
       section: 6,
       order: 2,
-      title: "객체와 배열: 메모리 주소(참조)의 비밀",
+      title: '객체와 배열: 메모리 주소(참조)의 비밀',
       type: 0,
       exp: 15,
       time: 10,
@@ -1236,10 +1295,10 @@ setUser(user);    // 🧐 리액트: "주소가 똑같네? 아무것도 안 바�
 리액트를 깨우려면 안의 내용물만 바꾸는 게 아니라, **새로운 주소(새로운 객체)** 를 만들어서 통째로 갈아 끼워줘야 합니다. 이때 필요한 도구가 바로 **스프레드 연산자** 입니다.`,
     },
     {
-      id: "state-array-copy",
+      id: 'state-array-copy',
       section: 6,
       order: 3,
-      title: "스프레드 연산자(...): 새로운 참조 만들기",
+      title: '스프레드 연산자(...): 새로운 참조 만들기',
       type: 0,
       exp: 15,
       time: 12,
@@ -1267,10 +1326,10 @@ setUser({ ...user, age: 21 });
 > 메모리 주소(참조)가 바뀌었으므로 리액트가 즉시 감지하고 화면을 **재렌더링** 합니다.`,
     },
     {
-      id: "state-immutability",
+      id: 'state-immutability',
       section: 6,
       order: 4,
-      title: "불변성(Immutable)과 상태 관리",
+      title: '불변성(Immutable)과 상태 관리',
       type: 0,
       exp: 15,
       time: 8,
@@ -1322,44 +1381,44 @@ React는 이전 데이터와 새 데이터의 **메모리 주소(참조)** 를 �
 항상 위 도구들을 활용해 **새 복사본** 을 만들어 **setState** 에 전달하는 것이 리액트의 정석입니다.`,
     },
     {
-      id: "quiz-list-map",
+      id: 'quiz-list-map',
       section: 6,
       order: 5,
-      title: "배열 렌더링 퀴즈",
+      title: '배열 렌더링 퀴즈',
       type: 2,
       question:
-        "React에서 배열을 화면에 반복 렌더링할 때 사용하는 JavaScript 메서드의 이름을 쓰세요.",
-      correctAnswer: "map,,map(),,맵",
+        'React에서 배열을 화면에 반복 렌더링할 때 사용하는 JavaScript 메서드의 이름을 쓰세요.',
+      correctAnswer: 'map,,map(),,맵',
       explanation:
-        "map() 함수는 배열의 각 요소를 돌며 JSX 엘리먼트로 변환해주는 역할을 합니다.",
+        'map() 함수는 배열의 각 요소를 돌며 JSX 엘리먼트로 변환해주는 역할을 합니다.',
       exp: 10,
       time: 3,
     },
     {
-      id: "quiz-immutability-reason",
+      id: 'quiz-immutability-reason',
       section: 6,
       order: 6,
-      title: "불변성 원리 퀴즈",
+      title: '불변성 원리 퀴즈',
       type: 1,
       question:
-        "객체나 배열을 직접 수정했을 때 리액트가 화면을 다시 그리지 않는 이유는 무엇인가요?",
+        '객체나 배열을 직접 수정했을 때 리액트가 화면을 다시 그리지 않는 이유는 무엇인가요?',
       options: [
-        "자바스크립트 엔진에 에러가 발생해서",
-        "리액트는 값이 아닌 메모리 주소(참조)의 변화를 감지하기 때문에",
-        "직접 수정하면 데이터가 삭제되기 때문에",
-        "리액트가 객체를 싫어하기 때문에",
+        '자바스크립트 엔진에 에러가 발생해서',
+        '리액트는 값이 아닌 메모리 주소(참조)의 변화를 감지하기 때문에',
+        '직접 수정하면 데이터가 삭제되기 때문에',
+        '리액트가 객체를 싫어하기 때문에',
       ],
       correctAnswerIndex: 1,
       explanation:
-        "리액트는 이전 상태와 새로운 상태의 참조(주소)가 다를 때만 업데이트를 수행합니다.",
+        '리액트는 이전 상태와 새로운 상태의 참조(주소)가 다를 때만 업데이트를 수행합니다.',
       exp: 20,
       time: 5,
     },
     {
-      id: "list-summary-review",
+      id: 'list-summary-review',
       section: 6,
       order: 7,
-      title: "Section 6 마무리: 리스트와 불변성",
+      title: 'Section 6 마무리: 리스트와 불변성',
       type: 0,
       exp: 20,
       time: 7,
@@ -1381,10 +1440,10 @@ React는 이전 데이터와 새 데이터의 **메모리 주소(참조)** 를 �
     },
     // Section 7: Form Events
     {
-      id: "form-intro",
+      id: 'form-intro',
       section: 7,
       order: 0,
-      title: "왜 Form 이벤트를 배워야 할까요?",
+      title: '왜 Form 이벤트를 배워야 할까요?',
       type: 0,
       exp: 10,
       time: 5,
@@ -1402,10 +1461,10 @@ React는 이전 데이터와 새 데이터의 **메모리 주소(참조)** 를 �
 이번 섹션에서는 본격적인 프로젝트 실습 전에 꼭 필요한 입력 처리의 기초를 다룹니다.`,
     },
     {
-      id: "form-controlled-input",
+      id: 'form-controlled-input',
       section: 7,
       order: 1,
-      title: "input 값은 왜 State로 관리할까요?",
+      title: 'input 값은 왜 State로 관리할까요?',
       type: 0,
       exp: 15,
       time: 8,
@@ -1424,10 +1483,10 @@ const [text, setText] = useState('');
 **해결책** : 사용자가 입력할 때마다 State를 바꿔주는 **이벤트** 가 세트로 필요합니다!`,
     },
     {
-      id: "form-onchange",
+      id: 'form-onchange',
       section: 7,
       order: 2,
-      title: "onChange 이벤트로 입력값 처리하기",
+      title: 'onChange 이벤트로 입력값 처리하기',
       type: 0,
       exp: 20,
       time: 12,
@@ -1453,10 +1512,10 @@ function InputExample() {
  키보드 입력 ➡️ onChange 발생 ➡️  setText 실행 ➡️  State 변경 ➡️  화면(input) 업데이트`,
     },
     {
-      id: "form-event-object",
+      id: 'form-event-object',
       section: 7,
       order: 3,
-      title: "이벤트 객체(e)는 무엇인가요?",
+      title: '이벤트 객체(e)는 무엇인가요?',
       type: 0,
       exp: 15,
       time: 8,
@@ -1490,10 +1549,10 @@ function InputExample() {
 지금 단계에서는 이것 하나만 기억해도 충분합니다! 나머지 복잡한 정보들은 나중에 필요할 때 하나씩 꺼내 쓰면 됩니다.`,
     },
     {
-      id: "form-submit",
+      id: 'form-submit',
       section: 7,
       order: 4,
-      title: "form과 onSubmit 이벤트",
+      title: 'form과 onSubmit 이벤트',
       type: 0,
       exp: 20,
       time: 10,
@@ -1529,10 +1588,10 @@ function InputExample() {
 > 📌 즉, **form** 은 데이터를 보내기 위한 **하나의 세트** 라고 생각하면 쉽습니다!`,
     },
     {
-      id: "form-prevent-default",
+      id: 'form-prevent-default',
       section: 7,
       order: 5,
-      title: "event.preventDefault()는 왜 필요할까요?",
+      title: 'event.preventDefault()는 왜 필요할까요?',
       type: 0,
       exp: 20,
       time: 10,
@@ -1554,10 +1613,10 @@ const handleSubmit = (e) => {
 리액트 프로젝트의 모든 Form 제출 함수에는 이 코드가 **첫 줄** 에 들어간다고 보셔도 무방합니다.`,
     },
     {
-      id: "form-submit-example",
+      id: 'form-submit-example',
       section: 7,
       order: 6,
-      title: "입력 + 제출 전체 흐름 예제",
+      title: '입력 + 제출 전체 흐름 예제',
       type: 0,
       exp: 25,
       time: 15,
@@ -1587,36 +1646,36 @@ function SimpleForm() {
 이 코드의 구조가 여러분이 곧 만들게 될 **Todo-List의 핵심 뼈대** 가 됩니다!`,
     },
     {
-      id: "quiz-form-onchange",
+      id: 'quiz-form-onchange',
       section: 7,
       order: 7,
-      title: "input 이벤트 퀴즈",
+      title: 'input 이벤트 퀴즈',
       type: 1,
       exp: 20,
       time: 3,
       question:
-        "input의 값이 바뀔 때마다 실행되어 State를 업데이트하기 위해 사용하는 React 이벤트는 무엇인가요?",
-      options: ["onClick", "onSubmit", "onChange", "onInput"],
+        'input의 값이 바뀔 때마다 실행되어 State를 업데이트하기 위해 사용하는 React 이벤트는 무엇인가요?',
+      options: ['onClick', 'onSubmit', 'onChange', 'onInput'],
       correctAnswerIndex: 2,
     },
     {
-      id: "quiz-form-prevent",
+      id: 'quiz-form-prevent',
       section: 7,
       order: 8,
-      title: "Form 이벤트 단답 퀴즈",
+      title: 'Form 이벤트 단답 퀴즈',
       type: 2,
       exp: 25,
       time: 4,
       question:
-        "form 제출 시 브라우저의 기본 동작(새로고침)을 막기 위해 호출하는 메서드는 무엇인가요?",
+        'form 제출 시 브라우저의 기본 동작(새로고침)을 막기 위해 호출하는 메서드는 무엇인가요?',
       correctAnswer:
-        "preventDefault,,e.preventDefault,,preventDefault(),,e.preventDefault()",
+        'preventDefault,,e.preventDefault,,preventDefault(),,e.preventDefault()',
     },
     {
-      id: "form-summary-review",
+      id: 'form-summary-review',
       section: 7,
       order: 9,
-      title: "Section 7 마무리: Form 이벤트 정리",
+      title: 'Section 7 마무리: Form 이벤트 정리',
       type: 0,
       exp: 15,
       time: 7,
@@ -1636,10 +1695,10 @@ function SimpleForm() {
     },
     // Section 8: Todo Project
     {
-      id: "todo-intro-structure",
+      id: 'todo-intro-structure',
       section: 8,
       order: 0,
-      title: "Todo 프로젝트 시작 & 구조 살펴보기",
+      title: 'Todo 프로젝트 시작 & 구조 살펴보기',
       type: 0,
       exp: 15,
       time: 7,
@@ -1684,10 +1743,10 @@ App (상태 관리의 중심)
 > 스타일(CSS)보다는 **데이터가 어떻게 흐르는지(State & Props)** 에만 집중합시다!`,
     },
     {
-      id: "todo-state-init",
+      id: 'todo-state-init',
       section: 8,
       order: 1,
-      title: "Todo 리스트 상태 만들기",
+      title: 'Todo 리스트 상태 만들기',
       type: 0,
       exp: 20,
       time: 8,
@@ -1711,10 +1770,10 @@ const [todos, setTodos] = useState([
  목록 안의 하나하나의 데이터는 **객체 \`{ }\`** 형태입니다.`,
     },
     {
-      id: "todo-render-list",
+      id: 'todo-render-list',
       section: 8,
       order: 2,
-      title: "Todo 리스트 화면에 출력하기",
+      title: 'Todo 리스트 화면에 출력하기',
       type: 0,
       exp: 20,
       time: 10,
@@ -1736,10 +1795,10 @@ const [todos, setTodos] = useState([
 - 리액트가 헷갈리지 않게 고유한 키 값을 꼭 넣어주세요! \`key={todo.id}\``,
     },
     {
-      id: "todo-input-state",
+      id: 'todo-input-state',
       section: 8,
       order: 3,
-      title: "입력 폼과 입력 상태 만들기",
+      title: '입력 폼과 입력 상태 만들기',
       type: 0,
       exp: 20,
       time: 10,
@@ -1763,10 +1822,10 @@ const [input, setInput] = useState('');
 > 입력창의 값(**value**) 을 State(**input**) 와 연결해야 리액트가 입력값을 완벽하게 제어할 수 있습니다. (이걸 **제어 컴포넌트** 라고 불렀었죠!)`,
     },
     {
-      id: "todo-submit-add",
+      id: 'todo-submit-add',
       section: 8,
       order: 4,
-      title: "폼 제출로 Todo 추가하기",
+      title: '폼 제출로 Todo 추가하기',
       type: 0,
       exp: 25,
       time: 15,
@@ -1802,10 +1861,10 @@ ID는 리스트에서 각 항목을 구분하는 **주민등록번호** 와 같�
 - 리액트의 **불변성 원칙** 덕분에 화면이 즉시 업데이트됩니다.`,
     },
     {
-      id: "todo-split-components",
+      id: 'todo-split-components',
       section: 8,
       order: 5,
-      title: "심화 1: 컴포넌트로 분리해보기",
+      title: '심화 1: 컴포넌트로 분리해보기',
       type: 0,
       exp: 20,
       time: 15,
@@ -1903,10 +1962,10 @@ export default App;
 분명히 코드는 그대로 옮겼는데 왜 화면이 사라졌을까요? 다음 강의에서 그 이유와 해결책(Props) 을 함께 알아봅시다.`,
     },
     {
-      id: "todo-error-why",
+      id: 'todo-error-why',
       section: 8,
       order: 6,
-      title: "심화 2: 왜 에러가 발생할까요?",
+      title: '심화 2: 왜 에러가 발생할까요?',
       type: 0,
       exp: 25,
       time: 12,
@@ -1964,10 +2023,10 @@ function TodoList() {
 다음 강의에서 이 상자에 **onSubmit** 과 **todos** 를 담아 자식들에게 안전하게 배달해 보겠습니다! 이제 문을 열고 데이터를 주고받을 시간이에요!`,
     },
     {
-      id: "todo-pass-props",
+      id: 'todo-pass-props',
       section: 8,
       order: 7,
-      title: "심화 3: 데이터 배달하고 받기 (Props)",
+      title: '심화 3: 데이터 배달하고 받기 (Props)',
       type: 0,
       exp: 25,
       time: 20,
@@ -2067,10 +2126,10 @@ function App() {
 이제 하얀 화면이 사라지고 다시 우리 앱이 정상적으로 작동할 거예요! 🎉`,
     },
     {
-      id: "todo-delete-filter",
+      id: 'todo-delete-filter',
       section: 8,
       order: 8,
-      title: "심화 4: Todo 삭제 기능 구현",
+      title: '심화 4: Todo 삭제 기능 구현',
       type: 0,
       exp: 30,
       time: 20,
@@ -2142,10 +2201,10 @@ function TodoList({ todos, onDelete }) {
 > 이제 추가와 삭제가 모두 가능한 **진짜 웹 서비스** 의 기본을 갖추게 되었습니다! 👏`,
     },
     {
-      id: "todo-final-code",
+      id: 'todo-final-code',
       section: 8,
       order: 9,
-      title: "심화 5: 드디어 완성! 전체 코드 보기",
+      title: '심화 5: 드디어 완성! 전체 코드 보기',
       type: 0,
       exp: 10,
       time: 5,
@@ -2256,13 +2315,13 @@ export default TodoList;
 모든 게 완벽하다면, 여러분은 이제 **리액트의 핵심(컴포넌트, 상태, Props)** 을 마스터한 것입니다! 🎉`,
     },
     {
-      id: "todo-section8-summary",
+      id: 'todo-section8-summary',
       section: 8,
       order: 10,
-      title: "Section 8 마무리: Todo 앱 완성",
+      title: 'Section 8 마무리: Todo 앱 완성',
       type: 0,
       exp: 20,
-      time: 7,
+      time: 5,
       content: `# 🎉 리액트로 만든 첫 번째 서비스, 완성을 축하합니다!
 
 여러분은 방금 실제 동작하는 서비스를 리액트로 직접 구현해냈습니다. 머릿속으로만 그리던 기능들을 **'내 코드'** 로 증명해낸 아주 값진 순간입니다.
@@ -2277,47 +2336,218 @@ export default TodoList;
 
 ---
 
-### 🚀 다음 레벨로 가기 위한 도전 과제
-기본 뼈대는 완성되었습니다! 이제 이 앱에 여러분만의 색깔을 입혀볼 차례입니다.
+### 🌍 다음 단계: 내 앱을 세상 밖으로!
+내 컴퓨터(Local) 에서의 개발은 모두 끝났습니다! 이제 이 앱을 내 컴퓨터 밖으로 꺼내 다른 사람들도 볼 수 있게 만들 차례입니다.
 
-- **🎨 스타일링** : CSS를 활용해 투두 앱에 멋진 옷을 입혀보세요.
-- **🛠️ 기능 확장** : "전체 삭제" 버튼을 만들거나, 할 일을 "수정" 하는 기능에 도전해 보세요.
-- **✅ 완료 체크** : 할 일을 클릭하면 가로줄이 그어지는 '완료 상태' 를 추가해 보는 건 어떨까요?
+다음 섹션에서 드디어 **GitHub Pages** 를 이용해 여러분의 앱을 실제 URL 주소로 배포해 보겠습니다. 
+
+나만의 웹 사이트를 가질 준비 되셨나요? 바로 시작해 봅시다! 🚀
+`,
+    },
+    // Section 9: Deployment
+    {
+      id: 'deploy-intro',
+      section: 9,
+      order: 0,
+      title: '내 컴퓨터를 넘어 전 세계로',
+      type: 0,
+      exp: 10,
+      time: 5,
+      content: `# 🏠 우리 집을 떠나 광장으로!
+
+우리는 지금까지 아주 멋진 투두 앱을 만들었습니다. 하지만 지금 이 앱은 오직 **여러분의 컴퓨터(Local)** 안에서만 살아있어요. 아무리 주소를 복사해서 친구에게 보내줘도 친구는 내 앱을 볼 수 없죠.
+
+### 🌍 배포(Deploy) 란?
+배포는 쉽게 말해 **"인터넷이라는 광장에 내 앱을 올리는 것"** 입니다. 
+
+
+
+- **지금까지**: (나만 볼 수 있는 임시 주소) \`localhost:5173\` 
+- **배포 후**: (전 세계 누구나 접속 가능한 공식 주소) \`https://아이디.github.io/프로젝트명\` 
+
+이제 우리가 만든 결과물에 생명력을 불어넣어 볼까요?`,
+    },
+    {
+      id: 'deploy-git-push',
+      section: 9,
+      order: 1,
+      title: 'GitHub과 내 코드 연결하기',
+      type: 0,
+      exp: 20,
+      time: 10,
+      content: `# 🔗 GitHub 레포지토리 연동하기
+
+배포를 하기 전, 먼저 우리의 코드를 **GitHub** 이라는 안전한 저장소에 올려두어야 합니다.
+
+### 🛠️ 실행 순서
+1. **GitHub** 에서 새로운 저장소(Repository) 를 만듭니다.
+2. 터미널을 열고 내 프로젝트 폴더에서 아래 명령어들을 순서대로 입력합니다.
+
+\`\`\`bash
+# 1. 만약 .git 폴더가 없다면 저장소를 초기화합니다
+git init
+
+# 2. 모든 파일을 장바구니에 담습니다
+git add .
+
+# 3. '첫 배포 준비'라는 메시지와 함께 확정합니다
+git commit -m "투두 앱 완성 및 배포 준비"
+
+# 4. 기본 브랜치 이름을 'main'으로 변경합니다 (중요!)
+git branch -M main
+
+# 5. GitHub 저장소와 연결합니다 (본인의 주소를 입력하세요!)
+git remote add origin https://github.com/아이디/레포지토리명.git
+# 예시: git remote add origin https://github.com/mediumryan/learning_react_todo.git
+
+# 6. GitHub으로 코드를 보냅니다
+git push -u origin main
+\`\`\`
+
+> 💡 **Tip**: **git branch -M main** 은 로컬의 기본 브랜치가 **master** 일지라도 **main** 으로 통일시켜주는 명령어입니다. **GitHub** 의 최신 표준에 맞추기 위해 꼭 필요합니다!`,
+    },
+    {
+      id: 'deploy-gh-pages-action',
+      section: 9,
+      order: 2,
+      title: 'gh-pages로 1분 만에 배포하기',
+      type: 0,
+      exp: 50,
+      time: 20,
+      content: `# 🚀 클릭 한 번으로 배포 완료하기
+
+우리는 이번 강의에서 앱 배포를 위해 **gh-pages** 라는 라이브러리를 사용할 것입니다.
+
+![gh-pages](${ghPages})
+
+왜 수많은 호스팅 서비스 중 **gh-pages** 일까요? 보통 웹 서비스를 배포하려면 서버 설정, 도메인 연결, 보안 인증서 등 복잡한 지식이 많이 필요합니다. 하지만 **gh-pages** 는 우리에게 친숙한 **GitHub** 저장소를 그대로 활용하기 때문에 매우 가볍고 빠릅니다. 
+
+> 💡 **안내**
+> 이미 **Firebase** 나 **AWS**, **Vercel** 같은 호스팅 서비스를 능숙하게 다루실 줄 아는 분들은 해당 서비스를 사용해 배포하셔도 무방합니다! 하지만 리액트 배포의 흐름을 가장 쉽고 명확하게 배우기에는 **gh-pages** 가 최고의 시작점입니다.
 
 ---
 
-### 🤝 여러분의 결과물을 자랑해 주세요!
-여러분의 개성이 담긴 Todo List가 정말 궁금합니다. 완성된 화면이나 코드를 **커뮤니티 페이지** 에 공유해 보세요! 동료들과 코드를 나누며 피드백을 주고받는 과정은 가장 빠르게 성장하는 지름길입니다.
+### 🛠️ 1단계: 라이브러리 설치
+터미널에 아래 명령어를 입력하여 배포 도구를 설치합니다.
+\`\`\`bash
+npm install gh-pages --save-dev
+\`\`\`
 
-정말 고생 많으셨습니다! 이 투두 앱이 여러분의 리액트 여정에 든든한 첫 번째 이정표가 되길 진심으로 응원합니다. 👏
+### ⚙️ 2단계: package.json 설정 (빌드 자동화)
+가장 중요한 부분입니다! 배포 전에는 반드시 최신 코드를 압축하는 **'빌드(Build)'** 과정이 선행되어야 합니다. \`scripts\` 항목에 아래 두 줄을 추가하세요.
+
+\`\`\`json
+"scripts": {
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d dist"
+}
+\`\`\`
+> **🤔 predeploy가 왜 필요한가요?**
+> 우리가 **npm run deploy** 를 입력하면, 리액트는 똑똑하게도 **predeploy** 를 찾아 먼저 실행합니다. 즉, 따로 명령어를 치지 않아도 **자동으로 최신 코드를 빌드(dist 생성) 한 뒤 배포**해주기 때문입니다!
+
+### 🛠️ 3단계: vite.config.js 설정
+**Vite** 로 만든 프로젝트는 기본적으로 루트 **( / )** 경로를 바라봅니다. 하지만 **GitHub Pages** 는 \`아이디.github.io/레포지토리명/\` 이라는 주소를 사용하죠. 그래서 아래와 같이 **base** 설정을 통해 정확한 위치를 알려줘야 합니다.
+\`\`\`javascript
+export default defineConfig({
+  plugins: [react()],
+  // base: "/레포지토리명/" 형식으로 적어주세요!
+  base: "/learning_react_todo/", 
+})
+\`\`\`
+
+### 🚀 4단계: 배포 커맨드 실행
+이제 명령어 하나면 빌드부터 배포까지 한 번에 끝납니다!
+\`\`\`bash
+npm run deploy
+\`\`\`
+
+콘솔에 **"Published"** 가 떴다면 성공입니다! 
+ 
+> 💡단, **GitHub** 서버에서 실제로 반영되기까지는 **약 1분에서 5분 정도의 시간** 이 소요될 수 있습니다. 만약 바로 접속되지 않더라도 잠시만 기다린 후 다시 확인해 보세요. 전 세계 어디서든 접속 가능한 나만의 앱이 곧 탄생할 것입니다! 🎉`,
+    },
+    {
+      id: 'deploy-final-summary',
+      section: 9,
+      order: 3,
+      title: '축하합니다! 전 세계에 당신의 앱이 공개되었습니다',
+      type: 0,
+      exp: 30,
+      time: 10,
+      content: `# 🏁 드디어 완성된 결과물을 세상에 공개했습니다!
+
+여러분, 정말 고생 많으셨습니다. 이제 여러분의 투두 앱은 단순히 공부용 코드가 아니라, **URL 주소를 가진 하나의 실제 웹 서비스** 가 되었습니다.
+
+---
+
+### 🤝 커뮤니티에 여러분의 앱을 자랑해 주세요!
+
+지금 바로 **GitHub Pages** 가 만들어준 **공식 URL 주소** 를 복사하세요! 그리고 **커뮤니티 페이지** 에 여러분의 작품을 공유해 주세요. 
+
+여러분의 개성이 담긴 **Todo List** 를 동료들에게 보여주고 응원의 댓글을 주고받는 것은 개발자로서 느낄 수 있는 가장 큰 즐거움 중 하나입니다.
+
+---
+
+### 🎁 여기서 끝이 아닙니다 (보너스 예고)
+
+배포까지 마친 여러분께 드리는 마지막 선물! **보너스 섹션(Section 10)** 이 기다리고 있습니다.
+
+우리 다음 보너스 강의에서 다시 만나요! 👋
 
 \`\`\`jsx
-// 여러분의 열정을 응원하며!
+// 세상을 향한 첫 발걸음, 축하드려요!
 return (
-  <Congratulations message="See you in the next level!" />
+  <Congratulations 
+    url="https://mediumryan.github.io/learning_react_todo" 
+    message="You are now a Web Developer!" 
+  />
 ); 
 // Made by Ryan
 \`\`\``,
     },
-    // {
-    //   title: "useEffect: 컴포넌트의 탄생과 죽음",
-    //   content:
-    //     "**useEffect**는 컴포넌트가 처음 화면에 나타날 때 실행할 코드를 작성하는 곳입니다.\n\n```jsx\nuseEffect(() => {\n  console.log('앱이 실행되었습니다!');\n}, []);\n```\n\n서버 통신, 타이머 설정 등\n사이드 이펙트를 처리할 때 사용합니다.",
-    //   section: 9,
-    //   type: 0,
-    //   id: "bonus-useeffect-lifecycle",
-    //   exp: 20,
-    //   order: 1,
-    // },
+    // Section 10: Bonus - useEffect
+    {
+      id: 'react-lifecycle-useeffect',
+      section: 10,
+      order: 0,
+      title: '보너스: useEffect로 똑똑한 컴포넌트 만들기',
+      type: 0,
+      exp: 30,
+      time: 15,
+      content: `# 🔄 화면이 그려진 뒤에 할 일: useEffect
+
+앱은 완성했지만, 리액트의 더 깊은 곳이 궁금한 분들을 위한 보너스 강의입니다! 컴포넌트가 **태어날 때(Mount), 바뀔 때(Update), 사라질 때(Unmount)** 특정 동작을 시키고 싶다면 **\`useEffect\`** 를 알아야 합니다.
+
+### 🧪 사이드 이펙트(Side Effect)란?
+컴포넌트의 본업인 '화면 그리기' 외의 부수적인 작업들을 말해요.
+- 서버에서 데이터 가져오기 (API 호출)
+- 브라우저 창 크기 감지하기
+- 로컬 스토리지에 데이터 저장하기
+
+---
+
+### 📝 기본 문법 (의존성 배열)
+\`\`\`jsx
+import { useEffect } from 'react';
+
+useEffect(() => {
+  console.log("환영합니다! 화면이 처음 나타날 때만 인사해요.");
+}, []); // 👈 이 빈 배열이 '딱 한 번만' 실행하게 해줍니다.
+\`\`\`
+
+[Image showing React useEffect lifecycle: Mounting, Updating, and Unmounting]
+
+> **💡 다음 도전 과제**
+> 지금까지 만든 투두 앱은 새로고침하면 데이터가 사라지죠? \`useEffect\` 를 활용하면 **로컬 스토리지** 에 데이터를 저장해서, 새로고침해도 할 일이 그대로 남아있는 더 강력한 앱을 만들 수 있습니다!`,
+    },
   ];
 
 export const contentDataJp: Content[] = [
   // Section 1
   {
-    id: "section1-orientation",
+    id: 'section1-orientation',
     section: 1,
     order: 0,
-    title: "講義を始める：何を作るのでしょうか？",
+    title: '講義を始める：何を作るのでしょうか？',
     type: 0,
     exp: 5,
     time: 5,
@@ -2357,41 +2587,60 @@ Reactを学ぶ前に、以下のような **基本的なウェブ開発の知識
 さあ、それでは始めてみましょう！`,
   },
   {
-    id: "intro-what-is-react",
+    id: 'intro-what-is-react',
     section: 1,
     order: 1,
-    title: "React.jsとは何か？",
+    title: 'React.jsとは何か？',
     type: 0,
     exp: 10,
-    time: 7,
-    content: `# ⚛️ React: UIを作るための強力なツール
+    time: 10,
+    content: `# ⚛️ React： UIを作る強力な道具
 
-**React** はユーザーインターフェース(UI)を作るための **JavaScriptライブラリ** です。Meta(旧Facebook)によって開発され、現在最も愛されているフロントエンド技術です。
+**React** はユーザーインターフェース（UI） を作るための **JavaScriptライブラリ** です. Meta（旧 Facebook） によって開発され、 現在最も愛されているフロントエンド技術の一つです.
+
+![React Icon](${reactIcon})
 
 ---
 
-### 💡 なぜReactなのですか？
+### 💡 なぜ React なのでしょうか？
 
-ウェブページでボタンをクリックした時、画面全体がリロードされずに **必要な部分だけ** がスムーズに更新される体験をしたことがありますか？ Reactは、このような動的な画面を **効率的に実装** するために誕生しました。
+ウェブページでボタンをクリックしたとき、 画面全体がリロードされることなく **必要な部分だけ** がスムーズにアップデートされる経験をしたことがありますか？ **React** は、 このような動的な画面を **効率的に実装** するために誕生しました.
 
 ---
 
 ### 📦 ライブラリ vs フレームワーク
 
-多くの人が迷うこの2つの概念の核心は、 **「誰が主導権を持っているか」** です。
+多くの方が混同しやすいこの二つの概念の核心は、 **「誰が主導権を持っているか」** です.
 
-- **ライブラリ** : 開発者が中要な時に **直接選んで使う道具箱** です。自分が欲しい時に必要な機能だけを取り出して使えます。
-- **フレームワーク** : 家を建てる時に使う **あらかじめ決められた枠組み** です。決められたルールと流れに必ず従わなければならず、その中でコードを書く必要があります。
 
-**「だから、Reactはライブラリなのです！」**
-Reactはウェブ全体を管理するルールを強制しません。ただ **「UIを作るツール」** としての役割に集中しています。
-したがって、開発者が好む他のツールと **自由に組み合わせて** 使用できることが、最大の魅力です。`,
+
+#### 🛠️ ライブラリ (Library)
+開発者が心要なときに **自ら選んで使う道具箱** です. 自分が主導権を持ち、 必要な機能だけを取り出して使うことができます.
+* **React** ： UIコンポーネントを作るために呼び出します.
+* **lodash** ： 複雑なデータを簡単に扱うために使用します.
+* **Axios** ： サーバーとデータをやり取りするために選択的に使用します.
+
+#### 🏗️ フレームワーク (Framework)
+家を建てるときに使う **あらかじめ決められた枠組み** です. フレームワークが決めたルールや流れに必ず従わなければならず、 その中でコードを記述する必要があります.
+* **Angular** ： Googleが作った、 ウェブ開発に必要なすべての道具が揃った枠組みです.
+* **Spring** ： Java開発者が決められたルールの通りにサーバーを作るときに使用します.
+* **Django** ： Pythonでウェブサービスを作るとき、 決められた構造に合わせて開発する必要があります.
+
+---
+
+**「だから、 Reactはライブラリなのです！」**
+
+**React** はウェブ全体を管理するルールを強制しません. ただ **「UIを作る道具」** としての役割に集中しています. そのため、 開発者が好みの他のライブラリと **自由に組み合わせて** 使用できることが最大の魅力です.
+
+![Library vs Framework](${libraryFramework})
+
+皆さんが主導権を握り、 必要な道具を一つずつ組み立てていく楽しさを感じてみてください！`,
   },
   {
-    id: "intro-spa-concept",
+    id: 'intro-spa-concept',
     section: 1,
     order: 2,
-    title: "ページ全体が変わらない理由 (SPA)",
+    title: 'ページ全体が変わらない理由 (SPA)',
     type: 0,
     exp: 10,
     time: 5,
@@ -2403,6 +2652,8 @@ Reactは **SPA(Single Page Application)** 方式で動作します。画面全�
 
 ### 📌 SPAとは何でしょうか？
 
+![single page application](${spa})
+
 伝統的なウェブサイトは、他のページに移動するたびにサーバーから画面全体を再度読み込みます。しかしSPAは
 - たった **一つのページ(HTML)** だけをロードします。
 - その後はJavaScriptを利用して **必要なデータだけ** を入れ替えます。
@@ -2412,22 +2663,22 @@ Reactは **SPA(Single Page Application)** 方式で動作します。画面全�
 > 2. サーバーとの通信量が減り、**速度が非常に速くなります。** `,
   },
   {
-    id: "quiz-react-definition",
+    id: 'quiz-react-definition',
     section: 1,
     order: 3,
-    title: "Reactの定義クイズ",
+    title: 'Reactの定義クイズ',
     type: 2,
-    question: "ReactはJavaScriptのどのような種類のツールですか？ (5文字)",
-    correctAnswer: "ライブラリ,,ライブラリー,,Library",
-    explanation: "ReactはUI構築のための専用機能を提供する「ライブラリ」です。",
+    question: 'ReactはJavaScriptのどのような種類のツールですか？ (5文字)',
+    correctAnswer: 'ライブラリ,,ライブラリー,,Library',
+    explanation: 'ReactはUI構築のための専用機能を提供する「ライブラリ」です。',
     exp: 20,
     time: 3,
   },
   {
-    id: "intro-why-react",
+    id: 'intro-why-react',
     section: 1,
     order: 4,
-    title: "なぜReactを学ぶ必要があるのでしょうか？",
+    title: 'なぜReactを学ぶ必要があるのでしょうか？',
     type: 0,
     exp: 10,
     time: 6,
@@ -2447,16 +2698,18 @@ Reactは **SPA(Single Page Application)** 方式で動作します。画面全�
 > Reactを学ぶことは単に文法を覚えることではなく、**現代的な開発者の思考回路** を身につける過程です。`,
   },
   {
-    id: "app-creation-vite",
+    id: 'app-creation-vite',
     section: 1,
     order: 5,
-    title: "アプリの作成 - Vite",
+    title: 'アプリの作成 - Vite',
     type: 0,
     exp: 15,
     time: 15,
     content: `# 🛠️ 実戦！最初のReactアプリ作成
 
 実際にReactプロジェクトを作成してみましょう。ここでは最も高速でモダンなツールである **Vite** を使用します。
+
+![vite](${vite})
 
 ---
 
@@ -2511,10 +2764,10 @@ export default App;
 `,
   },
   {
-    id: "section1-summary",
+    id: 'section1-summary',
     section: 1,
     order: 6,
-    title: "セクション 1 まとめ：Reactの全体像",
+    title: 'セクション 1 まとめ：Reactの全体像',
     type: 0,
     exp: 5,
     time: 4,
@@ -2538,16 +2791,18 @@ export default App;
   },
   // Section 2
   {
-    id: "basic-understanding-components",
+    id: 'basic-understanding-components',
     section: 2,
     order: 0,
-    title: "コンポーネント(Components)を理解する",
+    title: 'コンポーネント(Components)を理解する',
     type: 0,
     exp: 10,
     time: 6,
     content: `# 🧱 UIの欠片、コンポーネント(Component)
 
 **コンポーネント** はUIを構成する **独立しており再利用可能なブロック** です。まるでレゴブロックを組み立てるようにウェブサイトを作ることができます。
+
+![component](${component})
 
 ---
 
@@ -2579,56 +2834,83 @@ function Welcome() {
 
 > ⚠️ **注意**
 > コンポーネント名の最初の文字は必ず **大文字** でなければなりません。
-> 小文字で始めると、Reactはこれを通常のHTMLタグとして認識してしまいます。`,
+> 小文字で始めると、Reactはこれを通常のHTMLタグとして認識してしまいます。
+
+![component must be uppercase](${componentUpper})
+
+`,
   },
   {
-    id: "basic-jsx-syntax",
+    id: 'basic-jsx-syntax',
     section: 2,
     order: 1,
-    title: "JSX：JavaScriptの中のHTML",
+    title: 'JSX： JavaScriptの中のHTML',
     type: 0,
     exp: 10,
-    time: 10,
-    content: `# 🏗️ JavaScript拡張構文、JSX
+    time: 12,
+    content: `# 🏗️ JavaScript拡張文法、 JSX
 
-**JSX** は **JavaScriptの中でHTMLのように見える構文** を使用できるようにするReactの核心的な構文です。
+**JSX** は **JavaScript** の中で **HTML** のように見える文法を使用できるようにする **React** の核心的な文法です.
+
+![jsx](${jsx})
 
 ---
 
-### ❓ なぜJSXが必要なのでしょうか？
+### ❓ JSXはなぜ必要なのでしょうか？
 
-JSXがなければ、私たちは一つずつ複雑なJavaScript関数を呼び出さなければなりません。
+**JSX** がなければ、 私たちは画面を構成するすべての要素を一つずつ複雑な JavaScript 関数で呼び出す必要があります. 
+> 例えば、 クラス名を持つ **<div>** の中に **<h1>** と **<p>** タグがある構造を作ると仮定してみましょう.
 
+#### 1. JSXなしで記述する場合 (Pure JavaScript)
 \`\`\`js
-// JSXなしで記述する場合
-React.createElement('h1', null, 'こんにちは');
+// 構造が少し複雑になるだけで、 非常に読みづらくなります.
+return React.createElement(
+  'div',
+  { className: 'container' },
+  React.createElement('h1', null, 'こんにちは'),
+  React.createElement('p', null, 'お会いできて嬉しいです')
+);
 \`\`\`
+
+#### 2. JSXを使用して記述する場合
+\`\`\`jsx
+// HTMLとほぼ同じで、 一目で構造がわかります.
+return (
+  <div className="container">
+    <h1>こんにちは</h1>
+    <p>お会いできて嬉しいです</p>
+  </div>
+);
+\`\`\`
+
+**「どちらのコードがより直感的でしょうか？」**
+**JSX** を使用すればコードの量が画期的に減るだけでなく、 開発者が画面の構造を把握する時間を大幅に短縮してくれます. これこそが、 私たちが **React** で **JSX** を必ず使用しなければならない理由です.
 
 ---
 
 ### 🔀 JavaScriptの値を混ぜて使う 
 
- JSXの強力な点は、JavaScriptの変数を **中括弧** \`{ }\` を通じて画面にすぐ表示できる点です。
+**JSX** のもう一つの強力な点は、 JavaScriptの変数を **中括弧** \`{ }\` を通じて画面に直接表示できることです.
 
 \`\`\`jsx
 function App() {
   const name = '太郎';
   const age = 20;
 
-  return <h2>{name}さんは{age}歳です。</h2>;
+  return <h2>{name} さんは {age} 歳です.</h2>;
 }
 \`\`\`
 
-**🖥️ ブラウザ出力結果:** 
-> **太郎さんは20歳です。** 
- 
-このように中括弧の中のJavaScript変数が実際のデータに置換されて画面に現れます。`,
+**🖥️ ブラウザの出力結果:** 
+> **太郎 さんは 20 歳です.**
+
+ このように、 中括弧の中の JavaScript 変数が実際のデータに置換されて画面に表示されます.`,
   },
   {
-    id: "basic-jsx-rules",
+    id: 'basic-jsx-rules',
     section: 2,
     order: 2,
-    title: "JSX記述時に必ず守るべき規則",
+    title: 'JSX記述時に必ず守るべき規則',
     type: 0,
     exp: 15,
     time: 8,
@@ -2665,68 +2947,68 @@ JavaScriptにおいて \`class\` という単語はすでに予約語として�
  上記の二つのタグのようにHTMLで閉じなかったタグも、JSXでは必ず \`<img />\` のように **Self-closing** するか、閉じなければなりません。`,
   },
   {
-    id: "quiz-jsx-definition",
+    id: 'quiz-jsx-definition',
     section: 2,
     order: 3,
-    title: "JSXの概念クイズ",
+    title: 'JSXの概念クイズ',
     type: 1,
     exp: 20,
     time: 3,
-    question: "次のうち、JSXに関する説明として最も適切なものはどれですか？",
+    question: '次のうち、JSXに関する説明として最も適切なものはどれですか？',
     options: [
-      "HTMLファイルを代替するための新しい言語",
-      "ブラウザで直接実行されるテンプレート言語",
-      "JavaScriptの中でHTMLのように見える構文を使用できるようにする構文",
-      "React専用のスタイリング構文",
+      'HTMLファイルを代替するための新しい言語',
+      'ブラウザで直接実行されるテンプレート言語',
+      'JavaScriptの中でHTMLのように見える構文を使用できるようにする構文',
+      'React専用のスタイリング構文',
     ],
     correctAnswerIndex: 2,
     explanation:
-      "JSXはJavaScript XMLの略語で、コードの可読性を高めてくれるJavaScript拡張構文です。",
+      'JSXはJavaScript XMLの略語で、コードの可読性を高めてくれるJavaScript拡張構文です。',
   },
   {
-    id: "quiz-jsx-expression",
+    id: 'quiz-jsx-expression',
     section: 2,
     order: 4,
-    title: "JSX式クイズ",
+    title: 'JSX式クイズ',
     type: 1,
     exp: 20,
     time: 3,
     question:
-      "JSXの中でJavaScript変り数を出力する時に使用する正しい方法は何ですか？",
+      'JSXの中でJavaScript変り数を出力する時に使用する正しい方法は何ですか？',
     options: [
-      "<p>name</p>",
-      "<p>${name}</p>",
-      "<p>{name}</p>",
-      "<p>(name)</p>",
+      '<p>name</p>',
+      '<p>${name}</p>',
+      '<p>{name}</p>',
+      '<p>(name)</p>',
     ],
     correctAnswerIndex: 2,
     explanation:
-      "JSX内部でJavaScript変数や式を使用する時は、必ず中括弧 { } を使用しなければなりません。",
+      'JSX内部でJavaScript変数や式を使用する時は、必ず中括弧 { } を使用しなければなりません。',
   },
   {
-    id: "quiz-jsx-statement-vs-expression",
+    id: 'quiz-jsx-statement-vs-expression',
     section: 2,
     order: 5,
-    title: "JSX構文理解クイズ",
+    title: 'JSX構文理解クイズ',
     type: 1,
     exp: 25,
     time: 4,
-    question: "次のうち、JSXの中で直接使用できないものはどれですか？",
+    question: '次のうち、JSXの中で直接使用できないものはどれですか？',
     options: [
-      "三項演算子 (condition ? A : B)",
-      "数値計算 (1 + 2)",
-      "if 文",
-      "変数の値の出力",
+      '三項演算子 (condition ? A : B)',
+      '数値計算 (1 + 2)',
+      'if 文',
+      '変数の値の出力',
     ],
     correctAnswerIndex: 2,
     explanation:
-      "JSX内の中括弧には、結果値が即座に返される「式(expression)」だけが来ることができます。if文は「文(statement)」であるため、中括弧内部で直接使用することはできません。",
+      'JSX内の中括弧には、結果値が即座に返される「式(expression)」だけが来ることができます。if文は「文(statement)」であるため、中括弧内部で直接使用することはできません。',
   },
   {
-    id: "section2-summary",
+    id: 'section2-summary',
     section: 2,
     order: 6,
-    title: "セクション 2 まとめ：コンポーネントとJSX",
+    title: 'セクション 2 まとめ：コンポーネントとJSX',
     type: 0,
     exp: 5,
     time: 4,
@@ -2748,10 +3030,10 @@ JavaScriptにおいて \`class\` という単語はすでに予約語として�
   },
   // Section 3
   {
-    id: "state-what-is-state",
+    id: 'state-what-is-state',
     section: 3,
     order: 0,
-    title: "Stateとは何か？",
+    title: 'Stateとは何か？',
     type: 0,
     exp: 15,
     time: 8,
@@ -2796,10 +3078,10 @@ Stateは単なるデータではなく、 **「値が変わったから画面を
 Stateが変更されると、Reactは自動的にこのレンダリング過程を実行し、ユーザーが変更された値を確認できるようにします。`,
   },
   {
-    id: "state-counter-practice",
+    id: 'state-counter-practice',
     section: 3,
     order: 1,
-    title: "カウンターアプリ実習：useStateの使い方",
+    title: 'カウンターアプリ実習：useStateの使い方',
     type: 0,
     exp: 25,
     time: 10,
@@ -2833,58 +3115,58 @@ function Counter() {
 3. **コンポーネントを再実行（再レンダリング）** して、画面に新しい数値を描画します。`,
   },
   {
-    id: "quiz-state-description",
+    id: 'quiz-state-description',
     section: 3,
     order: 2,
-    title: "State概念理解クイズ",
+    title: 'State概念理解クイズ',
     type: 2,
     question:
-      "コンポーネントが記憶しており、値が変更されると画面が再レンダリングされるようにするReactのデータは何ですか？",
-    correctAnswer: "State,,state,,ステート,,状態,,状態値",
+      'コンポーネントが記憶しており、値が変更されると画面が再レンダリングされるようにするReactのデータは何ですか？',
+    correctAnswer: 'State,,state,,ステート,,状態,,状態値',
     explanation:
-      "Stateはコンポーネント内部で変化する値を管理し、変更時にレンダリングを誘発します。",
+      'Stateはコンポーネント内部で変化する値を管理し、変更時にレンダリングを誘発します。',
     exp: 20,
     time: 3,
   },
   {
-    id: "quiz-state-update-code",
+    id: 'quiz-state-update-code',
     section: 3,
     order: 3,
-    title: "State変更コードクイズ",
+    title: 'State変更コードクイズ',
     type: 2,
     question:
-      "次の状態が宣言されているとき、numberの値を5に変更する関数呼び出しコードを記述してください。\n\nconst [number, setNumber] = useState(0);",
-    correctAnswer: "setNumber(5)",
+      '次の状態が宣言されているとき、numberの値を5に変更する関数呼び出しコードを記述してください。\n\nconst [number, setNumber] = useState(0);',
+    correctAnswer: 'setNumber(5)',
     explanation:
-      "状態変更関数であるsetNumberに、希望する値を引数として渡します。",
+      '状態変更関数であるsetNumberに、希望する値を引数として渡します。',
     exp: 30,
     time: 4,
   },
   {
-    id: "quiz-state-change-effect",
+    id: 'quiz-state-change-effect',
     section: 3,
     order: 4,
-    title: "State変更結果クイズ",
+    title: 'State変更結果クイズ',
     type: 1,
     question:
-      "Stateの値が変更されると、Reactコンポーネントにはどのようなことが起こりますか？",
+      'Stateの値が変更されると、Reactコンポーネントにはどのようなことが起こりますか？',
     options: [
-      "何も起こらない",
-      "ページ全体がリロードされる",
-      "該当するコンポーネントが再レンダリングされる",
-      "エラーが発生する",
+      '何も起こらない',
+      'ページ全体がリロードされる',
+      '該当するコンポーネントが再レンダリングされる',
+      'エラーが発生する',
     ],
     correctAnswerIndex: 2,
     explanation:
-      "ReactはStateの変化を検知して、該当するコンポーネントを再レンダリングします。",
+      'ReactはStateの変化を検知して、該当するコンポーネントを再レンダリングします。',
     exp: 20,
     time: 3,
   },
   {
-    id: "state-common-mistakes",
+    id: 'state-common-mistakes',
     section: 3,
     order: 5,
-    title: "+ Stateで最もよくある間違い",
+    title: '+ Stateで最もよくある間違い',
     type: 0,
     exp: 20,
     time: 15,
@@ -2917,10 +3199,10 @@ console.log(count); // 🧐 まだ以前の値が表示されます！
 \`\`\` `,
   },
   {
-    id: "section3-summary",
+    id: 'section3-summary',
     section: 3,
     order: 6,
-    title: "セッション 3 まとめ：Stateを一気に整理",
+    title: 'セッション 3 まとめ：Stateを一気に整理',
     type: 0,
     exp: 15,
     time: 6,
@@ -2943,10 +3225,10 @@ console.log(count); // 🧐 まだ以前の値が表示されます！
   },
   // Section 4
   {
-    id: "props-passing-data",
+    id: 'props-passing-data',
     section: 4,
     order: 0,
-    title: "Propsでデータを渡す",
+    title: 'Propsでデータを渡す',
     type: 0,
     exp: 20,
     time: 12,
@@ -2987,10 +3269,10 @@ function MyButton(props) {
  子コンポーネントはこの値を **使用することだけができ、直接修正することはできません。** `,
   },
   {
-    id: "props-destructuring-intro",
+    id: 'props-destructuring-intro',
     section: 4,
     order: 1,
-    title: "Propsをより簡単に受け取る方法",
+    title: 'Propsをより簡単に受け取る方法',
     type: 0,
     exp: 10,
     time: 10,
@@ -3042,10 +3324,10 @@ function UserProfile({ name, age, email, address, job, hobby }) {
 このように関数の引数の位置に直接 \`{ }\` を書いてあげると、まるで自分の部屋にある物をそのまま取り出して使うように、データ名だけで簡単に使用できます。読みやすく書きやすいコードを作るための第一歩です！`,
   },
   {
-    id: "props-pass-setstate",
+    id: 'props-pass-setstate',
     section: 4,
     order: 2,
-    title: "関数もPropsとして渡せます",
+    title: '関数もPropsとして渡せます',
     type: 0,
     exp: 20,
     time: 15,
@@ -3076,10 +3358,10 @@ function CounterButton({ onIncrease }) {
 - 子でボタンを押すと、親から渡された関数が実行され、親のStateが変更されます！`,
   },
   {
-    id: "props-common-mistakes",
+    id: 'props-common-mistakes',
     section: 4,
     order: 3,
-    title: "+ Props使用時の注意点",
+    title: '+ Props使用時の注意点',
     type: 0,
     exp: 10,
     time: 8,
@@ -3104,43 +3386,43 @@ Propsは親からの「贈り物」のようなもので、子が勝手に変え
 \`\`\` `,
   },
   {
-    id: "quiz-props-definition",
+    id: 'quiz-props-definition',
     section: 4,
     order: 4,
-    title: "Propsの定義クイズ",
+    title: 'Propsの定義クイズ',
     type: 1,
-    question: "次のうち、Propsの正しい説明はどれでしょうか？",
+    question: '次のうち、Propsの正しい説明はどれでしょうか？',
     options: [
-      "コンポーネントが自身で管理する状態値",
-      "親コンポーネントが子に渡す読み取り専用データ",
-      "子コンポーネントが直接修正できる値",
-      "HTMLタグの属性を意味するReact専用の構文",
+      'コンポーネントが自身で管理する状態値',
+      '親コンポーネントが子に渡す読み取り専用データ',
+      '子コンポーネントが直接修正できる値',
+      'HTMLタグの属性を意味するReact専用の構文',
     ],
     correctAnswerIndex: 1,
     explanation:
-      "Propsは上位（親）コンポーネントが下位（子）コンポーネントに渡す読み取り専用のデータです。",
+      'Propsは上位（親）コンポーネントが下位（子）コンポーネントに渡す読み取り専用のデータです。',
     exp: 20,
     time: 5,
   },
   {
-    id: "quiz-props-vs-state",
+    id: 'quiz-props-vs-state',
     section: 4,
     order: 5,
-    title: "PropsとStateを区別する",
+    title: 'PropsとStateを区別する',
     type: 2,
     question:
-      "コンポーネントが直接管理し、変更時にレンダリングを誘発する値は何ですか？ (Props または State)",
-    correctAnswer: "State,,state,,ステート,,状態,,状態値",
+      'コンポーネントが直接管理し、変更時にレンダリングを誘発する値は何ですか？ (Props または State)',
+    correctAnswer: 'State,,state,,ステート,,状態,,状態値',
     explanation:
-      "Stateはコンポーネント内部の状態であり、Propsは外部から受け取る設定値です。",
+      'Stateはコンポーネント内部の状態であり、Propsは外部から受け取る設定値です。',
     exp: 20,
     time: 5,
   },
   {
-    id: "props-summary-review",
+    id: 'props-summary-review',
     section: 4,
     order: 6,
-    title: "Propsまとめ ＆ 復習",
+    title: 'Propsまとめ ＆ 復習',
     type: 0,
     exp: 15,
     time: 10,
@@ -3163,10 +3445,10 @@ Propsは親からの「贈り物」のようなもので、子が勝手に変え
   },
   // Section 5
   {
-    id: "event-what-is-event",
+    id: 'event-what-is-event',
     section: 5,
     order: 0,
-    title: "Reactでのイベント(Event)とは？",
+    title: 'Reactでのイベント(Event)とは？',
     type: 0,
     exp: 15,
     time: 8,
@@ -3194,10 +3476,10 @@ Reactにおいて **イベント** とは、ユーザーが画面と相互作用
 \`\`\` `,
   },
   {
-    id: "event-html-vs-react",
+    id: 'event-html-vs-react',
     section: 5,
     order: 1,
-    title: "HTMLイベントとReactイベントの違い",
+    title: 'HTMLイベントとReactイベントの違い',
     type: 0,
     exp: 15,
     time: 7,
@@ -3231,10 +3513,10 @@ ReactイベントはHTMLと似ているように見えますが、記述方式�
 > Reactは「このボタンがクリックされたら、 **この関数を後で実行してね** 」とお願いする方式です。`,
   },
   {
-    id: "event-handler-function",
+    id: 'event-handler-function',
     section: 5,
     order: 2,
-    title: "イベントハンドラ関数を作る",
+    title: 'イベントハンドラ関数を作る',
     type: 0,
     exp: 20,
     time: 10,
@@ -3268,10 +3550,10 @@ function App() {
  上記のように、 **どのような動作をするのか** を明確に付けるのが慣習です。`,
   },
   {
-    id: "event-function-vs-execution",
+    id: 'event-function-vs-execution',
     section: 5,
     order: 3,
-    title: "関数を渡すか？実行するか？",
+    title: '関数を渡すか？実行するか？',
     type: 0,
     exp: 20,
     time: 12,
@@ -3317,10 +3599,10 @@ Reactイベントを記述する際、最も頻繁に犯してしまうミスで
 > 📌 **まとめ** : 関数名だけを書くか、 **アロー関数(Arrow Function)** で包んで渡しましょう。それがReactにおける正しい **「実行予約」** の方法です！`,
   },
   {
-    id: "event-state-update",
+    id: 'event-state-update',
     section: 5,
     order: 4,
-    title: "イベントでStateを変更する",
+    title: 'イベントでStateを変更する',
     type: 0,
     exp: 25,
     time: 12,
@@ -3348,44 +3630,44 @@ function Counter() {
 > [足す] クリック時に数字が1ずつ増加`,
   },
   {
-    id: "quiz-event-camelcase",
+    id: 'quiz-event-camelcase',
     section: 5,
     order: 5,
-    title: "Reactイベント構文クイズ",
+    title: 'Reactイベント構文クイズ',
     type: 1,
     exp: 20,
     time: 5,
     question:
-      "Reactでボタンクリックイベントを正しく記述しているものはどれですか？",
+      'Reactでボタンクリックイベントを正しく記述しているものはどれですか？',
     options: [
       'onclick="handleClick()"',
-      "onClick={handleClick}",
+      'onClick={handleClick}',
       'onClick="handleClick"',
-      "onclick={handleClick()}",
+      'onclick={handleClick()}',
     ],
     correctAnswerIndex: 1,
     explanation:
-      "Reactイベントはキャメルケース(onClick)を使用し、中括弧の中に関数名を渡します。",
+      'Reactイベントはキャメルケース(onClick)を使用し、中括弧の中に関数名を渡します。',
   },
   {
-    id: "quiz-event-short-answer",
+    id: 'quiz-event-short-answer',
     section: 5,
     order: 6,
-    title: "イベント概念短答クイズ",
+    title: 'イベント概念短答クイズ',
     type: 2,
     exp: 20,
     time: 5,
     question:
-      "Reactイベントハンドラに渡すべきなのは、関数の「実行結果」でしょうか、「関数そのもの」でしょうか？",
-    correctAnswer: "関数,,関数そのもの,,function,,function itself",
+      'Reactイベントハンドラに渡すべきなのは、関数の「実行結果」でしょうか、「関数そのもの」でしょうか？',
+    correctAnswer: '関数,,関数そのもの,,function,,function itself',
     explanation:
-      "イベントが発生した時に初めて実行されるように、関数自体を渡す必要があります。",
+      'イベントが発生した時に初めて実行されるように、関数自体を渡す必要があります。',
   },
   {
-    id: "event-summary-review",
+    id: 'event-summary-review',
     section: 5,
     order: 7,
-    title: "セクション 5 まとめ：イベント整理",
+    title: 'セクション 5 まとめ：イベント整理',
     type: 0,
     exp: 15,
     time: 7,
@@ -3406,10 +3688,10 @@ function Counter() {
   },
   // Section 6
   {
-    id: "list-intro",
+    id: 'list-intro',
     section: 6,
     order: 0,
-    title: "リスト(List)とオブジェクト(Object)の基礎",
+    title: 'リスト(List)とオブジェクト(Object)の基礎',
     type: 0,
     exp: 10,
     time: 5,
@@ -3430,10 +3712,10 @@ Reactアプリで扱うデータのほとんどは、 **配列(List)** と **オ
 - **オブジェクト** : 一人のユーザー情報のように、 **複合的なデータ** を管理する時に使用します。`,
   },
   {
-    id: "list-render",
+    id: 'list-render',
     section: 6,
     order: 1,
-    title: "配列データを画面に繰り返しレンダリングする",
+    title: '配列データを画面に繰り返しレンダリングする',
     type: 0,
     exp: 15,
     time: 12,
@@ -3470,10 +3752,10 @@ Reactは **key** を見て「あ、この項目が修正されたんだな」と
 > 単に **1, 2, 3...** のように順番に付けられる数字(**index**) は、リストの順番が入れ替わった時に、Reactがどの項目が本当に変わったのかを見つけられず、 **バグの原因** になります！`,
   },
   {
-    id: "list-reference-concept",
+    id: 'list-reference-concept',
     section: 6,
     order: 2,
-    title: "オブジェクトと配列：メモリアドレス(参照)の秘密",
+    title: 'オブジェクトと配列：メモリアドレス(参照)の秘密',
     type: 0,
     exp: 15,
     time: 10,
@@ -3497,10 +3779,10 @@ setUser(user);      // 🧐 React：「アドレスが同じだな。何も変�
 Reactを反応させるには、中身だけを変えるのではなく、 **新しいアドレス（新しいオブジェクト）** を作って丸ごと入れ替える必要があります。その時に必要な道具が、まさに **スプレッド演算子** です。`,
   },
   {
-    id: "state-array-copy",
+    id: 'state-array-copy',
     section: 6,
     order: 3,
-    title: "スプレッド演算子(...)：新しい参照を作る",
+    title: 'スプレッド演算子(...)：新しい参照を作る',
     type: 0,
     exp: 15,
     time: 12,
@@ -3528,10 +3810,10 @@ setUser({ ...user, age: 21 });
 > メモリアドレス(参照)が変わったため、Reactが即座に検知して画面を **再レンダリング** します。`,
   },
   {
-    id: "state-immutability",
+    id: 'state-immutability',
     section: 6,
     order: 4,
-    title: "不変性(Immutable)と状態管理",
+    title: '不変性(Immutable)と状態管理',
     type: 0,
     exp: 15,
     time: 8,
@@ -3583,44 +3865,44 @@ Reactの状態更新時、以下のツールは既存の配列を書き換えず
 常に上記のツールを活用して **新しいコピー** を作り、 **setState** に渡すのがReactの定石です。`,
   },
   {
-    id: "quiz-list-map",
+    id: 'quiz-list-map',
     section: 6,
     order: 5,
-    title: "配列レンダリングクイズ",
+    title: '配列レンダリングクイズ',
     type: 2,
     question:
-      "Reactで配列を画面に繰り返しレンダリングする時に使用するJavaScriptメソッドの名前を記述してください。",
-    correctAnswer: "map,,map(),,マップ",
+      'Reactで配列を画面に繰り返しレンダリングする時に使用するJavaScriptメソッドの名前を記述してください。',
+    correctAnswer: 'map,,map(),,マップ',
     explanation:
-      "map() 関数は配列の各要素を回りながら、JSX要素に変換する役割を果たします。",
+      'map() 関数は配列の各要素を回りながら、JSX要素に変換する役割を果たします。',
     exp: 10,
     time: 3,
   },
   {
-    id: "quiz-immutability-reason",
+    id: 'quiz-immutability-reason',
     section: 6,
     order: 6,
-    title: "不変性の原理クイズ",
+    title: '不変性の原理クイズ',
     type: 1,
     question:
-      "オブジェクトや配列を直接修正した時に、Reactが画面を再描画しない理由は何ですか？",
+      'オブジェクトや配列を直接修正した時に、Reactが画面を再描画しない理由は何ですか？',
     options: [
-      "JavaScriptエンジンにエラーが発生するため",
-      "Reactは値ではなくメモリアドレス(参照)の変化を検知するため",
-      "直接修正するとデータが削除されるため",
-      "Reactがオブジェクトを嫌っているため",
+      'JavaScriptエンジンにエラーが発生するため',
+      'Reactは値ではなくメモリアドレス(参照)の変化を検知するため',
+      '直接修正するとデータが削除されるため',
+      'Reactがオブジェクトを嫌っているため',
     ],
     correctAnswerIndex: 1,
     explanation:
-      "Reactは以前の状態と新しい状態の参照(アドレス)が異なる時のみ、アップデートを実行します。",
+      'Reactは以前の状態と新しい状態の参照(アドレス)が異なる時のみ、アップデートを実行します。',
     exp: 20,
     time: 5,
   },
   {
-    id: "list-summary-review",
+    id: 'list-summary-review',
     section: 6,
     order: 7,
-    title: "セクション 6 まとめ：リストと不변性",
+    title: 'セクション 6 まとめ：リストと不변性',
     type: 0,
     exp: 20,
     time: 7,
@@ -3642,10 +3924,10 @@ Todoリストの核心機能！ 次のセクションである **Section 7: Form
   },
   // Section 7
   {
-    id: "form-intro",
+    id: 'form-intro',
     section: 7,
     order: 0,
-    title: "なぜFormイベントを学ぶ必要があるのでしょうか？",
+    title: 'なぜFormイベントを学ぶ必要があるのでしょうか？',
     type: 0,
     exp: 10,
     time: 5,
@@ -3663,10 +3945,10 @@ Todoリストの核心機能！ 次のセクションである **Section 7: Form
 このセクションでは、本格的なプロジェクト実習の前に必ず必要な入力処理の基礎を扱います。`,
   },
   {
-    id: "form-controlled-input",
+    id: 'form-controlled-input',
     section: 7,
     order: 1,
-    title: "inputの値はなぜStateで管理するのでしょうか？",
+    title: 'inputの値はなぜStateで管理するのでしょうか？',
     type: 0,
     exp: 15,
     time: 8,
@@ -3685,10 +3967,10 @@ const [text, setText] = useState('');
 **解決策** : ユーザーが入力するたびにStateを更新する **イベント** がセットで必要です！`,
   },
   {
-    id: "form-onchange",
+    id: 'form-onchange',
     section: 7,
     order: 2,
-    title: "onChangeイベントで入力値を処理する",
+    title: 'onChangeイベントで入力値を処理する',
     type: 0,
     exp: 20,
     time: 12,
@@ -3714,10 +3996,10 @@ function InputExample() {
  キーボード入力 ➡️ onChange発生 ➡️  setText実行 ➡️  State変更 ➡️  画面(input)アップデート`,
   },
   {
-    id: "form-event-object",
+    id: 'form-event-object',
     section: 7,
     order: 3,
-    title: "イベントオブジェクト(e)とは何ですか？",
+    title: 'イベントオブジェクト(e)とは何ですか？',
     type: 0,
     exp: 15,
     time: 8,
@@ -3751,10 +4033,10 @@ function InputExample() {
 今の段階では、これ一つだけ覚えておけば十分です！残りの複雑な情報は、後で必要になった時に一つずつ取り出して使えば大丈夫です。`,
   },
   {
-    id: "form-submit",
+    id: 'form-submit',
     section: 7,
     order: 4,
-    title: "formとonSubmitイベント",
+    title: 'formとonSubmitイベント',
     type: 0,
     exp: 20,
     time: 10,
@@ -3790,10 +4072,10 @@ function InputExample() {
 > 📌 つまり、 **form** はデータを送るための **一つのセット** だと考えると簡単です！`,
   },
   {
-    id: "form-prevent-default",
+    id: 'form-prevent-default',
     section: 7,
     order: 5,
-    title: "event.preventDefault()はなぜ必要なのでしょうか？",
+    title: 'event.preventDefault()はなぜ必要なのでしょうか？',
     type: 0,
     exp: 20,
     time: 10,
@@ -3815,10 +4097,10 @@ const handleSubmit = (e) => {
 ReactプロジェクトのすべてのForm送信関数には、このコードが **一行目** に入ると考えても間違いありません。`,
   },
   {
-    id: "form-submit-example",
+    id: 'form-submit-example',
     section: 7,
     order: 6,
-    title: "入力 ＋ 送信の全体フロー例",
+    title: '入力 ＋ 送信の全体フロー例',
     type: 0,
     exp: 25,
     time: 15,
@@ -3848,36 +4130,36 @@ function SimpleForm() {
 このコードの構造が、皆さんがこれから作成する **Todo-Listの核心的な骨組み** になります！`,
   },
   {
-    id: "quiz-form-onchange",
+    id: 'quiz-form-onchange',
     section: 7,
     order: 7,
-    title: "inputイベントクイズ",
+    title: 'inputイベントクイズ',
     type: 1,
     exp: 20,
     time: 3,
     question:
-      "inputの値が変わるたびに実行され、Stateを更新するために使用するReactイベントは何ですか？",
-    options: ["onClick", "onSubmit", "onChange", "onInput"],
+      'inputの値が変わるたびに実行され、Stateを更新するために使用するReactイベントは何ですか？',
+    options: ['onClick', 'onSubmit', 'onChange', 'onInput'],
     correctAnswerIndex: 2,
   },
   {
-    id: "quiz-form-prevent",
+    id: 'quiz-form-prevent',
     section: 7,
     order: 8,
-    title: "Formイベント短答クイズ",
+    title: 'Formイベント短答クイズ',
     type: 2,
     exp: 25,
     time: 4,
     question:
-      "form送信時にブラウザのデフォルト動作（リロード）を防ぐために呼び出すメソッドは何ですか？",
+      'form送信時にブラウザのデフォルト動作（リロード）を防ぐために呼び出すメソッドは何ですか？',
     correctAnswer:
-      "preventDefault,,e.preventDefault,,preventDefault(),,e.preventDefault()",
+      'preventDefault,,e.preventDefault,,preventDefault(),,e.preventDefault()',
   },
   {
-    id: "form-summary-review",
+    id: 'form-summary-review',
     section: 7,
     order: 9,
-    title: "セクション 7 まとめ：Formイベント整理",
+    title: 'セクション 7 まとめ：Formイベント整理',
     type: 0,
     exp: 15,
     time: 7,
@@ -3897,10 +4179,10 @@ function SimpleForm() {
   },
   // Section 8
   {
-    id: "todo-intro-structure",
+    id: 'todo-intro-structure',
     section: 8,
     order: 0,
-    title: "Todoプロジェクト開始 ＆ 構造の確認",
+    title: 'Todoプロジェクト開始 ＆ 構造の確認',
     type: 0,
     exp: 15,
     time: 7,
@@ -3945,10 +4227,10 @@ App (状態管理の中心)
 > スタイル(CSS)よりも、 **データがどのように流れるのか(State ＆ Props)** だけに集中しましょう！`,
   },
   {
-    id: "todo-state-init",
+    id: 'todo-state-init',
     section: 8,
     order: 1,
-    title: "Todoリストの状態を作る",
+    title: 'Todoリストの状態を作る',
     type: 0,
     exp: 20,
     time: 8,
@@ -3972,10 +4254,10 @@ const [todos, setTodos] = useState([
  リストの中の一つ一つのデータは **オブジェクト \`{ }\`** 形式です。`,
   },
   {
-    id: "todo-render-list",
+    id: 'todo-render-list',
     section: 8,
     order: 2,
-    title: "Todoリストを画面に出力する",
+    title: 'Todoリストを画面に出力する',
     type: 0,
     exp: 20,
     time: 10,
@@ -3997,10 +4279,10 @@ const [todos, setTodos] = useState([
 - Reactが混乱しないように、固有のキー値を必ず入れてください！ \`key={todo.id}\``,
   },
   {
-    id: "todo-input-state",
+    id: 'todo-input-state',
     section: 8,
     order: 3,
-    title: "入力フォームと入力状態を作る",
+    title: '入力フォームと入力状態を作る',
     type: 0,
     exp: 20,
     time: 10,
@@ -4024,10 +4306,10 @@ const [input, setInput] = useState('');
 > 入力欄の値(**value**) をState(**input**) と連結させることで、Reactが入力値を完璧に制御できるようになります。（これを **制御コンポーネント** と呼びましたよね！）`,
   },
   {
-    id: "todo-submit-add",
+    id: 'todo-submit-add',
     section: 8,
     order: 4,
-    title: "フォーム送信でTodoを追加する",
+    title: 'フォーム送信でTodoを追加する',
     type: 0,
     exp: 25,
     time: 15,
@@ -4063,10 +4345,10 @@ IDはリストの中で各項目を区別する **マイナンバー** のよう
 - Reactの **不変性の原則** のおかげで、画面が即座にアップデートされます。`,
   },
   {
-    id: "todo-split-components",
+    id: 'todo-split-components',
     section: 8,
     order: 5,
-    title: "深掘り 1：コンポーネントに分離してみる",
+    title: '深掘り 1：コンポーネントに分離してみる',
     type: 0,
     exp: 20,
     time: 15,
@@ -4164,10 +4446,10 @@ export default App;
 コードをそのまま移したはずなのに、なぜ画面が消えてしまったのでしょうか？ 次の講義でその理由と解決策（Props） を一緒に探ってみましょう。`,
   },
   {
-    id: "todo-error-why",
+    id: 'todo-error-why',
     section: 8,
     order: 6,
-    title: "深掘り 2：なぜエラーが発生するのでしょうか？",
+    title: '深掘り 2：なぜエラーが発生するのでしょうか？',
     type: 0,
     exp: 25,
     time: 12,
@@ -4225,10 +4507,10 @@ function TodoList() {
 次の講義で、この箱に **onSubmit** や **todos** を詰めて、子コンポーネントたちに安全に届けてみましょう！ いよいよ、扉を開けてデータをやり取りする時間です！`,
   },
   {
-    id: "todo-pass-props",
+    id: 'todo-pass-props',
     section: 8,
     order: 7,
-    title: "深掘り 3：データの配送と受け取り (Props)",
+    title: '深掘り 3：データの配送と受け取り (Props)',
     type: 0,
     exp: 25,
     time: 20,
@@ -4328,10 +4610,10 @@ function App() {
 これで真っ白だった画面が消え、アプリが正常に動作するようになります！ 🎉`,
   },
   {
-    id: "todo-delete-filter",
+    id: 'todo-delete-filter',
     section: 8,
     order: 8,
-    title: "深掘り 4：Todo削除機能の実装",
+    title: '深掘り 4：Todo削除機能の実装',
     type: 0,
     exp: 30,
     time: 20,
@@ -4403,10 +4685,10 @@ function TodoList({ todos, onDelete }) {
 > おめでとうございます！ これで追加と削除がすべて可能な **本物のウェブサービス** の基本が整いました！ 👏`,
   },
   {
-    id: "todo-final-code",
+    id: 'todo-final-code',
     section: 8,
     order: 9,
-    title: "深掘り 5：ついに完成！全体コードの確認",
+    title: '深掘り 5：ついに完成！全体コードの確認',
     type: 0,
     exp: 10,
     time: 5,
@@ -4517,13 +4799,13 @@ export default TodoList;
 すべてが完璧なら、あなたはもう **Reactの核心（コンポーネント、状態、Props）** をマスターしたことになります！ 🎉`,
   },
   {
-    id: "todo-section8-summary",
+    id: 'todo-section8-summary',
     section: 8,
     order: 10,
-    title: "Section 8 まとめ：Todoアプリ完成",
+    title: 'Section 8 まとめ：Todoアプリ完成',
     type: 0,
     exp: 20,
-    time: 7,
+    time: 5,
     content: `# 🎉 Reactで作った最初のサービス、完成おめでとうございます！
 
 皆さんは今、実際に動作するサービスをReactで自ら作り上げました。頭の中だけで描いていた機能を **「自分のコード」** で証明した、とても価値のある瞬間です。
@@ -4538,27 +4820,207 @@ export default TodoList;
 
 ---
 
-### 🚀 次のレベルへ進むための挑戦課題
-基本の骨組みは完成しました！ 次はこのアプリにあなただけの個性を吹き込む番です。
+### 🌍 次のステップ：アプリを世界へ！
+ローカル環境（Local） での開発はすべて完了しました！ 次は、このアプリを自分のPCの外に出して、他の人も見られるようにする番です。
 
-- **🎨 スタイリング** : CSSを活用して、Todoアプリに素敵なデザインを施してみましょう。
-- **🛠️ 機能拡張** : 「全削除」ボタンを作ったり、やる事を「修正」 する機能に挑戦してみてください。
-- **✅ 完了チェック** : やる事をクリックすると横線が引かれる「完了状態」 を追加してみるのはいかがでしょうか？
+次のセクションでは、いよいよ **GitHub Pages** を利用して、皆さんのアプリを実際のURLアドレスでデプロイ（公開） してみます。
+
+自分だけのウェブサイトを持つ準備はいいですか？ さっそく始めましょう！ 🚀
+`,
+  },
+  // Section 9
+  {
+    id: 'deploy-intro',
+    section: 9,
+    order: 0,
+    title: '自分のPCを超えて世界へ',
+    type: 0,
+    exp: 10,
+    time: 5,
+    content: `# 🏠 我が家を飛び出し、 広場へ！
+
+これまで素晴らしいTodoアプリを作ってきました. しかし、 今のアプリは **あなたのPC（Local）** の中だけで生きています. アドレスをコピーして友達に送っても、 友達はあなたのアプリを見ることができません.
+
+### 🌍 デプロイ（Deploy） とは？
+デプロイとは、 簡単に言えば **「インターネットという広場に自分のアプリを置くこと」** です.
+
+
+
+- **これまで**: (自分だけが見れる一時的な住所) \`localhost:5173\` 
+- **デプロイ後**: (世界中の誰でもアクセス可能な公式の住所) \`https://ID.github.io/プロジェクト名\`
+
+さあ、 私たちが作った成果物に生命力を吹き込んでみましょう！`,
+  },
+  {
+    id: 'deploy-git-push',
+    section: 9,
+    order: 1,
+    title: 'GitHubとコードを繋げる',
+    type: 0,
+    exp: 20,
+    time: 10,
+    content: `# 🔗 GitHubレポジトリとの連携
+
+デプロイを行う前に、 まず私たちのコードを **GitHub** という安全な貯蔵庫に預ける必要があります.
+
+### 🛠️ 実行手順
+1. **GitHub** で新しいレポジトリ（Repository） を作成します.
+2. ターミナルを開き、 プロジェクトフォルダで以下のコマンドを順に入力します.
+
+\`\`\`bash
+# 1. もし .git フォルダがなければ、 レポジトリを初期化します
+git init
+
+# 2. すべてのファイルをステージングエリアに追加します
+git add .
+
+# 3. 確定（コミット） します
+git commit -m "Todoアプリ完成およびデプロイ準備"
+
+# 4. 基本ブランチ名を 'main' に変更します（重要！）
+git branch -M main
+
+# 5. GitHubレポジトリと接続します（自分のURLを入力してください！）
+git remote add origin https://github.com/ユーザーID/レポジトリ名.git
+# 例: git remote add origin https://github.com/mediumryan/learning_react_todo.git
+
+# 6. GitHubにコードを送信します
+git push -u origin main
+\`\`\`
+
+> 💡 **Tip**: **git branch -M main** は、 ローカルの基本ブランチが **master** であっても **main** に統一してくれるコマンドです. **GitHub** の最新標準に合わせるために必ず実行しましょう！`,
+  },
+  {
+    id: 'deploy-gh-pages-action',
+    section: 9,
+    order: 2,
+    title: 'gh-pagesで1分デプロイ',
+    type: 0,
+    exp: 50,
+    time: 20,
+    content: `# 🚀 クリック一回でデプロイ完了
+
+この講義では、 アプリをデプロイするために **gh-pages** というライブラリを使用します.
+
+![gh-pages](${ghPages})
+
+数あるホスティングサービスの中から、 なぜ **gh-pages** なのでしょうか？ 通常、 ウェブサービスを公開するにはサーバーの設定やドメインの接続、 セキュリティ証明書など、 複雑な知識がたくさん必要です. しかし **gh-pages** は、 私たちに馴染みのある **GitHub** レポジトリをそのまま活用するため、 非常に軽量でスピーディーです.
+
+> 💡 **案内**
+> すでに **Firebase** や **AWS**, **Vercel** などのホスティングサービスを使いこなせる方は、 それらのサービスを使ってデプロイしても構いません！ しかし、 Reactのデプロイの流れを最も簡単かつ明確に学ぶには、 **gh-pages** が最高のスタート地点です.
 
 ---
 
-### 🤝 あなたの成果を自慢してください！
-皆さんの個性が詰まったTodo Listをぜひ見てみたいです。完成した画面やコードを **コミュニティページ** で共有しましょう！ 仲間とコードを共有し、フィードバックを送り合う過程は、最も早く成長できる近道です。
+### 🛠️ ステップ 1： ライブラリのインストール
+ターミナルに以下のコマンドを入力して、デプロイツールをインストールします。
+\`\`\`bash
+npm install gh-pages --save-dev
+\`\`\`
 
-本当にお疲れ様でした！ このTodoアプリが、皆さんのReactジャーニーにおける心強い第一歩となることを心から応援しています。 👏
+### ⚙️ ステップ 2： package.json の設定（ビルド自動化）
+最も重要な部分です！ デプロイの前には、 必ず最新のコードを圧縮する **「ビルド（Build）」** プロセスが必要です. \`scripts\` 項目に以下の2行を追加してください.
+
+\`\`\`json
+"scripts": {
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d dist"
+}
+\`\`\`
+> **🤔 なぜ predeploy が必要なのですか？**
+> 私たちが **npm run deploy** を入力すると、 Reactは賢く **predeploy** を探して先に実行してくれます. つまり、 別のコマンドを打たなくても **自動的に最新コードをビルド（distの生成） してからデプロイ** してくれるからです！
+
+### 🛠️ ステップ 3： vite.config.js の設定
+**Vite** で作成したプロジェクトは、 デフォルトでルート **( / )** パスを参照します. しかし、 **GitHub Pages** は \`ID.github.io/レポジトリ名/\` というURLを使用します. そのため、 以下のように **base** 設定を通じて正確な場所を教えてあげる必要があります。
+\`\`\`javascript
+export default defineConfig({
+  plugins: [react()],
+  base: "/learning_react_todo/", 
+})
+\`\`\`
+
+### 🚀 ステップ 4： デプロイコマンドの実行
+これで、 コマンド一つでビルドからデプロイまで一気に完了します！
+\`\`\`bash
+npm run deploy
+\`\`\`
+
+コンソールに **"Published"** と表示されれば成功です！ 
+
+> 💡ただし、 **GitHub** のサーバーに実際に反映されるまでには **約1分から5分程度の時間** がかかる場合があります. もしすぐにアクセスできなくても、 しばらく待ってから再度確認してみてください. 世界中どこからでもアクセス可能なあなただけのアプリがもうすぐ誕生します！ 🎉`,
+  },
+  {
+    id: 'deploy-final-summary',
+    section: 9,
+    order: 3,
+    title: 'おめでとうございます！ 世界にアプリが公開されました',
+    type: 0,
+    exp: 30,
+    time: 10,
+    content: `# 🏁 ついに完成した成果を世界に公開しました！
+
+本当にお疲れ様でした. これであなたのTodoアプリは、 **URLアドレスを持つ一つの本物のウェブサービス** になりました.
+
+---
+
+### 🤝 コミュニティにあなたのアプリを自慢しましょう！
+
+今すぐ **GitHub Pages** が生成した **公式URLアドレス** をコピーしてください！ そして、 **コミュニティページ** であなたの作品を共有しましょう.
+
+自分の個性が詰まった **Todo List** を仲間に見せ、 応援のコメントを送り合うことは、 開発者として感じられる大きな喜びの一つです.
+
+---
+
+### 🎁 ここで終わりではありません（ボーナス予告）
+
+デプロイまで終えた皆さんへの最後のプレゼント！ **ボーナスセクション（Section 10）** が待っています.
+
+また次のボーナス講義でお会いしましょう！ 👋
 
 \`\`\`jsx
-// 皆さんの情熱を応援しています！
+// 世界への第一歩、 おめでとうございます！
 return (
-  <Congratulations message="See you in the next level!" />
+  <Congratulations 
+    url="https://mediumryan.github.io/learning_react_todo" 
+    message="You are now a Web Developer!" 
+  />
 ); 
 // Made by Ryan
 \`\`\``,
+  },
+  // Section 10
+  {
+    id: 'react-lifecycle-useeffect',
+    section: 10,
+    order: 0,
+    title: 'ボーナス：useEffectで賢いコンポーネントを作る',
+    type: 0,
+    exp: 30,
+    time: 15,
+    content: `# 🔄 画面が描画された後にすること：useEffect
+
+アプリは完成しましたが、Reactのさらに深いところが気になる方のためのボーナス講義です！コンポーネントが **誕生した時(Mount)、変化した時(Update)、消える時(Unmount)** に特定の動作をさせたいなら、 **\`useEffect\`** を知る必要があります。
+
+### 🧪 サイドエフェクト(Side Effect)とは？
+コンポーネントの本業である「画面を描画すること」以外の付随的な作業を指します。
+- サーバーからデータを取得する (API呼び出し)
+- ブラウザのウィンドウサイズを検知する
+- ローカルストレージにデータを保存する
+
+---
+
+### 📝 基本文法 (依存配列)
+\`\`\`jsx
+import { useEffect } from 'react';
+
+useEffect(() => {
+  console.log("ようこそ！画面が初めて表示された時だけ挨拶します。");
+}, []); // 👈 この空の配列が「一度だけ」実行させる鍵です。
+\`\`\`
+
+[Image showing React useEffect lifecycle: Mounting, Updating, and Unmounting]
+
+> **💡 次の挑戦課題**
+> 今作ったTodoアプリは、リロードするとデータが消えてしまいますよね？ \`useEffect\` を活用すれば、 **ローカルストレージ** にデータを保存して、リロードしても予定が残っている、より強力なアプリを作ることができます！`,
   },
 ];
 
@@ -4566,7 +5028,7 @@ export type Content = DescriptiveContent | MultipleChoiceQuiz | ShortAnswerQuiz;
 
 export const contentsAtom = atom((get) => {
   const lang = get(languageAtom);
-  return lang === "ja" ? contentDataJp : contentsData;
+  return lang === 'ja' ? contentDataJp : contentsData;
 });
 
 export const lectures = {

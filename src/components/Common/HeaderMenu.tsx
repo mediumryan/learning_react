@@ -1,11 +1,12 @@
 // react
 import { useState } from "react";
 // react-router
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 // atoms
-import { useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { currentUserAtom } from "~/data/userData";
 import { contentsAtom } from "~/data/contentData";
+import { isLoadingAtom } from "~/data/commonData";
 // icons
 import {
   BookOpen,
@@ -35,15 +36,29 @@ import { useTranslation } from "react-i18next";
 export function HeaderMenu() {
   const { t } = useTranslation();
 
-  const currentUser = useAtomValue(currentUserAtom);
+  const location = useLocation();
+
+  const [currentUser, setCurrentUser] = useAtom(currentUserAtom);
   const contents = useAtomValue(contentsAtom);
+  const setIsLoading = useSetAtom(isLoadingAtom);
 
   const gradeInfo = getGradeInfo(currentUser?.grade || "Bronze");
 
   const [open, setOpen] = useState(false);
 
+  const handleClickContents = () => {
+    const isCurrentlyContents = location.pathname.includes("/contents");
+
+    if (!isCurrentlyContents) {
+      setIsLoading(true);
+    }
+
+    closeMenu();
+  };
+
   const handleClickSignOut = () => {
     logout();
+    setCurrentUser(null);
     toast.success(t("auth.logout_message"));
   };
 
@@ -87,9 +102,7 @@ export function HeaderMenu() {
         <Link
           to={`/contents/${getFirstContentId(contents ?? [])}`}
           prefetch="intent"
-          onClick={() => {
-            closeMenu();
-          }}
+          onClick={handleClickContents}
         >
           <Button variant="ghost">
             <BookOpen />

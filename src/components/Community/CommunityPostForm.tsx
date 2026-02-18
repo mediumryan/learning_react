@@ -11,6 +11,8 @@ import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
 import { Label } from "~/components/ui/label";
 import { Badge } from "~/components/ui/badge";
+// icons
+import { X } from "lucide-react";
 // firebase
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "~/lib/firebase";
@@ -41,7 +43,14 @@ export const CommunityPostForm = ({
   const [title, setTitle] = useState(editPost?.title || "");
   const [content, setContent] = useState(editPost?.content || "");
   const [projectLink, setProjectLink] = useState(editPost?.projectLink || "");
+
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [existingImageUrl, setExistingImageUrl] = useState<string | null>(
+    editPost?.imageUrl || null,
+  );
+  const [previewUrl, setPreviewUrl] = useState<string | null>(
+    editPost?.imageUrl || null,
+  );
 
   const currentUser = useAtomValue(currentUserAtom);
 
@@ -51,23 +60,21 @@ export const CommunityPostForm = ({
       return;
     }
 
-    let imageUrl: string | null;
+    let finalImageUrl: string | null = existingImageUrl;
 
-    // 🔥 이미지 업로드
+    // 🔥 1. 새 파일이 있으면 업로드 후 URL 획득
     if (imageFile) {
       const imageRef = ref(storage, `posts/${Date.now()}_${imageFile.name}`);
-
       await uploadBytes(imageRef, imageFile);
-      imageUrl = await getDownloadURL(imageRef);
-    } else {
-      imageUrl = null;
+      finalImageUrl = await getDownloadURL(imageRef);
     }
+    // 2. 새 파일도 없고 기존 URL도 없으면 null (이미지 삭제된 경우)
 
     onSave({
       title,
       content,
       projectLink,
-      imageUrl,
+      imageUrl: finalImageUrl,
       name: currentUser?.nickname || "Anonymous",
       userId: currentUser?.uid || "Anonymous",
     });
@@ -100,6 +107,16 @@ export const CommunityPostForm = ({
     }
 
     setImageFile(file);
+    // 새 파일이 선택되면 기존 URL은 무효화
+    setExistingImageUrl(null);
+    // 미리보기 생성
+    setPreviewUrl(URL.createObjectURL(file));
+  };
+
+  const handleRemoveImage = () => {
+    setImageFile(null);
+    setExistingImageUrl(null);
+    setPreviewUrl(null);
   };
 
   return (
@@ -144,17 +161,40 @@ export const CommunityPostForm = ({
         />
       </div>
 
+      {/* 이미지 업로드 */}
       <div className="space-y-2">
         <Label htmlFor="image" className={POST_FORM_TITLE_STYLE}>
           {t("community.community_post_add_preview_label")}
         </Label>
 
-        <Input
-          id="image"
-          type="file"
-          accept="image/jpeg,image/png,image/webp"
-          onChange={handleFileChange}
-        />
+        {previewUrl ? (
+          // 이미지가 있을 때 (기존 혹은 새로 선택됨)
+          <div className="relative aspect-video rounded-md overflow-hidden border border-slate-200">
+            <img
+              src={previewUrl}
+              alt="Preview"
+              className="w-full h-full object-cover"
+            />
+            <Button
+              type="button"
+              variant="destructive"
+              size="icon"
+              className="absolute top-2 right-2 h-8 w-8 rounded-full shadow-lg"
+              onClick={handleRemoveImage}
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
+        ) : (
+          // 이미지가 없을 때
+          <Input
+            id="image"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            className="cursor-pointer"
+            onChange={handleFileChange}
+          />
+        )}
 
         {/* helper text */}
         <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
