@@ -35,7 +35,7 @@ function UserForm({ user, onSave, setOpen }: UserFormProps) {
   );
   const [exp, setExp] = useState<number>(user?.exp ?? 0);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
     onSave({
       uid: user?.uid ?? Date.now().toString(),
@@ -102,8 +102,12 @@ function UserForm({ user, onSave, setOpen }: UserFormProps) {
             onChange={(e) => setCourse(e.target.value as Course)}
           >
             <option value="Beginner">Beginner</option>
-            <option value="Intermediate">Intermediate</option>
-            <option value="Advanced">Advanced</option>
+            <option value="Intermediate" disabled>
+              Intermediate
+            </option>
+            <option value="Advanced" disabled>
+              Advanced
+            </option>
           </select>
         </div>
 

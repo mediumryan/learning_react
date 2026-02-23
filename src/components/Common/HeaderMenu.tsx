@@ -69,7 +69,7 @@ export function HeaderMenu() {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <div className="fixed top-3 right-8 w-10 h-10 z-50">
+        <div className="fixed md:top-3 top-2 md:right-8 right-4 w-10 h-10 z-50">
           <Avatar
             className={cn("w-10 h-10 cursor-pointer border border-gray-200")}
           >
@@ -160,7 +160,7 @@ export function HeaderMenu() {
           <img
             src={gradeInfo.badge}
             alt="user medal"
-            className="min-w-40 h-20 absolute -bottom-20"
+            className="absolute md:min-w-40 min-w-30 md:h-20 h-15 md:-bottom-20 -bottom-15"
           />
         )}
       </PopoverContent>

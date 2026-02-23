@@ -110,7 +110,7 @@ export default function SettingsPage() {
           <img
             src={gradeInfo.badge}
             alt="user medal"
-            className="min-w-40 h-20 absolute top-0 -right-20"
+            className="absolute md:min-w-40 min-w-30 md:h-20 h-15 top-0 md:-right-20 -right-5"
           />
         )}
       </Card>

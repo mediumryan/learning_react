@@ -59,7 +59,7 @@ function App() {
             <Route path="/signup/*" element={<SignUp />} />
           </Route>
 
-          {/* 3. 그 외 (404 등) 공통 경로는 여기에 추가 */}
+          {/* 3. 그 외 (404 등) 공통 경로 */}
         </Routes>
         <CommonFooter />
       </div>

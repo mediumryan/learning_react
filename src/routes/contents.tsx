@@ -91,7 +91,7 @@ export default function ContentsPage() {
             </header>
 
             <ScrollArea>
-              <div className="h-full flex flex-col gap-4 items-center justify-center mx-auto max-w-4xl p-6 md:p-10">
+              <div className="h-full flex flex-col gap-4 items-center justify-center mx-auto max-w-4xl md:p-10 p-4">
                 <Contents lectureId={lectureId} />
                 <ContentFooter currentLecture={currentLecture} />
               </div>

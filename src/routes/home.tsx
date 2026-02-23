@@ -21,7 +21,7 @@ export default function Home() {
   const currentUser = useAtomValue(currentUserAtom);
 
   return (
-    <main className="p-8 flex flex-col justify-center items-center gap-2">
+    <main className="md:p-8 p-4 px-12 h-screen flex flex-col justify-between items-center gap-2">
       {/* 메인화면 - 헤더 */}
       <h1 className={`${H1_STYLE}` + " flex items-center gap-3 tracking-wide"}>
         <FaReact id="react-icon" className="text-blue-600 animate-spin" />

@@ -2,20 +2,21 @@
 import { atom } from 'jotai';
 import { languageAtom } from './commonData';
 // images
-import firstStepImg from '~/assets/images/contents/first-step.png';
-import todoSampleImg_jp from '~/assets/images/contents/todo-sample-jp.png';
-import todoSampleImg_kr from '~/assets/images/contents/todo-sample-kr.png';
-import helloReact from '~/assets/images/contents/hello-react.png';
-import componentsSample from '~/assets/images/contents/components-sample.png';
-import refError from '~/assets/images/contents/ref-error.png';
-import ghPages from '~/assets/images/contents/gh-pages.png';
-import reactIcon from '~/assets/images/contents/react-icon.png';
-import libraryFramework from '~/assets/images/contents/Library-and-Framework.jpg';
-import spa from '~/assets/images/contents/spa.webp';
-import vite from '~/assets/images/contents/vite.jpg';
-import component from '~/assets/images/contents/component.png';
-import componentUpper from '~/assets/images/contents/component-upper.jpg';
-import jsx from '~/assets/images/contents/jsx.gif';
+import todoSample from '~/../public/assets/images/contents/todo-sample.png';
+import firstStep from '~/../public/assets/images/contents/first-step.png';
+import viteInit from '~/../public/assets/images/contents/vite-init.png';
+import helloReact from '~/../public/assets/images/contents/hello-react.png';
+import componentsSample from '~/../public/assets/images/contents/components-sample.png';
+import refError from '~/../public/assets/images/contents/ref-error.png';
+import ghPages from '~/../public/assets/images/contents/gh-pages.png';
+import reactIcon from '~/../public/assets/images/contents/react-icon.png';
+import libraryFramework from '~/../public/assets/images/contents/Library-and-Framework.jpg';
+import spa from '~/../public/assets/images/contents/spa.webp';
+import vite from '~/../public/assets/images/contents/vite.jpg';
+import component from '~/../public/assets/images/contents/component.png';
+import componentUpper from '~/../public/assets/images/contents/component-upper.jpg';
+import jsx from '~/../public/assets/images/contents/jsx.gif';
+import state from '~/../public/assets/images/contents/state.jpeg';
 
 // 0: 설명, 1: 객관식, 2: 주관식
 export type ContentType = 0 | 1 | 2;
@@ -72,6 +73,26 @@ export const contentsData: Content[] =
 
 ---
 
+### 📊 강의 전체 로드맵 (Curriculum Volume)
+
+이 강의는 총 **10개의 섹션**, **76개의 강의**로 구성되어 있으며, 전체 러닝타임은 약 **671분(11시간 11분)** 의 집약적인 코스입니다.
+
+| 섹션 | 주제 (강의 수) | 소요 시간(min) |
+|:---:|:---|:---:|
+| 01 | What is React?(7) | 48 |
+| 02 | Components & JSX(7) | 40 |
+| 03 | State(7) | 49 |
+| 04 | Props(7) | 65 |
+| 05 | Events(8) | 66 |
+| 06 | Lists / Objects(8) | 62 |
+| 07 | Forms(10) | 82 |
+| 08 | Todo List Project(11) | 127 |
+| 09 | Deployment(4) | 45 |
+| 10 | Lifecycle & Storages(7) | 87 |
+| **Total** | **10(76)** | **671** |
+
+---
+
 ### 🧠 수강 전 알아두면 좋아요
 
 React를 배우기 전, 아래와 같은 **기본적인 웹 개발 지식** 을 알고 계시면 훨씬 수월합니다.
@@ -93,7 +114,7 @@ React를 배우기 전, 아래와 같은 **기본적인 웹 개발 지식** 을 
 
 우리는 이번 강의를 통해 **Todo-List 애플리케이션** 을 밑바닥부터 직접 완성해볼 것입니다.
 
-![Todo Sample](${todoSampleImg_kr})
+![Todo Sample](${todoSample})
 
 자, 그럼 시작해볼까요?`,
     },
@@ -216,7 +237,7 @@ React는 **SPA(Single Page Application)** 방식으로 동작합니다. 화면 �
       title: '앱 생성하기 - Vite',
       type: 0,
       exp: 15,
-      time: 15, // 내용 추가에 따른 시간 조정
+      time: 15,
       content: `# 🛠️ 실전! 첫 리액트 앱 만들기
 
 이제 실제로 React 프로젝트를 생성해봅시다. 우리는 가장 빠르고 현대적인 도구인 **Vite** 를 사용합니다.
@@ -245,6 +266,8 @@ npm run dev
 
 서버가 실행되면 터미널에 나온 주소를 브라우저에 입력해보세요. 여러분의 첫 React 화면이 나타납니다! \`http://localhost:5173\`
 
+![Vite Init](${viteInit})
+
 ---
 
 ### 🧹 프로젝트 초기 설정 (청소하기)
@@ -266,7 +289,7 @@ function App() {
 export default App
 \`\`\`
 
-![Code Clean](${firstStepImg})
+![Code Clean](${firstStep})
 
 5️⃣ **정리된 초기 화면 확인** 
 위 작업을 모두 마쳤다면, 브라우저에는 아무런 스타일 없이 흰 바탕에 **Hello, React!** 라는 글자만 나타나게 됩니다. 이제 진짜 개발을 시작할 준비가 끝났습니다!
@@ -553,6 +576,8 @@ return (
 React에서 **State** 는 컴포넌트가 내부적으로 **기억하고 있는 값** 입니다. 
 사용자와의 상호작용에 따라 언제든 **변경될 수 있는 데이터** 를 의미하죠.
 
+![state](${state})
+
 ---
 
 ### ❓ 왜 일반 변수로는 화면이 안 바뀔까요?
@@ -589,41 +614,84 @@ State는 단순한 데이터가 아니라, **"값이 바뀌었으니 화면을 �
 State가 변경되면 React는 자동으로 이 렌더링 과정을 수행하여 사용자가 바뀐 값을 볼 수 있게 합니다.`,
     },
     {
-      id: 'state-counter-practice',
+      id: 'state-usestate-deep-dive',
       section: 3,
       order: 1,
-      title: '카운터 앱 실습: useState 사용법',
+      title: 'useState 훅 완벽 파헤치기',
       type: 0,
-      exp: 25,
-      time: 10,
-      content: `# 🛠️ useState로 숫자 바꾸기
+      exp: 20,
+      time: 14,
+      content: `# 🎣 useState 훅의 구조와 원리
 
-이제 실제로 화면을 바꾸는 코드를 작성해봅시다. 리액트에서 제공하는 \`useState\` 도구를 사용합니다.
+리액트에서 상태를 만들기 위해 사용하는 \`useState\` 는 **배열 비구조화 할당** 이라는 독특한 문법을 사용합니다.
+
+> **💡 토막 상식: 배열 비구조화 할당이란?**
+> 배열 안에 들어있는 값들을 꺼내서 각각의 변수에 한 번에 담는 자바스크립트의 편리한 문법입니다.
+> \`\`\`javascript
+> // 비구조화 할당 방식 (훨씬 깔끔하죠!)
+> const [a, b] = ['사과', '바나나'];
+> \`\`\`
+> **"왜 굳이 배열 방식을 쓸까요?"**
+> 지금은 **"내가 원하는 대로 변수의 이름을 자유롭게 지을 수 있기 때문이다"** 라는 것만 알아두셔도 충분합니다! 덕분에 **count**, **text** 등 용도에 맞는 이름을 내 마음대로 붙일 수 있답니다.
+
+---
+
+### 📝 useState의 기본 문법
+비구조화 할당 문법을 통해 \`useState\` 가 뱉어내는 두 가지 선물을 각각의 변수에 담아줍니다.
 
 \`\`\`jsx
-import { useState } from 'react'; // 👈 꼭 불러와야 해요!
+const [state, setState] = useState(initialValue);
+\`\`\`
 
-function Counter() {
-  // [현재값, 변경함수] = useState(초기값);
-  const [count, setCount] = useState(0);
+1. **state (현재값)** : 컴포넌트가 지금 기억하고 있는 데이터입니다.
+2. **setState (변경함수)** : 이 데이터를 바꾸고 싶을 때 사용하는 전용 함수입니다. 이 함수를 통해서만 화면을 바꿀 수 있습니다.
+3. **initialValue (초기값)** : 컴포넌트가 처음 탄생할 때 가질 데이터의 시작값입니다.
 
-  return (
-    <div>
-      <p>현재 숫자: {count}</p>
-      <button onClick={() => setCount(count + 1)}>증가</button>
-    </div>
-  );
+---
+
+### 💻 실제 사용 예시
+우리가 앞으로 만들 '카운터'나 '입력창'에서는 아래와 같이 선언합니다.
+
+\`\`\`jsx
+// 숫자를 관리할 때
+const [count, setCount] = useState(0);
+
+// 문자를 관리할 때
+const [text, setText] = useState("");
+
+// 불리언(참/거짓)을 관리할 때
+const [isOn, setIsOn] = useState(false);
+\`\`\`
+
+
+
+---
+
+### ⚖️ 왜 두 개가 같이 나올까요?
+리액트는 데이터만 주는 것이 아니라, 그 데이터를 **안전하게 바꿀 수 있는 열쇠(변경함수)** 를 함께 줍니다. 
+
+우리가 상자에 든 공의 개수를 바꿀 때, 직접 상자를 부수는 것이 아니라 **'상자 관리자'** 에게 "공 하나 더 넣어줘!"라고 부탁하는 것과 같습니다. 여기서 관리자가 바로 **setState** 입니다.
+
+---
+
+### ⚠️ 규칙: Hook은 최상단에서!
+\`useState\` 같은 훅을 사용할 때는 반드시 지켜야 할 철칙이 있습니다. 바로 **컴포넌트 함수의 가장 윗부분** 에서 호출해야 한다는 점입니다.
+
+\`\`\`jsx
+function MyComponent() {
+  // ✅ 좋은 예: 함수가 시작되자마자 선언
+  const [name, setName] = useState("React");
+
+  if (someCondition) {
+    // ❌ 나쁜 예: 조건문이나 반복문 안에서 훅을 호출하면 안 됩니다!
+    // const [age, setAge] = useState(20); 
+  }
+
+  return <div>{name}</div>;
 }
 \`\`\`
 
-**🖥️ 브라우저 출력 결과:** 
-> 현재 숫자: 0  
-> [증가 버튼]
-
-**🔄 버튼을 누르면 일어나는 일:** 
-1. \`setCount\` 함수가 실행되어 \`count\` 가 변경됩니다.
-2. React가 "어? count가 바뀌었네?"라고 감지합니다.
-3. **컴포넌트를 다시 실행(재렌더링)** 하여 화면에 새로운 숫자를 그립니다.`,
+이 규칙을 지켜야 리액트가 여러 개의 상태를 헷갈리지 않고 정확한 순서대로 기억할 수 있습니다!`,
     },
     {
       id: 'quiz-state-description',
@@ -2362,8 +2430,8 @@ export default TodoList;
 
 
 
-- **지금까지**: (나만 볼 수 있는 임시 주소) \`localhost:5173\` 
-- **배포 후**: (전 세계 누구나 접속 가능한 공식 주소) \`https://아이디.github.io/프로젝트명\` 
+**지금까지**: (나만 볼 수 있는 임시 주소) \`localhost:5173\` 
+**배포 후**: (전 세계 누구나 접속 가능한 공식 주소) \`https://아이디.github.io/프로젝트명\` 
 
 이제 우리가 만든 결과물에 생명력을 불어넣어 볼까요?`,
     },
@@ -2506,38 +2574,312 @@ return (
     },
     // Section 10: Bonus - useEffect
     {
-      id: 'react-lifecycle-useeffect',
+      id: 'react-lifecycle-concept',
       section: 10,
       order: 0,
-      title: '보너스: useEffect로 똑똑한 컴포넌트 만들기',
+      title: '컴포넌트의 일생: 라이프사이클(생명주기)',
       type: 0,
-      exp: 30,
-      time: 15,
-      content: `# 🔄 화면이 그려진 뒤에 할 일: useEffect
+      exp: 10,
+      time: 5,
+      content: `# 🔄 컴포넌트도 일생이 있습니다: 라이프사이클
 
-앱은 완성했지만, 리액트의 더 깊은 곳이 궁금한 분들을 위한 보너스 강의입니다! 컴포넌트가 **태어날 때(Mount), 바뀔 때(Update), 사라질 때(Unmount)** 특정 동작을 시키고 싶다면 **\`useEffect\`** 를 알아야 합니다.
-
-### 🧪 사이드 이펙트(Side Effect)란?
-컴포넌트의 본업인 '화면 그리기' 외의 부수적인 작업들을 말해요.
-- 서버에서 데이터 가져오기 (API 호출)
-- 브라우저 창 크기 감지하기
-- 로컬 스토리지에 데이터 저장하기
+리액트 컴포넌트는 화면에 나타나고 사라지기까지의 과정을 거칩니다. 이를 **라이프사이클(Lifecycle, 생명주기)** 이라고 부릅니다.
 
 ---
 
-### 📝 기본 문법 (의존성 배열)
-\`\`\`jsx
-import { useEffect } from 'react';
+### 🌱 생명주기의 3단계
+1. **마운트 (Mount)** : 컴포넌트가 화면에 **처음 나타나는 탄생** 의 순간입니다.
+2. **업데이트 (Update)** : 데이터가 바뀌어 화면이 **다시 그려지는 성장** 의 순간입니다.
+3. **언마운트 (Unmount)** : 컴포넌트가 화면에서 **사라지는 죽음** 의 순간입니다.
 
+
+
+이 주기를 이해해야 내가 원하는 '타이밍'에 코드를 실행시킬 수 있습니다.`,
+    },
+    {
+      id: 'react-useeffect-sideeffect',
+      section: 10,
+      order: 1,
+      title: 'useEffect 훅과 Side Effect',
+      type: 0,
+      exp: 20,
+      time: 15,
+      content: `# 🎣 특정 타이밍에 실행하기: useEffect
+
+우리가 배운 라이프사이클의 특정 시점에 맞춰 작업을 수행하게 해주는 도구가 바로 **useEffect** 훅입니다.
+
+이 훅의 이름은 **사이드 이펙트(Side Effect)** 를 사용(use) 한다는 의미에서 붙여졌습니다. 즉, 컴포넌트의 생명주기에 맞춰 우리가 원하는 '부수적인 효과'를 일으키는 전용 도구인 셈이죠.
+
+---
+
+### 🧪 사이드 이펙트(Side Effect) 란?
+컴포넌트의 본업인 '화면 그리기' 외에 부수적으로 일어나는 모든 작업을 말합니다.
+- 서버에서 데이터를 가져오기
+- 브라우저 저장소(LocalStorage) 에 데이터 읽기/쓰기
+- 타이머 설정 및 이벤트 리스너 등록
+
+리액트는 화면을 그리는 도중 이런 부수적인 작업이 섞이면 화면이 버벅거리거나 예상치 못한 오류가 생길 수 있습니다. 그래서 **useEffect** 라는 안전한 분리 공간을 만들어 그 안에서만 이런 작업들을 처리하도록 권장합니다.
+
+
+
+---
+
+### 🛠️ useEffect 사용법: 3가지 핵심 패턴
+
+**useEffect** 의 두 번째 인자인 **의존성 배열(Dependency Array)** 을 어떻게 쓰느냐에 따라 실행 타이밍이 결정됩니다.
+
+#### 1. 배열이 없을 때 (매번 실행) ⚠️
+의존성 배열을 아예 적지 않으면 화면이 다시 그려질(Render) 때마다 매번 실행됩니다.
+\`\`\`jsx
 useEffect(() => {
-  console.log("환영합니다! 화면이 처음 나타날 때만 인사해요.");
-}, []); // 👈 이 빈 배열이 '딱 한 번만' 실행하게 해줍니다.
+  console.log("리렌더링될 때마다 실행!");
+}); 
+\`\`\`
+> **🚫 주의: 성능 악화 우려**
+> 컴포넌트 내의 작은 상태 하나만 바뀌어도 이 코드가 계속 실행됩니다. 이는 불필요한 연산을 반복하게 만들어 **앱의 전체적인 성능을 떨어뜨릴 위험** 이 크기 때문에, 실무에서는 특별한 이유가 없다면 거의 사용하지 않습니다.
+
+#### 2. 빈 배열일 때 [] (탄생 시 딱 한 번)
+컴포넌트가 화면에 처음 나타나는 **마운트(Mount)** 시점에만 딱 한 번 실행됩니다. 
+\`\`\`jsx
+useEffect(() => {
+  console.log("마운트될 때 딱 한 번 실행!");
+}, []); 
 \`\`\`
 
-[Image showing React useEffect lifecycle: Mounting, Updating, and Unmounting]
+#### 3. 값이 있는 배열일 때 [상태값] (탄생 시 + 변화 시)
+배열 안에 값을 넣으면 **① 컴포넌트가 마운트될 때 무조건 한 번 실행** 되고, 이후 **② 지정한 값이 변할 때마다** 다시 실행됩니다.
 
-> **💡 다음 도전 과제**
-> 지금까지 만든 투두 앱은 새로고침하면 데이터가 사라지죠? \`useEffect\` 를 활용하면 **로컬 스토리지** 에 데이터를 저장해서, 새로고침해도 할 일이 그대로 남아있는 더 강력한 앱을 만들 수 있습니다!`,
+\`\`\`jsx
+useEffect(() => {
+  console.log("마운트 시 + count가 바뀔 때마다 실행!");
+}, [count]); // 👈 처음 나타날 때도 실행된다는 점을 잊지 마세요!
+\`\`\`
+
+---
+
+### 🧹 보너스: 컴포넌트의 뒷정리 (Cleanup)
+컴포넌트가 사라질 때(**언마운트**) 무언가 멈춰야 하거나 치워야 할 때가 있습니다. 
+
+\`\`\`jsx
+useEffect(() => {
+  console.log("마운트!");
+
+  return () => {
+    console.log("언마운트! (뒷정리 중...)");
+  };
+}, []);
+\`\`\`
+
+**useEffect** 내부에서 함수를 **return** 하면, 리액트는 컴포넌트가 사라지는 순간 그 함수를 실행시켜 줍니다. **"사라질 때 뒷정리를 할 수 있는 방법이 있다"** 는 것만 가볍게 기억해 두세요!`,
+    },
+    {
+      id: 'browser-storage-concept',
+      section: 10,
+      order: 2,
+      title: '브라우저의 기억 장치: 스토리지 이해하기',
+      type: 0,
+      exp: 10,
+      time: 12,
+      content: `# 💾 브라우저가 데이터를 기억하는 법: 스토리지
+
+웹 페이지는 기본적으로 새로고침을 하면 모든 변수가 초기화됩니다. 하지만 브라우저 내부에는 데이터를 반영구적으로 저장할 수 있는 **스토리지(Storage)** 라는 기억 공간이 존재합니다.
+
+---
+
+### 🗄️ 로컬 스토리지 vs 세션 스토리지
+
+브라우저 스토리지는 용도에 따라 두 가지로 나뉩니다. 두 스토리지 모두 **'페이지를 새로고침해도 데이터가 사라지지 않는다'** 는 강력한 공통점을 가지고 있습니다.
+
+#### 1. 로컬 스토리지 (LocalStorage) 🏠
+* **특징** : 사용자가 직접 브라우저 캐시를 삭제하거나 코드로 지우지 않는 한, PC에 **계속 살아있는 데이터** 입니다.
+* **용도** : 다크모드 설정, 저장된 투두 리스트 등 장기적인 보관이 필요한 정보에 사용합니다.
+
+#### 2. 세션 스토리지 (SessionStorage) ⏱️
+* **특징** : **현재 열려있는 브라우저 탭** 에서만 유효한 데이터입니다. 탭을 닫는 순간 데이터는 즉시 삭제됩니다.
+* **용도** : 일회성 입력 폼 데이터 등 잠깐만 유지되어야 하는 정보에 사용합니다.
+
+---
+
+### ⚠️ 스토리지가 만능은 아니에요! (한계와 단점)
+스토리지 사용 시 반드시 주의해야 할 세 가지 제약 사항이 있습니다.
+
+1. **보안의 취약성** : 스토리지는 자바스크립트로 누구나 쉽게 읽을 수 있습니다. 따라서 **비밀번호, 개인정보, 중요한 인증 토큰** 등을 저장해서는 절대로 안 됩니다. (해킹의 타겟이 되기 쉽습니다!)
+2. **용량의 한계** : 보통 브라우저당 **약 5MB** 정도의 작은 용량만 허용합니다. 고화질 이미지나 방대한 데이터를 담기에는 부적절합니다.
+3. **문자열만 저장** : 스토리지는 오직 **텍스트(String)** 만 저장할 수 있습니다. 객체나 배열을 저장하려면 복잡한 변환 과정을 거쳐야 합니다.
+
+[Image: Safety warning for Browser Storage]
+
+이제 이러한 특징과 한계를 잘 이해했으니, 안전한 범위 내에서 우리 앱의 투두 리스트 데이터를 저장해 봅시다!`,
+    },
+    {
+      id: 'practice-storage-basic',
+      section: 10,
+      order: 3,
+      title: '실습 1: 기초적인 스토리지 사용법',
+      type: 0,
+      exp: 20,
+      time: 10,
+      content: `# 🛠️ 데이터 읽고 쓰기의 기초
+
+로컬 스토리지는 아주 단순한 문법으로 데이터를 주고받습니다. 마치 변수에 값을 할당하는 것과 비슷하죠.
+
+---
+
+### 📝 데이터 저장하기: setItem
+\`\`\`javascript
+// localStorage.setItem("이름", "값");
+localStorage.setItem("theme", "dark");
+\`\`\`
+
+### 📖 데이터 불러오기: getItem
+\`\`\`javascript
+// const 변수명 = localStorage.getItem("이름");
+const currentTheme = localStorage.getItem("theme");
+console.log(currentTheme); // 출력: "dark"
+\`\`\`
+
+### 🧹 데이터 삭제하기: removeItem / clear
+\`\`\`javascript
+localStorage.removeItem("theme"); // 특정 데이터만 삭제
+localStorage.clear(); // 모든 스토리지 데이터 초기화
+\`\`\`
+
+이 기초 문법은 오직 **문자열(String)** 일 때만 완벽하게 동작합니다. 그렇다면 우리가 만든 투두 리스트 같은 **배열** 은 어떻게 저장해야 할까요? 다음 실습에서 알아봅시다!`,
+    },
+    {
+      id: 'practice-storage-advanced-json',
+      section: 10,
+      order: 4,
+      title: '실습 2: 스토리지 사용법 (배열, 객체의 경우)',
+      type: 0,
+      exp: 30,
+      time: 15,
+      content: `# 🧩 배열과 객체를 저장하는 비결: JSON
+
+로컬 스토리지는 텍스트만 기억할 수 있는 기억장치입니다. 그래서 배열이나 객체를 그대로 넣으면 \`[object Object]\` 처럼 깨진 데이터가 저장됩니다. 이를 해결하기 위해 우리는 **JSON** 이라는 형식을 빌려야 합니다.
+
+> **💡 JSON(JavaScript Object Notation) 이란?**
+> 데이터를 저장하거나 주고받기 위해 만든 **'텍스트 기반의 통신 규약'** 입니다. 자바스크립트 객체와 아주 비슷하게 생겼지만, 파일이나 스토리지에 저장할 수 있는 순수한 **문자열** 이라는 점이 특징입니다.
+
+
+
+---
+
+### 📤 1. 저장할 때: JSON.stringify()
+자바스크립트의 배열이나 객체를 하나의 **긴 문자열** 로 마법처럼 변환해 줍니다. 이를 **직렬화** 라고 부릅니다.
+\`\`\`javascript
+const user = { name: "철수", age: 20 };
+localStorage.setItem("user-info", JSON.stringify(user)); 
+// 실제 저장되는 모습: '{"name":"철수","age":20}'
+\`\`\`
+
+### 📥 2. 불러올 때: JSON.parse()
+스토리지에서 가져온 문자열을 다시 우리가 쓸 수 있는 **자바스크립트 객체/배열** 로 되돌려줍니다. 이를 **역직렬화** 라고 부릅니다.
+\`\`\`javascript
+const data = localStorage.getItem("user-info");
+const parsedUser = JSON.parse(data);
+console.log(parsedUser.name); // 출력: "철수"
+\`\`\`
+
+---
+
+### 💡 핵심 요약
+- **직렬화 (stringify)** : 데이터를 보관하기 위해 한 줄의 기차(문자열) 로 세우는 과정
+- **역직렬화 (parse)** : 기차를 다시 원래의 복잡한 구조(객체/배열) 로 조립하는 과정
+
+이 두 과정을 거쳐야만 우리의 투두 리스트 배열을 안전하게 보관할 수 있습니다!`,
+    },
+    {
+      id: 'todolist-persistence-storage',
+      section: 10,
+      order: 5,
+      title: '실습 3: Todo list에 스토리지 적용하기',
+      type: 0,
+      exp: 50,
+      time: 25,
+      content: `# 🚀 우리 앱에 영구 저장 기능 넣기
+
+이제 배운 모든 기술을 하나로 합칠 시간입니다. **useEffect** 의 타이밍 조절 기능과 **JSON** 변환 기술을 우리 투두 리스트에 직접 적용해 봅시다.
+
+### 📍 어디에 작성하나요?
+우리의 할 일 목록 상태(**todos**) 가 관리되고 있는 **App.jsx** 파일의 **App** 컴포넌트 내부에 작성합니다. 상태값이 정의된 바로 아래 공간을 활용해 보세요!
+
+---
+
+### 1️⃣ 변화 감지하고 저장하기 (Update 시점)
+할 일이 추가되거나 삭제되어 **todos** 배열이 바뀔 때마다 로컬 스토리지에 자동으로 저장되도록 설정합니다.
+
+\`\`\`jsx
+useEffect(() => {
+  // 1. 배열을 문자열로 변환하여 저장합니다.
+  localStorage.setItem("my-todo-list", JSON.stringify(todos));
+}, [todos]); // 👈 todos가 변할 때마다 실행!
+\`\`\`
+
+---
+
+### 2️⃣ 시작할 때 데이터 불러오기 (Mount 시점)
+앱이 처음 켜질 때 딱 한 번, 저장된 데이터를 확인하고 있다면 화면에 다시 뿌려줍니다.
+
+\`\`\`jsx
+useEffect(() => {
+  const savedData = localStorage.getItem("my-todo-list");
+  
+  if (savedData) {
+    // 2. 문자열을 다시 배열로 변환하여 상태를 업데이트합니다.
+    setTodos(JSON.parse(savedData));
+  }
+}, []); // 👈 마운트 시점에 딱 한 번 실행!
+\`\`\`
+
+---
+
+### 🏆 완성된 App.jsx 코드 확인하기
+작성한 코드가 아래와 같은 구조인지 확인해 보세요. 순서가 바뀌어도 동작하지만, 보통 **상태 선언 -> 효과(Effect) -> 함수** 순으로 작성하는 것이 가독성에 좋습니다.
+
+\`\`\`jsx
+function App() {
+  const [todos, setTodos] = useState([]);
+
+  // 불러오기 (마운트 시)
+  useEffect(() => {
+    const savedData = localStorage.getItem("my-todo-list");
+    if (savedData) setTodos(JSON.parse(savedData));
+  }, []);
+
+  // 저장하기 (변경 시)
+  useEffect(() => {
+    localStorage.setItem("my-todo-list", JSON.stringify(todos));
+  }, [todos]);
+
+  // ... 이하 컴포넌트 로직 및 return 문
+}
+\`\`\`
+
+---
+
+### ✅ 결과 확인하기
+이제 할 일을 입력한 뒤 브라우저를 **새로고침** 해보세요. 데이터가 사라지지 않고 그대로 남아있다면 성공입니다! 만약 동작하지 않는다면 개발자 도구의 **Application** 탭을 다시 확인해 보세요.`,
+    },
+    {
+      id: 'section-10-conclusion',
+      section: 10,
+      order: 6,
+      title: '보너스 섹션 마무리',
+      type: 0,
+      exp: 20,
+      time: 5,
+      content: `# 🏁 완주를 축하합니다!
+
+배포부터 **useEffect**, **로컬 스토리지** 까지! 여러분은 리액트의 기초를 넘어 실무 기술의 문턱을 성공적으로 넘으셨습니다. 
+
+---
+
+### 🎁 여러분은 이제...
+단순히 화면만 그리는 사람이 아니라, **데이터의 흐름과 생명주기를 다룰 줄 아는 리액트 개발자** 가 되었습니다. 
+
+우리가 이번 보너스 섹션에서 배운 내용은 실제 대규모 서비스에서도 서버 통신(API) 을 처리할 때 똑같은 원리로 사용됩니다. 
+오늘의 경험이 여러분의 멋진 개발 인생에 든든한 밑거름이 되길 바랍니다. 정말 고생 많으셨습니다! 🎉`,
     },
   ];
 
@@ -2559,7 +2901,25 @@ export const contentDataJp: Content[] = [
 
  本講義は **Reactに初めて触れる方も** 実際に一つの完成されたウェブアプリケーションを作ってみることを目標としています。
 
----
+ ---
+ 
+### 📊 講座の全体ロードマップ (Curriculum Roadmap)
+
+このコースは全 **10セクション**、**76講義**で構成されています。全体の学習時間は約 **11時間11分**です.
+
+| セクション | 主題 (講義数) | 所要時間(min) |
+|:---:|:---|:---:|
+| 01 | What is React?(7) | 48 |
+| 02 | Components & JSX(7) | 40 |
+| 03 | State(7) | 49 |
+| 04 | Props(7) | 65 |
+| 05 | Events(8) | 66 |
+| 06 | Lists / Objects(8) | 62 |
+| 07 | Forms(10) | 82 |
+| 08 | Todo List Project(11) | 127 |
+| 09 | Deployment(4) | 45 |
+| 10 | Lifecycle & Storages(7) | 87 |
+| **Total** | **10(76)** | **671** |
 
 ### 🧠 受講前に知っておくと良いこと
 
@@ -2582,7 +2942,7 @@ Reactを学ぶ前に、以下のような **基本的なウェブ開発の知識
 
 私たちは今回の講義を通じて、**Todo-Listアプリケーション** をゼロから直接完成させてみます。
 
-![Todo Sample](${todoSampleImg_jp})
+![Todo Sample](${todoSample})
 
 さあ、それでは始めてみましょう！`,
   },
@@ -2733,6 +3093,8 @@ npm run dev
 
 サーバーが実行されたら、ターミナルに表示されたアドレスをブラウザに入力してみてください。あなたの最初のReact画面が表示されます！ \`http://localhost:5173\`
 
+![Vite Init](${viteInit})
+
 ---
 
 ### 🧹 プロジェクトの初期設定（クリーニング）
@@ -2755,7 +3117,7 @@ function App() {
 export default App;
 \`\`\`
 
-![Code Clean](${firstStepImg})
+![Code Clean](${firstStep})
 
 5️⃣ **整理された初期画面の確認** 
 上記の作業をすべて終えると、ブラウザにはスタイルが適用されていない白い背景に **Hello, React!** という文字だけが表示されます。これで本格的な開発の準備が完了しました！
@@ -3042,6 +3404,8 @@ JavaScriptにおいて \`class\` という単語はすでに予約語として�
 Reactにおいて **State** は、コンポーネントが内部的に **記憶している値** です。
 ユーザーとの相互作用によっていつでも **変更される可能性のあるデータ** を意味します。
 
+![state](${state})
+
 ---
 
 ### ❓ なぜ通常の変数では画面が変わらないのでしょうか？
@@ -3078,41 +3442,84 @@ Stateは単なるデータではなく、 **「値が変わったから画面を
 Stateが変更されると、Reactは自動的にこのレンダリング過程を実行し、ユーザーが変更された値を確認できるようにします。`,
   },
   {
-    id: 'state-counter-practice',
+    id: 'state-usestate-deep-dive',
     section: 3,
     order: 1,
-    title: 'カウンターアプリ実習：useStateの使い方',
+    title: 'useStateフックを完璧に解剖する',
     type: 0,
-    exp: 25,
-    time: 10,
-    content: `# 🛠️ useStateで数値を変える
+    exp: 20,
+    time: 14,
+    content: `# 🎣 useStateフックの構造と原理
 
-では、実際に画面を更新するコードを書いてみましょう。Reactが提供する \`useState\` というツールを使用します。
+Reactで状態を作るために使用する \`useState\` は、 **配列の分割代入** という独特な文法を使用します。
+
+> **💡 豆知識： 配列の分割代入とは？**
+> 配列の中に入っている値を取り出して、 それぞれの変数に一度に格納するJavaScriptの便利な文法です。
+> \`\`\`javascript
+> // 分割代入方式（ずっとスッキリします！）
+> const [a, b] = ['りんご', 'バナナ'];
+> \`\`\`
+> **「なぜあえて配列の方式を使うのでしょうか？」**
+> 今は **「自分が望む通りに変数の名前を自由に付けられるからだ」** ということだけ知っておけば十分です！ そのおかげで **count** や **text** など、 用途に合った名前を自分の思い通りに付けることができるのです。
+
+---
+
+### 📝 useStateの基本文法
+分割代入の文法を通じて、 \`useState\` が返してくれる二つの贈り物をそれぞれの変数に格納します。
 
 \`\`\`jsx
-import { useState } from 'react'; // 👈 必ずインポートする必要があります！
+const [state, setState] = useState(initialValue);
+\`\`\`
 
-function Counter() {
-  // [現在値, 更新関数] = useState(初期値);
-  const [count, setCount] = useState(0);
+1. **state (現在値)** ： コンポーネントが今記憶しているデータです。
+2. **setState (更新関数)** ： このデータを変更したい時に使用する専用の関数です。 この関数を通じてのみ、 画面を更新できます。
+3. **initialValue (初期値)** ： コンポーネントが初めて誕生した時に持つデータの開始値です。
 
-  return (
-    <div>
-      <p>現在の数字: {count}</p>
-      <button onClick={() => setCount(count + 1)}>増加</button>
-    </div>
-  );
+---
+
+### 💻 実際の使用例
+これから作成する「カウンター」や「入力欄」では、 次のように宣言します。
+
+\`\`\`jsx
+// 数値を管理する場合
+const [count, setCount] = useState(0);
+
+// 文字を管理する場合
+const [text, setText] = useState("");
+
+// 真偽値（オン/オフ）を管理する場合
+const [isOn, setIsOn] = useState(false);
+\`\`\`
+
+
+
+---
+
+### ⚖️ なぜ二つがセットで出てくるのでしょうか？
+Reactはデータだけを与えるのではなく、 そのデータを **安全に変更できる鍵 (更新関数)** を一緒に与えます。
+
+私たちが箱に入ったボールの数を変える時、 直接箱を壊すのではなく、 **「箱の管理者」** に「ボールをもう一つ入れて！」と頼むのと同じです。 ここでの管理者がまさに **setState** です。
+
+---
+
+### ⚠️ ルール： Hookは最上部で！
+\`useState\` のようなフックを使用する時には、 必ず守らなければならない鉄則があります。 それは、 **コンポーネント関数の最も上の部分** で呼び出さなければならないという点です。
+
+\`\`\`jsx
+function MyComponent() {
+  // ✅ 良い例： 関数が始まってすぐに宣言
+  const [name, setName] = useState("React");
+
+  if (someCondition) {
+    // ❌ 悪い例： 条件文やループ文の中でフックを呼び出してはいけません！
+    // const [age, setAge] = useState(20); 
+  }
+
+  return <div>{name}</div>;
 }
 \`\`\`
 
-**🖥️ ブラウザ出力結果:** 
-> 現在の数字: 0  
-> [増加ボタン]
-
-**🔄 ボタンを押すと起こること:** 
-1. \`setCount\` 関数が実行され、 \`count\` が変更されます。
-2. Reactが「おや？ countが変わったな」と検知します。
-3. **コンポーネントを再実行（再レンダリング）** して、画面に新しい数値を描画します。`,
+このルールを守ってこそ、 Reactが複数の状態を混乱せずに正確な順序で記憶することができるのです。`,
   },
   {
     id: 'quiz-state-description',
@@ -4846,8 +5253,8 @@ export default TodoList;
 
 
 
-- **これまで**: (自分だけが見れる一時的な住所) \`localhost:5173\` 
-- **デプロイ後**: (世界中の誰でもアクセス可能な公式の住所) \`https://ID.github.io/プロジェクト名\`
+**これまで**: (自分だけが見れる一時的な住所) \`localhost:5173\` 
+**デプロイ後**: (世界中の誰でもアクセス可能な公式の住所) \`https://ID.github.io/プロジェクト名\`
 
 さあ、 私たちが作った成果物に生命力を吹き込んでみましょう！`,
   },
@@ -4989,38 +5396,312 @@ return (
   },
   // Section 10
   {
-    id: 'react-lifecycle-useeffect',
+    id: 'react-lifecycle-concept',
     section: 10,
     order: 0,
-    title: 'ボーナス：useEffectで賢いコンポーネントを作る',
+    title: 'コンポーネントの一生： ライフサイクル（生滅周期）',
     type: 0,
-    exp: 30,
-    time: 15,
-    content: `# 🔄 画面が描画された後にすること：useEffect
+    exp: 10,
+    time: 5,
+    content: `# 🔄 コンポーネントにも一生があります： ライフサイクル
 
-アプリは完成しましたが、Reactのさらに深いところが気になる方のためのボーナス講義です！コンポーネントが **誕生した時(Mount)、変化した時(Update)、消える時(Unmount)** に特定の動作をさせたいなら、 **\`useEffect\`** を知る必要があります。
-
-### 🧪 サイドエフェクト(Side Effect)とは？
-コンポーネントの本業である「画面を描画すること」以外の付随的な作業を指します。
-- サーバーからデータを取得する (API呼び出し)
-- ブラウザのウィンドウサイズを検知する
-- ローカルストレージにデータを保存する
+Reactコンポーネントは、 画面に現れてから消えるまでの過程をたどります。 これを **ライフサイクル（Lifecycle, 生涯周期）** と呼びます。
 
 ---
 
-### 📝 基本文法 (依存配列)
-\`\`\`jsx
-import { useEffect } from 'react';
+### 🌱 生涯周期の3段階
+1. **マウント (Mount)** ： コンポーネント가画面に **初めて現れる誕生** の瞬間です。
+2. **アップデート (Update)** ： データが変わり、 画面が **再描画される成長** の瞬間です。
+3. **アンマウント (Unmount)** ： コンポーネントが画面から **消える死** の瞬間です。
 
+
+
+この周期を理解してこそ、 自分の望む「タイミング」でコードを実行させることができます。`,
+  },
+  {
+    id: 'react-useeffect-sideeffect',
+    section: 10,
+    order: 1,
+    title: 'useEffectフックとSide Effect',
+    type: 0,
+    exp: 20,
+    time: 15,
+    content: `# 🎣 特定のタイミングで実行する： useEffect
+
+私たちが学んだライフサイクルの特定の時点に合わせて作業を実行させてくれる道具が、 まさに **useEffect** フックです。
+
+このフックの名前は、 **サイドエフェクト (Side Effect)** を使用 (use) するという意味から付けられました。 つまり、 コンポーネントのライフサイクルに合わせて、 私たちが望む「付随的な効果」を引き起こすための専用ツールなのです。
+
+---
+
+### 🧪 サイドエフェクト (Side Effect) とは？
+コンポーネントの本業である「画面を描画すること」以外に、 付随的に発生するすべての作業のことを指します。
+- サーバーからデータを取得する
+- ブラウザのストレージ (LocalStorage) にデータを読み書きする
+- タイマーの設定やイベントリスナーの登録
+
+Reactは、 画面を描画している最中にこのような付随的な作業が混ざると、 画面が重くなったり予期せぬエラーが発生したりする可能性があります。 そのため、 **useEffect** という安全な分離された空間を作り、 その中でのみこれらの作業を処理するように推奨しています。
+
+
+
+---
+
+### 🛠️ useEffectの使い方： 3つの核心パターン
+
+**useEffect** の第2引数である **依存配列 (Dependency Array)** をどのように使うかによって、 実行タイミングが決定されます。
+
+#### 1. 配列がない場合 (毎回実行) ⚠️
+依存配列を全く記述しないと、 画面が再描画 (Render) されるたびに毎回実行されます。
+\`\`\`jsx
 useEffect(() => {
-  console.log("ようこそ！画面が初めて表示された時だけ挨拶します。");
-}, []); // 👈 この空の配列が「一度だけ」実行させる鍵です。
+  console.log("再レンダリングされるたびに実行！");
+}); 
+\`\`\`
+> **🚫 注意： パフォーマンス低下の懸念**
+> コンポーネント内の小さな状態が一つ変わるだけでも、 このコードが繰り返し実行されます。 これは不必要な演算を繰り返すことになり、 **アプリ全体のパフォーマンスを低下させるリスク** が高いため、 実務では特別な理由がない限りほとんど使用されません。
+
+#### 2. 空の配列の場合 [] (誕生時に一度だけ)
+コンポーネントが画面に初めて現れる **マウント (Mount)** 時点でのみ一度だけ実行されます。 
+\`\`\`jsx
+useEffect(() => {
+  console.log("マウント時に一度だけ実行！");
+}, []); 
 \`\`\`
 
-[Image showing React useEffect lifecycle: Mounting, Updating, and Unmounting]
+#### 3. 値が入った配列の場合 [状態値] (誕生時 + 変化時)
+配列の中に値を入れると、 **① コンポーネントがマウントされる時に必ず一度実行** され、 その後 **② 指定した値が変わるたびに** 再び実行されます。
 
-> **💡 次の挑戦課題**
-> 今作ったTodoアプリは、リロードするとデータが消えてしまいますよね？ \`useEffect\` を活用すれば、 **ローカルストレージ** にデータを保存して、リロードしても予定が残っている、より強力なアプリを作ることができます！`,
+\`\`\`jsx
+useEffect(() => {
+  console.log("マウント時 + countが変わるたびに実行！");
+}, [count]); // 👈 最初に現れる時も実行されるという点を忘れないでください！
+\`\`\`
+
+---
+
+### 🧹 ボーナス： コンポーネントの後片付け (Cleanup)
+コンポーネントが消える時（**アンマウント**） に、 何かを止めたり片付けたりしなければならない場合があります。 
+
+\`\`\`jsx
+useEffect(() => {
+  console.log("マウント！");
+
+  return () => {
+    console.log("アンマウント！ （後片付け中...）");
+  };
+}, []);
+\`\`\`
+
+**useEffect** の内部で関数を **return** すると、 Reactはコンポーネントが消える瞬間にその関数を実行してくれます。 **「消える時に後片付けをする方法がある」** ということだけ軽く覚えておいてください！`,
+  },
+  {
+    id: 'browser-storage-concept',
+    section: 10,
+    order: 2,
+    title: '10-2. ブラウザの記憶装置： ストレージを理解する',
+    type: 0,
+    exp: 10,
+    time: 12,
+    content: `# 💾 ブラウザがデータを記憶する方法： ストレージ
+
+ウェブページは基本的に、 リロードするとすべての変数が初期化されます。 しかし、 ブラウザ内部にはデータを半永久的に保存できる **ストレージ (Storage)** という記憶空間が存在します。
+
+---
+
+### 🗄️ ローカルストレージ vs セッションストレージ
+
+ブラウザストレージは、 用途に応じて二つに分けられます。 どちらのストレージも **「ページをリロードしてもデータが消えない」** という強力な共通点を持っています。
+
+#### 1. ローカルストレージ (LocalStorage) 🏠
+* **特徴** ： ユーザーが直接ブラウザキャッシュを削除したり、 コードで消去したりしない限り、 PC内に **残り続けるデータ** です。
+* **用途** ： ダークモード設定、 保存されたTodoリストなど、 長期的な保管が必要な情報に使用します。
+
+#### 2. セッションストレージ (SessionStorage) ⏱️
+* **特徴** ： **現在開いているブラウザタブ** 内でのみ有効なデータです。 タブを閉じた瞬間にデータは即座に削除されます。
+* **用途** ： 一時的な入力フォームデータなど、 短期間だけ維持すべき情報に使用します。
+
+---
+
+### ⚠️ ストレージは万能ではありません！ （限界と短所）
+ストレージを使用する際は、 必ず以下の三つの制約に注意する必要があります。
+
+1. **セキュリティの脆弱性** ： ストレージはJavaScriptで誰でも簡単に読み取ることができます。 そのため、 **パスワード、 個人情報、 重要な認証トークン** などを保存してはいけません。 （ハッキングの標的になりやすいです！）
+2. **容量の限界** ： 通常、 ブラウザごとに **約 5MB** 程度の小さな容量しか許容されません。 高画質な画像や膨大なデータを保存するには不適切です。
+3. **文字列のみ保存** ： ストレージは **テキスト (String)** のみ保存できます。 オブジェクトや配列を保存するには、 複雑な変換過程を経る必要があります。
+
+[Image: Safety warning for Browser Storage]
+
+これらの特徴と限界をしっかり理解した上で、 安全な範囲内で私たちのアプリのTodoリストデータを保存してみましょう！`,
+  },
+  {
+    id: 'practice-storage-basic',
+    section: 10,
+    order: 3,
+    title: '実習 1： 基礎的なストレージの使用法',
+    type: 0,
+    exp: 20,
+    time: 10,
+    content: `# 🛠️ データの読み書きの基礎
+
+ローカルストレージは非常に単純な文法でデータをやり取りします。 まるで変数に値を代入するのと似ています。
+
+---
+
+### 📝 データを保存する： setItem
+\`\`\`javascript
+// localStorage.setItem("名前", "値");
+localStorage.setItem("theme", "dark");
+\`\`\`
+
+### 📖 データを読み込む： getItem
+\`\`\`javascript
+// const 変数名 = localStorage.getItem("名前");
+const currentTheme = localStorage.getItem("名前");
+console.log(currentTheme); // 出力： "dark"
+\`\`\`
+
+### 🧹 データを削除する： removeItem / clear
+\`\`\`javascript
+localStorage.removeItem("theme"); // 特定のデータのみ削除
+localStorage.clear(); // すべてのストレージデータを初期化
+\`\`\`
+
+この基礎文法は、 **文字列 (String)** である場合のみ完璧に動作します。 それでは、 私たちが作った Todo リストのような **配列** はどのように保存すべきでしょうか？ 次の実習で学んでみましょう！`,
+  },
+  {
+    id: 'practice-storage-advanced-json',
+    section: 10,
+    order: 4,
+    title: '実習 2： ストレージの使用法 (配列、 オブジェクトの場合)',
+    type: 0,
+    exp: 30,
+    time: 15,
+    content: `# 🧩 配列とオブジェクトを保存する秘訣： JSON
+
+ローカルストレージはテキストのみを記憶できる記憶装置です。 そのため、 配列やオブジェクトをそのまま入れると \`[object Object]\` のように壊れたデータが保存されてしまいます。 これを解決するために、 私たちは **JSON** という形式を借りる必要があります。
+
+> **💡 JSON (JavaScript Object Notation) とは？**
+> データを保存したりやり取りしたりするために作られた **「テキストベースの通信規約」** です。 JavaScriptのオブジェクトと非常によく似ていますが、 ファイルやストレージに保存できる純粋な **文字列** である点が特徴です。
+
+
+
+---
+
+### 📤 1. 保存する時： JSON.stringify()
+JavaScriptの配列やオブジェクトを、 一つの **長い文字列** に魔法のように変換してくれます。 これを **シリアライズ** と呼びます。
+\`\`\`javascript
+const user = { name: "太郎", age: 20 };
+localStorage.setItem("user-info", JSON.stringify(user)); 
+// 実際に保存される姿： '{"name":"太郎","age":20}'
+\`\`\`
+
+### 📥 2. 読み込む時： JSON.parse()
+ストレージから取得した文字列を、 再び私たちが使用できる **JavaScriptオブジェクト/配列** に戻してくれます。 これを **デシリアライズ** と呼びます。
+\`\`\`javascript
+const data = localStorage.getItem("user-info");
+const parsedUser = JSON.parse(data);
+console.log(parsedUser.name); // 出力： "太郎"
+\`\`\`
+
+---
+
+### 💡 ポイント要約
+- **シリアライズ (stringify)** ： データを保管するために一列の列車 (文字列) に並べる過程
+- **デシリアライズ (parse)** ： 列車を再び元の複雑な構造 (オブジェクト/配列) に組み立てる過程
+
+この二つの過程を経て初めて、 私たちの Todo リスト配列を安全に保管することができます！`,
+  },
+  {
+    id: 'todolist-persistence-storage',
+    section: 10,
+    order: 5,
+    title: '実習 3： Todo listにストレージを適用する',
+    type: 0,
+    exp: 50,
+    time: 25,
+    content: `# 🚀 私たちのアプリに永久保存機能を組み込む
+
+これまで学んだすべての技術を一つにまとめる時が来ました。 **useEffect** のタイミング調節機能と **JSON** 変換技術を、 私たちの Todo リストに直接適用してみましょう。
+
+### 📍 どこに記述しますか？
+私たちの Todo リストの状態 (**todos**) が管理されている **App.jsx** ファイルの **App** コンポーネント内部に記述します。 状態値が定義されたすぐ下のスペースを活用してみてください！
+
+---
+
+### 1️⃣ 変化を検知して保存する (Update 時点)
+Todo が追加されたり削除されたりして **todos** 配列が変わるたびに、 ローカルストレージに自動的に保存されるように設定します。
+
+\`\`\`jsx
+useEffect(() => {
+  // 1. 配列を文字列に変換して保存します。
+  localStorage.setItem("my-todo-list", JSON.stringify(todos));
+}, [todos]); // 👈 todosが変わるたびに実行！
+\`\`\`
+
+---
+
+### 2️⃣ 起動時にデータを読み込む (Mount 時点)
+アプリが最初に起動した時に一度だけ、 保存されたデータを確認し、 もしあれば画面に再表示します。
+
+\`\`\`jsx
+useEffect(() => {
+  const savedData = localStorage.getItem("my-todo-list");
+  
+  if (savedData) {
+    // 2. 文字列を再び配列に変換して状態を更新します。
+    setTodos(JSON.parse(savedData));
+  }
+}, []); // 👈 マウント時に一度だけ実行！
+\`\`\`
+
+---
+
+### 🏆 完成した App.jsx コードの確認
+作成したコードが以下のような構造になっているか確認してみてください。 順序が入れ替わっても動作しますが、 通常は **状態宣言 -> 効果(Effect) -> 関数** の順で記述するのが可読性に優れています。
+
+\`\`\`jsx
+function App() {
+  const [todos, setTodos] = useState([]);
+
+  // 読み込み (マウント時)
+  useEffect(() => {
+    const savedData = localStorage.getItem("my-todo-list");
+    if (savedData) setTodos(JSON.parse(savedData));
+  }, []);
+
+  // 保存 (変更時)
+  useEffect(() => {
+    localStorage.setItem("my-todo-list", JSON.stringify(todos));
+  }, [todos]);
+
+  // ... 以下コンポーネントロジックおよび return 文
+}
+\`\`\`
+
+---
+
+### ✅ 動作確認
+Todo を入力した後、 ブラウザを **リロード** してみてください。 データが消えずにそのまま残っていれば成功です！ もし動作しない場合は、 デベロッパーツールの **Application** タブをもう一度確認してみてください。`,
+  },
+  {
+    id: 'section-10-conclusion',
+    section: 10,
+    order: 6,
+    title: 'ボーナスセクションのまとめ',
+    type: 0,
+    exp: 20,
+    time: 5,
+    content: `# 🏁 完走おめでとうございます！
+
+デプロイから **useEffect**, **ローカルストレージ** まで！ 皆さんは React の基礎を越え、 実務技術の入り口を無事に突破しました。 
+
+---
+
+### 🎁 皆さんは今や...
+単に画面を描画する人ではなく、 **データの流れとライフサイクルを扱える React 開発者** になりました。 
+
+今回このボーナスセクションで学んだ内容は、 実際の大規模なサービスでもサーバー通信 (API) を処理する際に、 まったく同じ原理で使用されます。 
+今日の経験が、 皆さんの素晴らしい開発人生の確かな糧となることを願っています。 本当にお疲れ様でした！ 🎉`,
   },
 ];
 

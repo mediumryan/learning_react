@@ -1,6 +1,6 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -45,8 +45,79 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+@font-face {
+  font-family: 'GmarketSans';
+  src: url('./../public/assets/fonts/GmarketSansTTFLight.ttf')
+    format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GmarketSans';
+  src: url('../public/assets/fonts/GmarketSansTTFMedium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GmarketSans';
+  src: url('../public/assets/fonts/GmarketSansTTFBold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans JP';
+  src: url('../public/assets/fonts/NotoSansJP-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans JP';
+  src: url('../public/assets/fonts/NotoSansJP-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans JP';
+  src: url('../public/assets/fonts/NotoSansJP-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans JP';
+  src: url('../public/assets/fonts/NotoSansJP-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
-  font-family: "Google Sans", sans-serif;
+  font-family:
+    'GmarketSans',
+    'Inter',
+    'Noto Sans KR',
+    'Noto Sans JP',
+    -apple-system,
+    /* iOS/macOS 시스템 폰트 */ BlinkMacSystemFont,
+    /* macOS Chrome */ 'Segoe UI',
+    /* Windows */ 'Hiragino Kaku Gothic ProN',
+    /* iOS 일본어 표준 */ 'Meiryo',
+    /* Windows 일본어 표준 */ sans-serif;
+
+  /* 폰트 렌더링 최적화 */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 button,
@@ -57,11 +128,18 @@ a {
 li {
   list-style: disc;
   margin-left: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
 li.content-sidebar {
   list-style: none;
   margin-left: 0;
+  margin-bottom: 0;
+}
+
+[data-active='true'] {
+  background-color: #2b7fff;
+  color: #fff;
 }
 
 :root {

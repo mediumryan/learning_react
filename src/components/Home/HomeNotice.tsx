@@ -29,7 +29,7 @@ export default function HomeNotice() {
 
   return (
     <>
-      <Card className="w-1/3 max-w-1/3">
+      <Card className="md:w-1/3 w-full md:max-w-1/3">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>Notice</CardTitle>
 
@@ -48,7 +48,7 @@ export default function HomeNotice() {
         </CardHeader>
 
         <CardContent>
-          <ScrollArea className="h-50 pr-4">
+          <ScrollArea className="md:h-50 h-72 pr-4">
             <div className="space-y-3">
               {notices?.map((notice) => (
                 <Card

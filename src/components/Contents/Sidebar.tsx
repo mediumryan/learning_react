@@ -7,7 +7,7 @@ import { useAtomValue } from "jotai";
 import { currentUserAtom } from "~/data/userData";
 import { contentsAtom } from "~/data/contentData";
 // icons
-import { BookOpen, CheckCircle2 } from "lucide-react";
+import { BookOpen, CheckCircle2, Clock } from "lucide-react";
 import { FaReact } from "react-icons/fa";
 // shadcn/ui
 import {
@@ -15,16 +15,18 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "~/components/ui/sidebar";
 import { Progress } from "~/components/ui/progress";
 import { Label } from "../ui/label";
 // helpers
 import {
+  calculateTotalTime,
+  getSectionProgress,
   groupContentBySection,
   isCompleteCourse,
   mappingTitlebySection,
@@ -34,6 +36,7 @@ import { cn } from "~/lib/utils";
 export function AppSidebar() {
   const lectureId = useParams().id;
 
+  const { isMobile, setOpenMobile } = useSidebar();
   const sideBarItemRef = useRef<HTMLLIElement>(null);
 
   const currentUser = useAtomValue(currentUserAtom);
@@ -43,6 +46,12 @@ export function AppSidebar() {
   const contents = useAtomValue(contentsAtom);
 
   const headerD = groupContentBySection(contents);
+
+  const handleMenuItemClick = () => {
+    if (isMobile) {
+      setOpenMobile(false);
+    }
+  };
 
   useEffect(() => {
     const contentLength = contents?.length || 0;
@@ -82,9 +91,41 @@ export function AppSidebar() {
       <SidebarContent>
         {headerD.map((section) => (
           <SidebarGroup key={`section${section[0].section}`}>
-            <SidebarGroupLabel className="px-2 mb-1 text-blue-400 font-semibold text-sm ">
-              {mappingTitlebySection(section[0].section)}
-            </SidebarGroupLabel>
+            <div className="flex flex-col gap-2 group/label px-2 pb-2 mb-3 text-sm w-full ">
+              {/* TEST */}
+              <div className="flex items-center gap-2 text-[10px] text-gray-400">
+                <span className="flex items-center gap-0.5">
+                  <BookOpen className="w-3 h-3" /> {contents.length}
+                </span>
+                <span className="flex items-center gap-0.5">
+                  <Clock className="w-3 h-3" /> {calculateTotalTime(contents)}m
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div className="flex flex-col text-blue-400 font-bold">
+                  <span>{`Section ${section[0].section}`}</span>
+                  <span className="text-sm text-gray-400 italic">
+                    {mappingTitlebySection(section[0].section)}
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-2 text-[10px] text-gray-400">
+                  <span className="flex items-center gap-0.5">
+                    <BookOpen className="w-3 h-3" /> {section.length}
+                  </span>
+                  <span className="flex items-center gap-0.5">
+                    <Clock className="w-3 h-3" /> {calculateTotalTime(section)}m
+                  </span>
+                </div>
+              </div>
+              <Progress
+                value={getSectionProgress(section, currentUser)}
+                className="w-full h-1 transition-all duration-300 ease-in-out"
+                indicatorClassName="bg-blue-500"
+              />
+            </div>
+
             <SidebarGroupContent>
               <SidebarMenu>
                 {section.map((content) => (
@@ -92,6 +133,7 @@ export function AppSidebar() {
                     key={content.id}
                     ref={lectureId === content.id ? sideBarItemRef : null}
                     className="content-sidebar px-2"
+                    onClick={handleMenuItemClick}
                   >
                     <Link
                       to={`/contents/${content.id}`}
@@ -99,11 +141,10 @@ export function AppSidebar() {
                     >
                       <>
                         <SidebarMenuButton
-                          className={`${
-                            lectureId === content.id
-                              ? "bg-blue-400 text-white"
-                              : ""
-                          } `}
+                          isActive={lectureId === content.id}
+                          className={cn(
+                            "transition-colors hover:opacity-75 duration-300",
+                          )}
                         >
                           {content.type === 0 ? (
                             <BookOpen
@@ -163,4 +204,15 @@ export function AppSidebar() {
       </SidebarContent>
     </Sidebar>
   );
+}
+
+{
+  /* <div className="flex flex-col items-end gap-2 text-[10px] text-gray-400">
+  <span className="flex items-center gap-0.5">
+    <BookOpen className="w-3 h-3" /> {section.length}
+  </span>
+  <span className="flex items-center gap-0.5">
+    <Clock className="w-3 h-3" /> {calculateTotalTime(section)}m
+  </span>
+</div>; */
 }

@@ -157,29 +157,57 @@ export default function UsersPage() {
         <Table>
           <TableHeader>
             <TableRow>
+              {/* 이름 */}
               <TableHead>{t("users.users_name_label")}</TableHead>
+              {/* 닉네임 */}
               <TableHead>{t("users.users_nickname_label")}</TableHead>
-              <TableHead>{t("users.users_email_label")}</TableHead>
-              <TableHead>{t("users.users_course_label")}</TableHead>
-              <TableHead>{t("users.users_grade_label")}</TableHead>
-              <TableHead>{t("users.users_authority_label")}</TableHead>
-              <TableHead>{t("users.users_exp_label")}</TableHead>
-              <TableHead className="text-right"></TableHead>
+              {/* 이메일 */}
+              <TableHead className="hidden md:table-cell">
+                {t("users.users_email_label")}
+              </TableHead>
+              {/* 과정 */}
+              <TableHead className="hidden md:table-cell">
+                {t("users.users_course_label")}
+              </TableHead>
+              {/* 등급 */}
+              <TableHead className="hidden md:table-cell">
+                {t("users.users_grade_label")}
+              </TableHead>
+              {/* 권한 */}
+              <TableHead className="hidden md:table-cell">
+                {t("users.users_authority_label")}
+              </TableHead>
+              {/* 경험치 */}
+              <TableHead className="hidden md:table-cell">
+                {t("users.users_exp_label")}
+              </TableHead>
+              {/* 8. 액션 버튼 (항상 표시) */}
+              <TableHead></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filteredUsers?.map((user) => (
               <TableRow key={user.uid}>
-                <TableCell className="font-medium">{user.name}</TableCell>
+                {/* 이름 */}
+                <TableCell className="font-bold">{user.name}</TableCell>
+                {/* 닉네임 */}
                 <TableCell>{user.nickname}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell className="capitalize">{user.course}</TableCell>
-                <TableCell>
+                {/* 이메일 */}
+                <TableCell className="hidden md:table-cell">
+                  {user.email}
+                </TableCell>
+                {/* 과정 */}
+                <TableCell className="capitalize hidden md:table-cell">
+                  {user.course}
+                </TableCell>
+                {/* 등급 */}
+                <TableCell className="hidden md:table-cell">
                   <Badge variant="outline" className="capitalize">
                     {user.grade}
                   </Badge>
                 </TableCell>
-                <TableCell>
+                {/* 권한 */}
+                <TableCell className="hidden md:table-cell">
                   <Badge
                     variant={
                       user.authority === "admin"
@@ -193,9 +221,11 @@ export default function UsersPage() {
                     {user.authority}
                   </Badge>
                 </TableCell>
-                <TableCell className="tabular-nums">
+                {/* 경험치 */}
+                <TableCell className="tabular-nums hidden md:table-cell">
                   {user.exp.toLocaleString()}
                 </TableCell>
+                {/* 액션 버튼 */}
                 <TableCell className="text-right">
                   <div className="flex justify-end gap-2">
                     <Dialog

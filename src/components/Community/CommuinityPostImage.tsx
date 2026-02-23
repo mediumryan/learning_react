@@ -47,7 +47,8 @@ const PostImage = ({ src, title }: { src: string; title: string }) => {
 
       {/* 2. 확대된 이미지 내용 */}
       <DialogContent
-        className="max-w-[95vw] max-h-[95vh] p-0 border-none bg-transparent shadow-none flex items-center justify-center"
+        // max-w-none을 추가하여 기본 너비 제약을 명시적으로 제거합니다.
+        className="max-w-none w-screen h-screen p-0 border-none bg-transparent shadow-none flex items-center justify-center outline-none"
         showCloseButton={false}
       >
         <DialogTitle className="sr-only">{title} Zoomed-in</DialogTitle>
@@ -55,7 +56,8 @@ const PostImage = ({ src, title }: { src: string; title: string }) => {
         <img
           src={src}
           alt={title}
-          className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
+          // w-full 또는 w-auto와 함께 h-full을 사용하여 화면을 꽉 채우도록 유도합니다.
+          className="w-auto h-auto max-w-[80vw] max-h-[75vh] object-contain rounded-lg shadow-2xl"
         />
       </DialogContent>
     </Dialog>

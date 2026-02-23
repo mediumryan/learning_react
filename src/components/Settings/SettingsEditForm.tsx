@@ -63,7 +63,7 @@ export const SettingsEditForm = ({ setShowForm }: SettingsEditFormProps) => {
     setPreviewUrl(URL.createObjectURL(file));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     if (!currentUser) return;
 

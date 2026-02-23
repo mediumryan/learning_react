@@ -43,8 +43,8 @@ export default function HomeSelectCourse() {
   };
 
   return (
-    <>
-      <ButtonGroup orientation="vertical" className="my-4 gap-1">
+    <div className="flex flex-col items-center gap-4">
+      <ButtonGroup orientation="vertical" className="gap-1">
         {courseOptions.map((course, index) => (
           <Button
             key={course}
@@ -60,7 +60,6 @@ export default function HomeSelectCourse() {
           </Button>
         ))}
       </ButtonGroup>
-
       <CommonAlert
         buttonLabel={t("common.change")}
         triggerVariant="ghost"
@@ -70,6 +69,6 @@ export default function HomeSelectCourse() {
         description={`コースを「${selectedCourse}」に変更しますか？`}
         onConfirm={handleClickChangeCourse}
       />
-    </>
+    </div>
   );
 }

@@ -25,7 +25,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const handleSignUp = async (e: React.FormEvent) => {
+  const handleSignUp = async (e: React.SubmitEvent) => {
     e.preventDefault();
     setError(null);
 

@@ -61,7 +61,7 @@ export default function HomeNoticeDetail({
       open={!!selectedNotice}
       onOpenChange={() => setSelectedNotice(null)}
     >
-      <DialogContent className="max-w-lg">
+      <DialogContent className="sm:max-w-lg">
         {selectedNotice && (
           <>
             <DialogHeader>
