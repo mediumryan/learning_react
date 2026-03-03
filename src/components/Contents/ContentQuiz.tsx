@@ -1,7 +1,7 @@
 // react
 import { useState } from "react";
 // atoms
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import type { MultipleChoiceQuiz, ShortAnswerQuiz } from "~/data/contentData";
 import { currentUserAtom } from "~/data/userData";
 import {
@@ -29,22 +29,23 @@ import { cn } from "~/lib/utils";
 import { checkShortAnswer } from "~/lib/helper";
 // firebase
 import { completeLectureForUser } from "~/lib/firestore_utils";
+import { Label } from "../ui/label";
+import { useTranslation } from "react-i18next";
 
 interface ContentQuizProps {
   quiz: MultipleChoiceQuiz | ShortAnswerQuiz;
 }
 
 export default function ContentQuiz({ quiz }: ContentQuizProps) {
+  const { t } = useTranslation();
+
   const [userAnswer, setUserAnswer] = useAtom(userAnswersAtom);
   const [isSubmitted, setIsSubmitted] = useAtom(isSubmittedAtom);
   const [isCorrect, setIsCorrect] = useAtom(isCorrectAtom);
   const [showFeedback, setShowFeedback] = useAtom(showFeedbackAtom);
-  const [displayedCorrectAnswer, setDisplayedCorrectAnswer] = useAtom(
-    displayedCorrectAnswerAtom,
-  );
+  const setDisplayedCorrectAnswer = useSetAtom(displayedCorrectAnswerAtom);
 
   const [currentUser, setCurrentUser] = useAtom(currentUserAtom);
-
   const [isOpen, setIsOpen] = useState(false);
 
   const handleAnswerChange = (value: string) => {
@@ -54,6 +55,7 @@ export default function ContentQuiz({ quiz }: ContentQuizProps) {
   };
 
   const handleSubmit = async () => {
+    console.log(quiz.question);
     try {
       setIsSubmitted(true);
       setShowFeedback(true);
@@ -138,6 +140,13 @@ export default function ContentQuiz({ quiz }: ContentQuizProps) {
                 >
                   {option}
                 </FieldLabel>
+                <FieldLabel>
+                  {showFeedback && quiz.explanation && (
+                    <p className="text-sm text-gray-600 mt-1">
+                      {quiz.explanation}
+                    </p>
+                  )}
+                </FieldLabel>
               </Field>
             ))}
           </RadioGroup>
@@ -145,8 +154,12 @@ export default function ContentQuiz({ quiz }: ContentQuizProps) {
       )}
 
       {quiz.type === 2 && (
-        <Field>
-          <FieldLabel htmlFor={`quiz-input-${quiz.id}`}>
+        <FieldSet>
+          <FieldLegend variant="label">Quiz</FieldLegend>
+          <FieldLabel
+            htmlFor={`quiz-input-${quiz.id}`}
+            className="whitespace-pre-wrap"
+          >
             {quiz.question}
           </FieldLabel>
           <Input
@@ -162,15 +175,7 @@ export default function ContentQuiz({ quiz }: ContentQuizProps) {
             onChange={(e) => handleAnswerChange(e.target.value)}
             disabled={isSubmitted}
           />
-          {showFeedback &&
-            isSubmitted &&
-            !isCorrect &&
-            displayedCorrectAnswer && (
-              <p className="text-sm text-green-600 mt-1">
-                正解は: {displayedCorrectAnswer}
-              </p>
-            )}
-        </Field>
+        </FieldSet>
       )}
 
       {showFeedback && isSubmitted && (
@@ -180,8 +185,17 @@ export default function ContentQuiz({ quiz }: ContentQuizProps) {
             isCorrect ? "text-green-600" : "text-red-600",
           )}
         >
-          {isCorrect ? "正解です！" : "残念、不正解です。"}
+          {isCorrect ? t("contents.correct") : t("contents.incorrect")}
         </p>
+      )}
+
+      {showFeedback && isSubmitted && (
+        <Label className="flex flex-col items-start mt-4 text-xs text-gray-600/85">
+          <span className="text-sm font-bold">
+            {t("contents.explanation_label")}
+          </span>
+          <span>{quiz.explanation}</span>
+        </Label>
       )}
 
       <Button
@@ -189,7 +203,9 @@ export default function ContentQuiz({ quiz }: ContentQuizProps) {
         onClick={isSubmitted && !isCorrect ? handleRetry : handleSubmit}
         disabled={isButtonDisabled}
       >
-        {isSubmitted && !isCorrect ? "再試行" : "提出"}
+        {isSubmitted && !isCorrect
+          ? t("contents.retry_label")
+          : t("contents.submit_label")}
       </Button>
       <LevelUpModal
         isOpen={isOpen}

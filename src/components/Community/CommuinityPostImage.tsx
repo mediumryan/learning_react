@@ -1,16 +1,16 @@
-import { useState } from 'react';
+import { useState } from "react";
 // shadcn/ui
-import { Skeleton } from '~/components/ui/skeleton';
+import { Skeleton } from "~/components/ui/skeleton";
 import {
   Dialog,
   DialogContent,
   DialogTrigger,
   DialogTitle,
-} from '~/components/ui/dialog';
+} from "~/components/ui/dialog";
 // icons
-import { ImageIcon, ZoomIn } from 'lucide-react';
+import { ImageIcon, ZoomIn } from "lucide-react";
 // helpers
-import { cn } from '~/lib/utils';
+import { cn } from "~/lib/utils";
 
 const PostImage = ({ src, title }: { src: string; title: string }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -19,7 +19,7 @@ const PostImage = ({ src, title }: { src: string; title: string }) => {
     <Dialog>
       {/* 1. 트리거: 클릭할 수 있는 프리뷰 이미지 */}
       <DialogTrigger asChild>
-        <div className="aspect-video overflow-hidden rounded-md relative bg-muted cursor-pointer group">
+        <div className="overflow-hidden rounded-md relative bg-muted cursor-pointer group">
           {isLoading && (
             <Skeleton className="absolute inset-0 h-full w-full flex items-center justify-center">
               <ImageIcon className="h-10 w-10 text-muted-foreground/20" />
@@ -37,8 +37,8 @@ const PostImage = ({ src, title }: { src: string; title: string }) => {
             src={src}
             alt={title}
             className={cn(
-              'h-full w-full object-cover transition-all duration-300 group-hover:scale-105',
-              isLoading ? 'opacity-0' : 'opacity-100',
+              "h-full w-full object-cover transition-all duration-300 group-hover:scale-105",
+              isLoading ? "opacity-0" : "opacity-100",
             )}
             onLoad={() => setIsLoading(false)}
           />
@@ -57,7 +57,7 @@ const PostImage = ({ src, title }: { src: string; title: string }) => {
           src={src}
           alt={title}
           // w-full 또는 w-auto와 함께 h-full을 사용하여 화면을 꽉 채우도록 유도합니다.
-          className="w-auto h-auto max-w-[80vw] max-h-[75vh] object-contain rounded-lg shadow-2xl"
+          className="w-auto h-auto max-w-[80vw] max-h-[75vh] bg-white object-contain rounded-lg shadow-2xl"
         />
       </DialogContent>
     </Dialog>

@@ -16,9 +16,14 @@ import { Label } from "~/components/ui/label";
 import { toast } from "sonner";
 // firebase
 import { signIn } from "~/lib/auth";
+// i18n
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
   const navigate = useNavigate();
+
+  const { t } = useTranslation();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -47,10 +52,12 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <Card className="p-8 w-full max-w-sm shadow-lg">
-        <h2 className={H2_STYLE + " mb-6 text-center"}>ログイン</h2>
+        <h2 className={H2_STYLE + " mb-6 text-center"}>
+          {t("login.login_label")}
+        </h2>
         <form className="space-y-4" onSubmit={handleSignIn}>
           <div>
-            <Label htmlFor="email">メール</Label>
+            <Label htmlFor="email">{t("login.email_label")}</Label>
             <Input
               id="email"
               type="email"
@@ -62,7 +69,7 @@ const Login = () => {
             />
           </div>
           <div>
-            <Label htmlFor="password">パスワード </Label>
+            <Label htmlFor="password">{t("login.password_label")}</Label>
             <Input
               id="password"
               type="password"
@@ -76,10 +83,10 @@ const Login = () => {
           {error && <p className="text-red-500 text-sm">{error}</p>}
           <ButtonGroup className="w-full mt-6 flex justify-end">
             <Button type="button" onClick={handleClickSignUp}>
-              会員登録
+              {t("login.sign_up_label")}
             </Button>
             <Button type="submit" variant="outline">
-              ログイン
+              {t("login.login_label")}
             </Button>
           </ButtonGroup>
         </form>

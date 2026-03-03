@@ -1,6 +1,6 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
-@import 'shadcn/tailwind.css';
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -46,78 +46,56 @@
 }
 
 @font-face {
-  font-family: 'GmarketSans';
-  src: url('./../public/assets/fonts/GmarketSansTTFLight.ttf')
-    format('truetype');
+  font-family: "Noto Sans JP";
+  src: url("../public/assets/fonts/NotoSansJP-Light.ttf") format("truetype");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'GmarketSans';
-  src: url('../public/assets/fonts/GmarketSansTTFMedium.ttf') format('truetype');
+  font-family: "Noto Sans JP";
+  src: url("../public/assets/fonts/NotoSansJP-Medium.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'GmarketSans';
-  src: url('../public/assets/fonts/GmarketSansTTFBold.ttf') format('truetype');
+  font-family: "Noto Sans JP";
+  src: url("../public/assets/fonts/NotoSansJP-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Noto Sans JP';
-  src: url('../public/assets/fonts/NotoSansJP-Light.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Noto Sans JP';
-  src: url('../public/assets/fonts/NotoSansJP-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Noto Sans JP';
-  src: url('../public/assets/fonts/NotoSansJP-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Noto Sans JP';
-  src: url('../public/assets/fonts/NotoSansJP-Black.ttf') format('truetype');
+  font-family: "Noto Sans JP";
+  src: url("../public/assets/fonts/NotoSansJP-Black.ttf") format("truetype");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
 }
 
+/* 기본 폰트 */
 body {
   font-family:
-    'GmarketSans',
-    'Inter',
-    'Noto Sans KR',
-    'Noto Sans JP',
+    "Inter",
     -apple-system,
-    /* iOS/macOS 시스템 폰트 */ BlinkMacSystemFont,
-    /* macOS Chrome */ 'Segoe UI',
-    /* Windows */ 'Hiragino Kaku Gothic ProN',
-    /* iOS 일본어 표준 */ 'Meiryo',
-    /* Windows 일본어 표준 */ sans-serif;
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
 
-  /* 폰트 렌더링 최적화 */
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
+/* 한국어 전용 */
+:lang(ko) {
+  font-family: "Inter", "Noto Sans KR", sans-serif;
+}
+
+/* 일본어 전용 */
+:lang(ja) {
+  font-family:
+    "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
 }
 
 button,
@@ -137,7 +115,7 @@ li.content-sidebar {
   margin-bottom: 0;
 }
 
-[data-active='true'] {
+[data-active="true"] {
   background-color: #2b7fff;
   color: #fff;
 }

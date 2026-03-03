@@ -1,20 +1,20 @@
 // react
-import { useMemo } from 'react';
+import { useMemo } from "react";
 // atoms
-import { useAtomValue } from 'jotai';
-import { contentsAtom } from '~/data/contentData';
+import { useAtomValue } from "jotai";
+import { contentsAtom } from "~/data/contentData";
 // shadcn/ui
-import { Card } from '../ui/card';
+import { Card } from "../ui/card";
 // components
-import ContentQuiz from './ContentQuiz';
+import ContentQuiz from "./ContentQuiz";
 // markdown
-import ReactMarkdown from 'react-markdown';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import nord from 'react-syntax-highlighter/dist/cjs/styles/prism/nord';
-import remarkGfm from 'remark-gfm';
+import ReactMarkdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import nord from "react-syntax-highlighter/dist/cjs/styles/prism/nord";
+import remarkGfm from "remark-gfm";
 // i18n
-import { useTranslation } from 'react-i18next';
-import PostImage from '../Community/CommuinityPostImage';
+import { useTranslation } from "react-i18next";
+import PostImage from "../Community/CommuinityPostImage";
 
 interface ContentsProps {
   lectureId: string | undefined;
@@ -30,14 +30,14 @@ export default function Contents({ lectureId }: ContentsProps) {
   }, [contents, lectureId]);
 
   const customStyle = {
-    margin: 0,
-    borderRadius: '0.5rem',
-    fontSize: '0.875rem',
+    margin: "1rem 0",
+    borderRadius: "0.5rem",
+    fontSize: "0.875rem",
   };
 
   const renderContent = () => {
     if (!currentContent) {
-      return <p>{t('contents.no_data')}</p>;
+      return <p>{t("contents.no_data")}</p>;
     }
 
     switch (currentContent.type) {
@@ -139,7 +139,7 @@ export default function Contents({ lectureId }: ContentsProps) {
                 );
               },
               code({ className, children }) {
-                const match = /language-(\w+)/.exec(className || '');
+                const match = /language-(\w+)/.exec(className || "");
                 return match ? (
                   <SyntaxHighlighter
                     style={nord}
@@ -148,13 +148,13 @@ export default function Contents({ lectureId }: ContentsProps) {
                     wrapLongLines={true}
                     customStyle={customStyle}
                     lineProps={{
-                      style: { wordBreak: 'break-all', whiteSpace: 'pre-wrap' },
+                      style: { wordBreak: "break-all", whiteSpace: "pre-wrap" },
                     }}
                   >
                     {String(children)
-                      .replace(/\n$/, '')
-                      .replace(/\n&nbsp;\n/g, '')
-                      .replace(/\n&nbsp\n/g, '')}
+                      .replace(/\n$/, "")
+                      .replace(/\n&nbsp;\n/g, "")
+                      .replace(/\n&nbsp\n/g, "")}
                   </SyntaxHighlighter>
                 ) : (
                   <SyntaxHighlighter
@@ -165,10 +165,10 @@ export default function Contents({ lectureId }: ContentsProps) {
                     wrapLongLines={true}
                     customStyle={customStyle}
                     lineProps={{
-                      style: { wordBreak: 'break-all', whiteSpace: 'pre-wrap' },
+                      style: { wordBreak: "break-all", whiteSpace: "pre-wrap" },
                     }}
                   >
-                    {String(children).replace(/\n$/, '')}
+                    {String(children).replace(/\n$/, "")}
                   </SyntaxHighlighter>
                 );
               },
@@ -177,7 +177,7 @@ export default function Contents({ lectureId }: ContentsProps) {
                   <blockquote
                     className="md:pl-3 pl-2 md:pr-6 pr-2 py-1 rounded-lg md:text-base text-sm space-y-4"
                     style={{
-                      background: '#deeaff',
+                      background: "#deeaff",
                     }}
                     {...props}
                   >
@@ -187,19 +187,19 @@ export default function Contents({ lectureId }: ContentsProps) {
               },
               img({ node, ...props }) {
                 return (
-                  <div className="my-6">
-                    {' '}
+                  <div className="my-2">
+                    {" "}
                     {/* 마크다운 레이아웃을 위한 간격 유지 */}
                     <PostImage
-                      src={props.src || ''}
-                      title={props.alt || 'content-image'}
+                      src={props.src || ""}
+                      title={props.alt || "content-image"}
                     />
                   </div>
                 );
               },
               em({ children, ...props }) {
                 return (
-                  <span style={{ fontStyle: 'italic' }} {...props}>
+                  <span style={{ fontStyle: "italic" }} {...props}>
                     {children}
                   </span>
                 );

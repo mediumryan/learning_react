@@ -11,7 +11,7 @@ import UsersPage from "~/routes/users";
 import Login from "~/routes/login";
 import SignUp from "~/routes/signup";
 // atoms
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { authLoadingAtom, currentUserAtom } from "~/data/userData";
 // components
 import { HeaderMenu } from "~/components/Common/HeaderMenu";
@@ -27,7 +27,7 @@ function App() {
 
   const isAuthLoading = useAtomValue(authLoadingAtom);
 
-  const setLanguage = useSetAtom(languageAtom);
+  const [language, setLanguage] = useAtom(languageAtom);
 
   useEffect(() => {
     initAuthListener();
@@ -41,7 +41,7 @@ function App() {
 
   return (
     <Layout>
-      <div className="relative h-full">
+      <div className="relative h-full" lang={language}>
         {currentUser && <HeaderMenu />}
         <Routes>
           {/* 1. 인증이 반드시 필요한 경로들 */}

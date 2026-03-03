@@ -30,6 +30,11 @@ const resources = {
         complete_next_level_message_1: "다음 등급까지",
         complete_next_level_message_2: "남았습니다!",
         complete_continue_button: "계속 학습하기",
+        correct: "정답입니다!",
+        incorrect: "아쉽네요.",
+        explanation_label: "해설",
+        submit_label: "제출",
+        retry_label: "다시 풀어보기",
       },
       home_message: {
         welcome: "환영합니다!",
@@ -113,12 +118,16 @@ const resources = {
         settings_error_file_too_large: "파일 크기는 1MB 이하만 가능합니다.",
       },
       auth: {
-        login: "로그인",
-        logout: "로그아웃",
         logout_confirm: "로그아웃 하시겠습니까?",
         logout_message: "로그아웃 되었습니다.",
         signup_success: "회원가입에 성공했습니다! 환영합니다!",
         signup_fail: "회원가입에 실패했습니다: ",
+      },
+      login: {
+        login_label: "로그인",
+        email_label: "이메일",
+        password_label: "비밀번호",
+        sign_up_label: "회원가입",
       },
       course: {
         Beginner: "Beginner - 초심자 코스",
@@ -154,6 +163,11 @@ const resources = {
         complete_next_level_message_1: "次のレベルまで",
         complete_next_level_message_2: "あと少しです！",
         complete_continue_button: "学習を続ける",
+        correct: "正解です！",
+        incorrect: "残念、不正解です。",
+        explanation_label: "解説",
+        submit_label: "提出",
+        retry_label: "もう一度挑戦",
       },
       home_message: {
         welcome: "ようこそ！",
@@ -202,6 +216,9 @@ const resources = {
           "JPG、PNG、SVG形式のみアップロード可能です。",
         community_post_image_error_too_large:
           "ファイルサイズは0.5MB以下のみ可能です。",
+        community_post_success_post: "ポストが",
+        community_post_success_add: "登録されました。",
+        community_post_success_update: "修正されました。",
       },
       users: {
         users_title: "ユーザー管理",
@@ -243,6 +260,12 @@ const resources = {
         logout_message: "ログアウトしました。",
         signup_success: "サインアップに成功しました！ようこそ！",
         signup_fail: "サインアップに失敗しました: ",
+      },
+      login: {
+        login_label: "ログイン",
+        email_label: "メールアドレス",
+        password_label: "パスワード",
+        sign_up_label: "サインアップ",
       },
       course: {
         Beginner: "Beginner - 初心者コース",
