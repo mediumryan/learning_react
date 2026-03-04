@@ -1,11 +1,5 @@
 import type { Content } from "~/data/contentData";
 import type { Grade, User } from "~/data/userData";
-// images
-import bronzeBadge from "~/../public/assets/images/grades/bronze.png";
-import silverBadge from "~/../public/assets/images/grades/silver.png";
-import goldBadge from "~/../public/assets/images/grades/gold.png";
-import platinumBadge from "~/../public/assets/images/grades/platinum.png";
-import diamondBadge from "~/../public/assets/images/grades/diamond.png";
 import type { PostType } from "~/data/postData";
 
 interface GradeInfo {
@@ -139,35 +133,35 @@ export const GRADE_CONFIG: Record<Grade, GradeInfo> = {
     minExp: 0,
     maxExp: 500,
     color: "text-orange-800",
-    badge: bronzeBadge,
+    badge: "/assets/images/grades/bronze.png",
   },
   Silver: {
     nextGrade: "Gold",
     minExp: 500,
     maxExp: 1200,
     color: "text-slate-400",
-    badge: silverBadge,
+    badge: "/assets/images/grades/silver.png",
   },
   Gold: {
     nextGrade: "Platinum",
     minExp: 1200,
     maxExp: 2800,
     color: "text-yellow-500",
-    badge: goldBadge,
+    badge: "/assets/images/grades/gold.png",
   },
   Platinum: {
     nextGrade: "Diamond",
     minExp: 2800,
     maxExp: 5000,
     color: "text-purple-400",
-    badge: platinumBadge,
+    badge: "/assets/images/grades/platinum.png",
   },
   Diamond: {
     nextGrade: "Max",
     minExp: 5000,
     maxExp: 5000,
     color: "text-blue-400",
-    badge: diamondBadge,
+    badge: "/assets/images/grades/diamond.png",
   },
 };
 
