@@ -104,7 +104,7 @@ export function AppSidebar() {
 
               <div className="flex items-center justify-between">
                 <div className="flex flex-col text-blue-400 font-bold">
-                  <span>{`Section ${section[0].section}`}</span>
+                  <span>{`${section[0].section < 10 ? `Section ${section[0].section}` : `Bonus Section`}`}</span>
                   <span className="text-sm text-gray-400 italic">
                     {mappingTitlebySection(section[0].section)}
                   </span>

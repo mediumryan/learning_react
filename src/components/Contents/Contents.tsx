@@ -47,6 +47,19 @@ export default function Contents({ lectureId }: ContentsProps) {
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
+              a({ children, href, ...props }) {
+                return (
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline break-all"
+                    {...props}
+                  >
+                    {children}
+                  </a>
+                );
+              },
               strong({ children, ...props }) {
                 return (
                   <strong
@@ -60,11 +73,21 @@ export default function Contents({ lectureId }: ContentsProps) {
               ul({ children, ...props }) {
                 return (
                   <ul
-                    className="list-disc list-inside space-y-2 md:text-base text-sm"
+                    className="list-disc list-inside space-y-2 md:text-base text-sm bg-slate-50/50 p-4 rounded-lg"
                     {...props}
                   >
                     {children}
                   </ul>
+                );
+              },
+              ol({ children, ...props }) {
+                return (
+                  <ol
+                    className="space-y-2"
+                    {...props}
+                  >
+                    {children}
+                  </ol>
                 );
               },
               p({ children }) {
@@ -175,7 +198,7 @@ export default function Contents({ lectureId }: ContentsProps) {
               blockquote({ children, ...props }) {
                 return (
                   <blockquote
-                    className="md:pl-3 pl-2 md:pr-6 pr-2 py-1 rounded-lg md:text-base text-sm space-y-4"
+                    className="md:pl-3 pl-2 md:pr-6 pr-2 py-2 rounded-lg md:text-base text-sm space-y-4"
                     style={{
                       background: "#deeaff",
                     }}
@@ -187,7 +210,7 @@ export default function Contents({ lectureId }: ContentsProps) {
               },
               img({ node, ...props }) {
                 return (
-                  <div className="my-2">
+                  <div className="">
                     {" "}
                     {/* 마크다운 레이아웃을 위한 간격 유지 */}
                     <PostImage
