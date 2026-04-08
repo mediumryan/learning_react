@@ -30,7 +30,7 @@ export default function Contents({ lectureId }: ContentsProps) {
   }, [contents, lectureId]);
 
   const customStyle = {
-    margin: "1rem 0",
+    margin: "0.5rem 0",
     borderRadius: "0.5rem",
     fontSize: "0.875rem",
   };
@@ -82,15 +82,24 @@ export default function Contents({ lectureId }: ContentsProps) {
               },
               ol({ children, ...props }) {
                 return (
-                  <ol
-                    className="space-y-2"
-                    {...props}
-                  >
+                  <ol className="space-y-2" {...props}>
                     {children}
                   </ol>
                 );
               },
               p({ children }) {
+                // children이 배열인지 확인 후 처리
+                const childArray = Array.isArray(children)
+                  ? children
+                  : [children];
+                // 단일 자식이 img이면 <p>를 사용하지 않고 fragment로 렌더링
+                if (
+                  childArray.length === 1 &&
+                  childArray[0]?.type?.name === "img"
+                ) {
+                  return <>{childArray}</>;
+                }
+
                 return (
                   <p className="leading-7 whitespace-pre-wrap md:text-base text-sm">
                     {children}
@@ -100,7 +109,7 @@ export default function Contents({ lectureId }: ContentsProps) {
               h1({ children, ...props }) {
                 return (
                   <h1
-                    className="md:text-2xl text-xl font-bold md:mb-6 mb-3 text-blue-500"
+                    className="md:text-2xl text-xl font-bold md:mb-4 mb-2 text-blue-500"
                     {...props}
                   >
                     {children}
@@ -210,14 +219,10 @@ export default function Contents({ lectureId }: ContentsProps) {
               },
               img({ node, ...props }) {
                 return (
-                  <div className="">
-                    {" "}
-                    {/* 마크다운 레이아웃을 위한 간격 유지 */}
-                    <PostImage
-                      src={props.src || ""}
-                      title={props.alt || "content-image"}
-                    />
-                  </div>
+                  <PostImage
+                    src={props.src || ""}
+                    title={props.alt || "content-image"}
+                  />
                 );
               },
               em({ children, ...props }) {

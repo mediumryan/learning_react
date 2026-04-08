@@ -19,7 +19,7 @@ const PostImage = ({ src, title }: { src: string; title: string }) => {
     <Dialog>
       {/* 1. 트리거: 클릭할 수 있는 프리뷰 이미지 */}
       <DialogTrigger asChild>
-        <div className="overflow-hidden rounded-md relative bg-muted cursor-pointer group">
+        <div className="overflow-hidden rounded-md relative bg-muted cursor-pointer group min-h-48">
           {isLoading && (
             <Skeleton className="absolute inset-0 h-full w-full flex items-center justify-center">
               <ImageIcon className="h-10 w-10 text-muted-foreground/20" />
@@ -50,6 +50,7 @@ const PostImage = ({ src, title }: { src: string; title: string }) => {
         // max-w-none을 추가하여 기본 너비 제약을 명시적으로 제거합니다.
         className="max-w-none w-screen h-screen p-0 border-none bg-transparent shadow-none flex items-center justify-center outline-none"
         showCloseButton={false}
+        aria-describedby={title}
       >
         <DialogTitle className="sr-only">{title} Zoomed-in</DialogTitle>
 

@@ -44,9 +44,8 @@ const Login = () => {
     } catch (err: any) {
       setError(err.message);
       toast.error(`Sign-in Error: ${err.message}`);
-    } finally {
       setIsLoading(false);
-    }
+    } 
   };
 
   return (

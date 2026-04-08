@@ -1,10 +1,9 @@
 // react
 import { useEffect } from "react";
 // react-router
-import { Navigate, useParams } from "react-router";
+import { useParams } from "react-router";
 // atoms
 import { useAtomValue, useSetAtom } from "jotai";
-import { currentUserAtom } from "~/data/userData";
 import {
   displayedCorrectAnswerAtom,
   isCorrectAtom,
@@ -31,8 +30,6 @@ import { isLoadingAtom } from "~/data/commonData";
 // import { migrateContentToFirestore } from "~/script/migrateContent";
 
 export default function ContentsPage() {
-  const currentUser = useAtomValue(currentUserAtom);
-
   const lectureId = useParams().id;
 
   const contents = useAtomValue(contentsAtom);
@@ -67,10 +64,6 @@ export default function ContentsPage() {
     }, 0);
     return () => clearTimeout(timer);
   }, []);
-
-  if (!currentUser) {
-    return <Navigate to="/login" replace />;
-  }
 
   return (
     <SidebarProvider>

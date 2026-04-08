@@ -1,6 +1,7 @@
 // atoms
-import { useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { currentUserAtom } from "~/data/userData";
+import { isLoadingAtom } from "~/data/commonData";
 // shadcn/ui
 import { Separator } from "~/components/ui/separator";
 // components
@@ -14,11 +15,18 @@ import { H1_STYLE, H3_STYLE } from "~/style/commonStyle";
 import { SEPERATOR_STYLE } from "~/style/homeStyle";
 // i18n
 import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
 
 export default function Home() {
   const { t } = useTranslation();
 
   const currentUser = useAtomValue(currentUserAtom);
+
+  const setIsLoading = useSetAtom(isLoadingAtom);
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
 
   return (
     <main className="md:p-8 p-4 px-12 h-screen flex flex-col justify-between items-center gap-2">

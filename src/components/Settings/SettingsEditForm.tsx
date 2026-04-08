@@ -4,12 +4,12 @@ import { Label } from "~/components/ui/label";
 import { useAtom } from "jotai";
 import { currentUserAtom, type Course, type User } from "~/data/userData";
 import { useState } from "react";
-import { updateUserInFirestore } from "~/lib/firestore_utils";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "~/lib/firebase";
+import { useUsers } from "~/hooks/useUsers";
 
 interface SettingsEditFormProps {
   setShowForm: (open: boolean) => void;
@@ -19,6 +19,8 @@ export const SettingsEditForm = ({ setShowForm }: SettingsEditFormProps) => {
   const { t } = useTranslation();
 
   const [currentUser, setCurrentUser] = useAtom<User | null>(currentUserAtom);
+
+  const { updateUserMutation } = useUsers();
 
   const [name, setName] = useState(currentUser?.name ?? "");
   const [nickname, setNickname] = useState(currentUser?.nickname ?? "");
@@ -87,7 +89,7 @@ export const SettingsEditForm = ({ setShowForm }: SettingsEditFormProps) => {
       };
 
       // 3. Firestore 업데이트
-      await updateUserInFirestore(updatedUser.uid, updatedUser);
+      updateUserMutation.mutate(updatedUser);
 
       // 4. 전역 상태 업데이트
       setCurrentUser(updatedUser);

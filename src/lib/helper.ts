@@ -1,6 +1,8 @@
 import type { Content } from "~/data/contentData";
 import type { Grade, User } from "~/data/userData";
 import type { PostType } from "~/data/postData";
+import { deleteObject, ref } from "firebase/storage";
+import { storage } from "~/lib/firebase";
 
 interface GradeInfo {
   nextGrade: Grade | "Max";
@@ -69,9 +71,9 @@ export const mappingTitlebySection = (section: number) => {
     case 5:
       return "Events";
     case 6:
-      return "Immutability";
+      return "Form";
     case 7:
-      return "Forms";
+      return "Immutability";
     case 8:
       return "Todo List Project";
     case 9:
@@ -227,4 +229,9 @@ export const getSectionProgress = (
     isCompleteCourse(content, currentUser),
   ).length;
   return totalContents === 0 ? 0 : (completedContents / totalContents) * 100;
+};
+
+export const deleteImageByUrl = async (imageUrl: string) => {
+  const imageRef = ref(storage, imageUrl);
+  await deleteObject(imageRef);
 };

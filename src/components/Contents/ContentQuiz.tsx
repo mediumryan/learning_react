@@ -109,7 +109,7 @@ export default function ContentQuiz({ quiz }: ContentQuizProps) {
     <div>
       {quiz.type === 1 && (
         <FieldSet className="w-full">
-          <FieldLegend variant="label">Quiz</FieldLegend>
+          <FieldLegend variant="legend" className="text-blue-500 font-bold italic">Quiz</FieldLegend>
           <FieldDescription>{quiz.question}</FieldDescription>
           <RadioGroup
             value={userAnswer}
@@ -140,13 +140,6 @@ export default function ContentQuiz({ quiz }: ContentQuizProps) {
                 >
                   {option}
                 </FieldLabel>
-                <FieldLabel>
-                  {showFeedback && quiz.explanation && (
-                    <p className="text-sm text-gray-600 mt-1">
-                      {quiz.explanation}
-                    </p>
-                  )}
-                </FieldLabel>
               </Field>
             ))}
           </RadioGroup>
@@ -155,7 +148,7 @@ export default function ContentQuiz({ quiz }: ContentQuizProps) {
 
       {quiz.type === 2 && (
         <FieldSet>
-          <FieldLegend variant="label">Quiz</FieldLegend>
+          <FieldLegend variant="legend" className="text-blue-500 font-bold italic">Quiz</FieldLegend>
           <FieldLabel
             htmlFor={`quiz-input-${quiz.id}`}
             className="whitespace-pre-wrap"
@@ -190,7 +183,7 @@ export default function ContentQuiz({ quiz }: ContentQuizProps) {
       )}
 
       {showFeedback && isSubmitted && (
-        <Label className="flex flex-col items-start mt-4 text-xs text-gray-600/85">
+        <Label className="flex flex-col items-start mt-4 text-s text-gray-600/85">
           <span className="text-sm font-bold">
             {t("contents.explanation_label")}
           </span>

@@ -3,7 +3,7 @@ import { useState } from "react";
 // react-router
 import { Navigate } from "react-router";
 // atoms
-import { currentUserAtom, usersAtom, type User } from "~/data/userData";
+import { currentUserAtom, type User } from "~/data/userData";
 import { useAtom } from "jotai";
 // shadcn/ui
 import { Input } from "~/components/ui/input";
@@ -22,23 +22,28 @@ import { toast } from "sonner";
 // components
 import UserForm from "~/components/Users/UserForm";
 import { CommonAlert } from "~/components/Common/ConfirmDialog";
+import { BackgroundSpinner } from "~/components/Common/BackgroundSpinner";
 // icons
 import { Search, UserCog, Trash2 } from "lucide-react";
-// firebase
-import {
-  updateUserInFirestore,
-  deleteUserFromFirestore,
-} from "~/lib/firestore_utils";
 // i18n
 import { useTranslation } from "react-i18next";
+// data fetching
+import { useQuery } from "@tanstack/react-query";
+import { useUsers } from "~/hooks/useUsers";
+import { getAllUsers } from "~/lib/firestore_utils";
 
 export default function UsersPage() {
   const { t } = useTranslation();
 
+  const { data: users, isLoading } = useQuery<User[]>({
+    queryKey: ["users"],
+    queryFn: getAllUsers,
+  });
+  const { updateUserMutation, deleteUserMutation } = useUsers();
+
   const [openAdd, setOpenAdd] = useState(false);
   const [_, setOpenEdit] = useState(false);
 
-  const [users, setUsers] = useAtom(usersAtom); // Standard atom usage
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [search, setSearch] = useState("");
 
@@ -49,59 +54,23 @@ export default function UsersPage() {
       user.email.toLowerCase().includes(search.toLowerCase()),
   );
 
-  const handleDelete = async (id: string) => {
-    // Store current state for potential rollback
-    const prevUsers = users;
-
-    // Optimistic UI update
-    setUsers((currentUsers) =>
-      currentUsers ? currentUsers.filter((user) => user.uid !== id) : null,
-    );
-
+  const handleDelete = (uid: string) => {
     try {
-      await deleteUserFromFirestore(id);
+      deleteUserMutation.mutate(uid);
       toast.success(t("users.users_delete_success"));
     } catch (err: any) {
       toast.error(t("users.users_delete_fail"));
-      setUsers(prevUsers); // Rollback optimistic update
     }
   };
 
   const [currentUser, setCurrentUser] = useAtom(currentUserAtom);
 
   const handleSave = async (user: User) => {
-    const isNewUser = !users?.some((u) => u.uid === user.uid);
-    const prevUsers = users;
-
-    // Optimistic UI update (리스트 갱신)
-    setUsers((currentUsers) => {
-      if (!currentUsers) return [user];
-      const existingIndex = currentUsers.findIndex((u) => u.uid === user.uid);
-      if (existingIndex !== -1) {
-        const updated = [...currentUsers];
-        updated[existingIndex] = user;
-        return updated;
-      } else {
-        return [...currentUsers, user];
-      }
-    });
-
-    if (user.uid === currentUser?.uid) {
-      setCurrentUser(user);
-    }
-
     try {
-      if (isNewUser) {
-        // await addUserToFirestore(user);
-      } else {
-        await updateUserInFirestore(user.uid, user);
-        toast.success(t("users.users_edit_success"));
-      }
+      updateUserMutation.mutate(user);
+      toast.success(t("users.users_edit_success"));
     } catch (err: any) {
       toast.error(t("users.users_save_fail"));
-      setUsers(prevUsers);
-
-      // 에러 발생 시 currentUser도 롤백 (선택 사항)
       if (user.uid === currentUser?.uid) {
         setCurrentUser(currentUser);
       }
@@ -111,16 +80,14 @@ export default function UsersPage() {
     }
   };
 
-  if (!currentUser) {
-    return <Navigate to="/login" replace />;
-  }
-
   if (
     currentUser?.authority !== "admin" &&
     currentUser?.authority !== "instructor"
   ) {
     return <Navigate to="/" replace />;
   }
+
+  if (isLoading) return <BackgroundSpinner />;
 
   // Ensure users is not null before rendering the table content
   if (!users) {

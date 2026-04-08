@@ -12,12 +12,16 @@ import {
   writeBatch,
   Timestamp,
   addDoc,
-  serverTimestamp, // Import writeBatch for batch deletions
+  serverTimestamp,
+  QueryDocumentSnapshot,
+  limit,
+  startAfter, // Import writeBatch for batch deletions
 } from "firebase/firestore";
 import type { User } from "~/data/userData";
 import type { Content } from "~/data/contentData";
 import type { Notice } from "~/data/noticeData";
-import { calculateGrade } from "~/lib/helper";
+import { calculateGrade, deleteImageByUrl } from "~/lib/helper";
+import type { PostType } from "~/data/postData";
 
 /**
  * Fetches a user's profile from the 'users' collection in Firestore.
@@ -81,35 +85,11 @@ export const getAllUsers = async (): Promise<User[]> => {
 };
 
 /**
- * Adds a new user to Firestore.
- * @param user The user object to add.
- */
-export const addUserToFirestore = async (user: User) => {
-  const userDocRef = doc(firestore, "users", user.uid);
-  // Ensure contentStatus is not directly stored in the main user document
-  const { contentStatus, ...userDataToStore } = user;
-  await setDoc(userDocRef, userDataToStore);
-
-  // Initialize an empty contentStatus subcollection (or add existing if any)
-  // For new users, it should be empty. If user object has contentStatus, it would be from temporary state.
-  // We'll create empty one or add based on provided for robustness, though new users start empty.
-  const batch = writeBatch(firestore);
-  contentStatus.forEach((contentId) => {
-    const contentStatusDocRef = doc(userDocRef, "contentStatus", contentId);
-    batch.set(contentStatusDocRef, { createdAt: serverTimestamp() }); // Use serverTimestamp() in actual creation
-  });
-  await batch.commit();
-};
-
-/**
  * Updates an existing user in Firestore.
  * @param uid The user's unique ID.
  * @param updates Partial user object with fields to update.
  */
-export const updateUserInFirestore = async (
-  uid: string,
-  updates: Partial<User>,
-) => {
+export const updateUser = async (uid: string, updates: Partial<User>) => {
   const userDocRef = doc(firestore, "users", uid);
   // Do not allow contentStatus to be updated directly via this function
   const { contentStatus, ...updatesToApply } = updates;
@@ -120,7 +100,7 @@ export const updateUserInFirestore = async (
  * Deletes a user from Firestore, including their contentStatus subcollection.
  * @param uid The user's unique ID.
  */
-export const deleteUserFromFirestore = async (uid: string) => {
+export const deleteUser = async (uid: string) => {
   const userDocRef = doc(firestore, "users", uid);
 
   // Delete all documents in the contentStatus subcollection
@@ -145,20 +125,6 @@ export const updateUserCourse = async (uid: string, newCourse: string) => {
   const userDocRef = doc(firestore, "users", uid);
   await updateDoc(userDocRef, {
     course: newCourse,
-  });
-};
-
-export const getContents = async (): Promise<Content[]> => {
-  const contentsCollectionRef = collection(firestore, "contents");
-  const q = query(contentsCollectionRef, orderBy("section"), orderBy("order"));
-  const querySnapshot = await getDocs(q);
-
-  return querySnapshot.docs.map((doc) => {
-    const data = doc.data();
-
-    return {
-      ...data,
-    } as Content;
   });
 };
 
@@ -279,4 +245,138 @@ export const completeLectureForUser = async (
     console.error("Error completing lecture:", error);
     throw error; // 호출부에서 toast.error를 띄울 수 있도록 에러를 던집니다.
   }
+};
+
+export const getPosts = async ({
+  currentUserId,
+  postOrder = "new",
+  pageParam, // TanStack Query에서 넘겨주는 파라미터
+}: {
+  currentUserId?: string;
+  postOrder?: "new" | "popular";
+  pageParam?: QueryDocumentSnapshot; // 마지막 문서 스냅샷 타입
+}) => {
+  const postsCollection = collection(firestore, "posts");
+
+  // 1. 쿼리 생성 (정렬 기준에 따라 분기)
+  let q = query(
+    postsCollection,
+    orderBy(postOrder === "new" ? "createdAt" : "likeCount", "desc"),
+    limit(3), // 한 번에 가져올 개수
+  );
+
+  // 2. 다음 페이지라면 마지막 문서 이후부터 가져오기
+  if (pageParam) {
+    q = query(q, startAfter(pageParam));
+  }
+
+  const querySnapshot = await getDocs(q);
+  const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+
+  const posts: PostType[] = [];
+
+  // 3. 데이터 가공 (성능을 위해 Promise.all 활용 권장)
+  for (const docSnap of querySnapshot.docs) {
+    const data = docSnap.data();
+    // (기존 likes 가져오는 로직 유지하되, 데이터가 많아지면 sub-collection 조합은 주의가 필요합니다)
+    const likesSnapshot = await getDocs(collection(docSnap.ref, "likes"));
+    const likedUserIds = likesSnapshot.docs.map((likeDoc) => likeDoc.id);
+
+    posts.push({
+      id: docSnap.id,
+      title: data.title,
+      content: data.content,
+      projectLink: data.projectLink,
+      imageUrl: data.imageUrl,
+      likeCount: data.likeCount || likedUserIds.length,
+      name: data.name,
+      createdAt: data.createdAt.toDate(),
+      isLiked: currentUserId ? likedUserIds.includes(currentUserId) : false,
+    });
+  }
+
+  return { posts, lastVisible }; // 다음 페이지를 위해 lastVisible 반환
+};
+
+export const addPost = async (
+  post: Omit<PostType, "id" | "createdAt" | "likeCount" | "isLiked">,
+  userId: string,
+) => {
+  const newPost = {
+    ...post,
+    userId: userId,
+    createdAt: Timestamp.now(),
+    likeCount: 0,
+  };
+
+  const docRef = await addDoc(collection(firestore, "posts"), newPost);
+
+  return {
+    ...newPost,
+    id: docRef.id,
+    likeCount: 0,
+    isLiked: false,
+  };
+};
+
+export const updatePost = async (
+  id: string,
+  prevPost: PostType,
+  post: Partial<Omit<PostType, "id">>,
+) => {
+  const postRef = doc(firestore, "posts", id);
+
+  // 1️⃣ 이미지가 변경되었을 경우
+  if (prevPost.imageUrl && post.imageUrl !== prevPost.imageUrl) {
+    try {
+      await deleteImageByUrl(prevPost.imageUrl);
+    } catch (e) {
+      console.warn("기존 이미지 삭제 실패", e);
+    }
+  }
+
+  // 2️⃣ Firestore 업데이트
+  await updateDoc(postRef, post);
+};
+
+export const deletePost = async (post: PostType) => {
+  // 1️⃣ 이미지 삭제
+  if (post.imageUrl) {
+    try {
+      await deleteImageByUrl(post.imageUrl);
+    } catch (e) {
+      console.warn("이미지 삭제 실패", e);
+    }
+  }
+
+  // 2️⃣ Firestore 문서 삭제
+  const postRef = doc(firestore, "posts", post.id);
+  await deleteDoc(postRef);
+};
+
+export const likePost = async (postId: string, userId: string) => {
+  if (!userId) return;
+
+  const postRef = doc(firestore, "posts", postId);
+  const likeRef = doc(collection(postRef, "likes"), userId);
+
+  const likeSnapshot = await getDoc(likeRef);
+  const postSnapshot = await getDoc(postRef);
+
+  if (!postSnapshot.exists()) return;
+
+  const data = postSnapshot.data();
+  let likeCount = data.likeCount || 0;
+
+  if (!likeSnapshot.exists()) {
+    // 좋아요 추가
+    await setDoc(likeRef, { createdAt: Timestamp.now() });
+    likeCount++;
+  } else {
+    // 좋아요 취소
+    await deleteDoc(likeRef);
+    likeCount--;
+  }
+
+  await updateDoc(postRef, { likeCount });
 };

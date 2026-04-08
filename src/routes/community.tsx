@@ -1,12 +1,9 @@
 // react
 import { useEffect, useState } from "react";
-// react-router
-import { Navigate } from "react-router";
 // atoms
-import { useSetAtom, useAtomValue, useAtom } from "jotai";
+import { useAtomValue, useAtom } from "jotai";
 import { currentUserAtom } from "~/data/userData";
-import { refetchAtom } from "~/data/commonData";
-import { postOrderAtom, postsAtom, type PostType } from "~/data/postData";
+import { postOrderAtom, type PostType } from "~/data/postData";
 // shadcn/ui
 import {
   Dialog,
@@ -20,29 +17,64 @@ import { BackgroundSpinner } from "~/components/Common/BackgroundSpinner";
 import { CommunityHeader } from "~/components/Community/CommunityHeader";
 import { CommunityPost } from "~/components/Community/CommunityPost";
 import CommunityPostForm from "~/components/Community/CommunityPostForm";
-// helpers
-import { addPost, deletePost, likePost, updatePost } from "~/data/postApi";
 // i18n
 import { useTranslation } from "react-i18next";
 import { isNewPost } from "~/lib/helper";
+// data fetching
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { getPosts } from "~/lib/firestore_utils";
+import { usePost } from "~/hooks/usePost";
+import type { QueryDocumentSnapshot } from "firebase/firestore";
+import { useInView } from "react-intersection-observer";
 
-function Community() {
+export default function CommunityPage() {
   const { t } = useTranslation();
 
   const currentUser = useAtomValue(currentUserAtom);
-  const setRefetch = useSetAtom(refetchAtom);
-  const [posts, setPosts] = useState<PostType[]>([]);
+  const currentUserId = currentUser?.uid || "Anonymous";
+
+  const [postOrder, setPostOrder] = useAtom(postOrderAtom);
+  // 게시글 데이터와 무한 스크롤 관련 상태
+  const {
+    data: posts,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useInfiniteQuery({
+    queryKey: ["posts", currentUserId, postOrder],
+    queryFn: ({ pageParam }) =>
+      getPosts({ currentUserId, postOrder, pageParam }),
+    initialPageParam: undefined as QueryDocumentSnapshot | undefined,
+    getNextPageParam: (lastPage) => {
+      // 반환된 데이터가 limit(3)보다 적으면 다음 페이지가 없는 것으로 간주
+      return lastPage.posts.length < 3 ? undefined : lastPage.lastVisible;
+    },
+  });
+  // 게시글 관련 뮤테이션 훅
+  const {
+    addPostMutation,
+    updatePostMutation,
+    deletePostMutation,
+    likePostMutation,
+  } = usePost();
   const [editingPost, setEditingPost] = useState<PostType | null>(null);
   const [showForm, setShowForm] = useState(false);
 
-  const [postOrder, setPostOrder] = useAtom(postOrderAtom);
+  const { ref, inView } = useInView({
+    threshold: 0,
+  });
 
-  const [{ data: initialPosts, isPending }] = useAtom(postsAtom);
+  // 사용자가 바닥에 도달(inView)하고, 다음 페이지가 있다면(hasNextPage) 호출
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   const handleDelete = async (post: PostType) => {
     try {
-      await deletePost(post);
-      setRefetch((c) => c + 1);
+      await deletePostMutation.mutateAsync(post);
 
       toast.success(t("community.community_post_deleted"));
     } catch (err) {
@@ -51,74 +83,35 @@ function Community() {
   };
 
   const handleSave = async (
-    post: Omit<PostType, "id" | "createdAt" | "likeCount" | "likedUsers"> & {
+    post: Omit<PostType, "id" | "createdAt" | "likeCount" | "isLiked"> & {
       userId: string;
     },
   ) => {
     if (editingPost) {
-      await updatePost(editingPost.id, editingPost, post);
+      updatePostMutation.mutate({
+        id: editingPost.id,
+        prevPost: editingPost,
+        post,
+      });
+      toast.success(
+        `${t("community.community_post_success_post")} ${t("community.community_post_success_update")}`,
+      );
     } else {
-      await addPost(post, post.userId || "Anonymous");
-    }
-
-    setRefetch((c) => c + 1);
-    toast.success(
-      `${t("community.community_post_success_post")} ${editingPost ? t("community.community_post_success_update") : t("community.community_post_success_add")}`,
-    );
-  };
-
-  const handleClickLikeButton = async (post: PostType) => {
-    if (!currentUser) return;
-
-    // Optimistic UI update
-    setPosts((prev) =>
-      prev.map((p) =>
-        p.id === post.id
-          ? {
-              ...p,
-              likeCount: p.isLiked ? p.likeCount - 1 : p.likeCount + 1,
-              isLiked: !p.isLiked,
-            }
-          : p,
-      ),
-    );
-
-    try {
-      await likePost(post.id, currentUser.uid);
-    } catch (err) {
-      console.error("Like update failed, reverting:", err);
-      // On error, refetch from the server to get the correct state
-      setRefetch((c) => c + 1);
+      addPostMutation.mutate({
+        post,
+        userId: post.userId || "Anonymous",
+      });
+      toast.success(
+        `${t("community.community_post_success_post")} ${t("community.community_post_success_add")}`,
+      );
     }
   };
 
-  useEffect(() => {
-    if (!initialPosts) return;
+  const handleClickLikeButton = (post: PostType) => {
+    likePostMutation.mutate({ postId: post.id, userId: currentUserId });
+  };
 
-    const sortPosts = async () => {
-      await Promise.resolve();
-
-      let sortedPosts = [...initialPosts];
-
-      if (postOrder === "new") {
-        sortedPosts.sort(
-          (a, b) => b.createdAt.getTime() - a.createdAt.getTime(),
-        );
-      } else if (postOrder === "popular") {
-        sortedPosts.sort((a, b) => b.likeCount - a.likeCount);
-      }
-
-      setPosts(sortedPosts);
-    };
-
-    sortPosts();
-  }, [initialPosts, postOrder]);
-
-  if (isPending) return <BackgroundSpinner />;
-
-  if (!currentUser) {
-    return <Navigate to="/login" replace />;
-  }
+  if (isLoading) return <BackgroundSpinner />;
 
   return (
     /* 전체 배경 + 양옆 여백 */
@@ -134,14 +127,18 @@ function Community() {
             setShowForm={setShowForm}
           />
           {/* 게시글 피드 */}
-          <CommunityPost
-            posts={posts}
-            handleClickLikeButton={handleClickLikeButton}
-            handleDelete={handleDelete}
-            setEditingPost={setEditingPost}
-            setShowForm={setShowForm}
-            isNewPost={isNewPost}
-          />
+          {posts ? (
+            <CommunityPost
+              posts={posts.pages.flatMap((page) => page.posts)}
+              handleClickLikeButton={handleClickLikeButton}
+              handleDelete={handleDelete}
+              setEditingPost={setEditingPost}
+              setShowForm={setShowForm}
+              isNewPost={isNewPost}
+            />
+          ) : (
+            <p>Data not Found</p>
+          )}
         </main>
       </div>
 
@@ -165,10 +162,10 @@ function Community() {
           />
         </DialogContent>
       </Dialog>
+      {/* 감지용 타겟 요소 */}
+      <div ref={ref} style={{ height: "20px", background: "transparent" }}>
+        {isFetchingNextPage && "Loading..."}
+      </div>
     </div>
   );
-}
-
-export default function CommunityPage() {
-  return <Community />;
 }

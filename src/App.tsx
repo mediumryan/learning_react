@@ -10,6 +10,7 @@ import SettingsPage from "~/routes/settings";
 import UsersPage from "~/routes/users";
 import Login from "~/routes/login";
 import SignUp from "~/routes/signup";
+import NotFound from "~/routes/notFound";
 // atoms
 import { useAtom, useAtomValue } from "jotai";
 import { authLoadingAtom, currentUserAtom } from "~/data/userData";
@@ -21,6 +22,10 @@ import { BackgroundSpinner } from "./components/Common/BackgroundSpinner";
 // firebase
 import { initAuthListener } from "~/lib/auth";
 import { languageAtom } from "./data/commonData";
+// tanstack query
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 function App() {
   const currentUser = useAtomValue(currentUserAtom);
@@ -40,30 +45,33 @@ function App() {
   }
 
   return (
-    <Layout>
-      <div className="relative h-full" lang={language}>
-        {currentUser && <HeaderMenu />}
-        <Routes>
-          {/* 1. 인증이 반드시 필요한 경로들 */}
-          <Route element={<ProtectedRoute />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/contents/:id" element={<ContentsPage />} />
-            <Route path="/community/*" element={<CommunityPage />} />
-            <Route path="/users/*" element={<UsersPage />} />
-            <Route path="/settings/*" element={<SettingsPage />} />
-          </Route>
+    <QueryClientProvider client={queryClient}>
+      <Layout>
+        <div className="relative h-full" lang={language}>
+          {currentUser && <HeaderMenu />}
+          <Routes>
+            {/* 1. 인증이 반드시 필요한 경로들 */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/contents/:id" element={<ContentsPage />} />
+              <Route path="/community/*" element={<CommunityPage />} />
+              <Route path="/users/*" element={<UsersPage />} />
+              <Route path="/settings/*" element={<SettingsPage />} />
+            </Route>
 
-          {/* 2. 로그인 안 한 유저만 접근 가능한 경로들 */}
-          <Route element={<PublicRoute />}>
-            <Route path="/login/*" element={<Login />} />
-            <Route path="/signup/*" element={<SignUp />} />
-          </Route>
+            {/* 2. 로그인 안 한 유저만 접근 가능한 경로들 */}
+            <Route element={<PublicRoute />}>
+              <Route path="/login/*" element={<Login />} />
+              <Route path="/signup/*" element={<SignUp />} />
+            </Route>
 
-          {/* 3. 그 외 (404 등) 공통 경로 */}
-        </Routes>
-        <CommonFooter />
-      </div>
-    </Layout>
+            {/* 3. 그 외 (404 등) 공통 경로 */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <CommonFooter />
+        </div>
+      </Layout>
+    </QueryClientProvider>
   );
 }
 

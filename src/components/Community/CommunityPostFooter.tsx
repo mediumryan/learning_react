@@ -41,7 +41,7 @@ export const CommunityPostFooter = ({
   const handleClick = (post: PostType) => {
     handleClickLikeButton(post);
     setIsHeartAnimating(true);
-    setTimeout(() => setIsHeartAnimating(false), 300);
+    setTimeout(() => setIsHeartAnimating(false), 500);
   };
 
   return (

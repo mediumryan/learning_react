@@ -87,7 +87,9 @@ export const CommunityPost = ({
             </CardHeader>
 
             <CardContent className="space-y-4">
-              <p className="text-sm text-muted-foreground">{post.content}</p>
+              <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                {post.content}
+              </p>
 
               {post.projectLink && (
                 <a
