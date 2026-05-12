@@ -1,5 +1,5 @@
 // react
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // react-router
 import { Link, useLocation } from "react-router";
 // atoms
@@ -38,6 +38,8 @@ export function HeaderMenu() {
 
   const location = useLocation();
 
+  const [nowIAm, setNowIAm] = useState("home");
+
   const [currentUser, setCurrentUser] = useAtom(currentUserAtom);
   const contents = useAtomValue(contentsAtom);
   const setIsLoading = useSetAtom(isLoadingAtom);
@@ -65,6 +67,32 @@ export function HeaderMenu() {
   const closeMenu = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    const path = location.pathname.split("/")[1];
+
+    console.log("Current path:", path); // 디버깅용 로그
+
+    switch (path) {
+      case "":
+        setNowIAm("home");
+        break;
+      case "contents":
+        setNowIAm("contents");
+        break;
+      case "users":
+        setNowIAm("users");
+        break;
+      case "community":
+        setNowIAm("community");
+        break;
+      case "settings":
+        setNowIAm("settings");
+        break;
+      default:
+        setNowIAm("");
+    }
+  }, [location.pathname]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -94,7 +122,7 @@ export function HeaderMenu() {
       <PopoverContent className="flex flex-col gap-4 items-center justify-center w-16">
         {/* 홈 메뉴 버튼 */}
         <Link to="/" onClick={closeMenu}>
-          <Button variant="ghost">
+          <Button variant={nowIAm === "home" ? "default" : "ghost"}>
             <House />
           </Button>
         </Link>
@@ -104,7 +132,7 @@ export function HeaderMenu() {
           prefetch="intent"
           onClick={handleClickContents}
         >
-          <Button variant="ghost">
+          <Button variant={nowIAm === "contents" ? "default" : "ghost"}>
             <BookOpen />
           </Button>
         </Link>
@@ -114,13 +142,13 @@ export function HeaderMenu() {
           onClick={closeMenu}
           className={`${currentUser?.authority === "user" ? "hidden" : ""}`}
         >
-          <Button variant="ghost">
+          <Button variant={nowIAm === "users" ? "default" : "ghost"}>
             <UsersRound />
           </Button>
         </Link>
         {/* 커뮤니티 메뉴 버튼 */}
         <Link to="/community" onClick={closeMenu} prefetch="intent">
-          <Button variant="ghost">
+          <Button variant={nowIAm === "community" ? "default" : "ghost"}>
             <MessagesSquare />
           </Button>
         </Link>
@@ -137,7 +165,7 @@ export function HeaderMenu() {
         </Popover>
 
         <Link to="/settings" onClick={closeMenu}>
-          <Button variant="ghost">
+          <Button variant={nowIAm === "settings" ? "default" : "ghost"}>
             <Settings />
           </Button>
         </Link>

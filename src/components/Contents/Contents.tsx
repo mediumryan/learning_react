@@ -73,7 +73,7 @@ export default function Contents({ lectureId }: ContentsProps) {
               ul({ children, ...props }) {
                 return (
                   <ul
-                    className="list-disc list-inside space-y-2 md:text-base text-sm bg-slate-50/50 p-4 rounded-lg"
+                    className="list-disc list-inside space-y-2 md:text-base text-sm bg-green-50/85 p-4 rounded-lg"
                     {...props}
                   >
                     {children}

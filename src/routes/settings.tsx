@@ -21,6 +21,9 @@ import {
 import { useTranslation } from "react-i18next";
 import SettingsEditForm from "~/components/Settings/SettingsEditForm";
 import { Button } from "~/components/ui/button";
+import { toast } from "sonner";
+import { CommonAlert } from "~/components/Common/ConfirmDialog";
+import { resetUserLearningInfo } from "~/lib/firestore_utils";
 
 const LABEL_WRAPPER_STYLE = "flex items-center justify-between gap-1 mb-2";
 
@@ -38,6 +41,25 @@ export default function SettingsPage() {
       ? "text-black"
       : getGradeInfo(gradeInfo.nextGrade).color;
 
+
+  const resetLearningInfo = async () => {
+    try {
+      await resetUserLearningInfo(currentUser?.uid || "");
+      toast.success(t("settings.settings_reset_learning_info_success"));
+
+      const timer = setTimeout(() => {
+        window.location.reload();
+      }, 500);
+
+      return () => clearTimeout(timer);
+    } catch (e) {
+      toast.error(t("settings.settings_reset_learning_info_fail"));
+      console.error(e);
+      return;
+    }
+    
+  };
+
   return (
     <main className="p-8 flex flex-col justify-center items-center gap-2">
       {/* 타이틀 */}
@@ -51,7 +73,7 @@ export default function SettingsPage() {
       <Card className="relative w-full max-w-sm p-6 mt-20">
         <div className="flex items-center gap-4">
           <Avatar
-            className={cn("w-10 h-10 cursor-pointer border border-gray-200")}
+            className={cn("w-10 h-10 cursor-default border border-gray-200")}
           >
             {currentUser?.photoURL && (
               <AvatarImage
@@ -117,7 +139,7 @@ export default function SettingsPage() {
 
       <Separator className={SEPERATOR_STYLE} />
 
-      <div className="flex items-center justify-center w-full">
+      <div className="flex items-center justify-center w-full gap-2">
         {/* 유저 정보 수정 다이얼로그 */}
         <Dialog open={showForm} onOpenChange={setShowForm}>
           <DialogTrigger asChild>
@@ -133,6 +155,19 @@ export default function SettingsPage() {
             <SettingsEditForm setShowForm={setShowForm} />
           </DialogContent>
         </Dialog>
+        <CommonAlert
+                  buttonLabel={
+                    t("settings.settings_reset_learning_info")
+                  }
+                  triggerVariant="destructive"
+                  triggerDisabled={false}
+                  triggerSize="sm"
+                  title={t("settings.settings_reset_learning_info_confirm")}
+                  titleWithIcon="warning"
+                  cancleButtonLabel={t("common.cancel")}
+                  confirmButtonLabel={t("common.yes")}
+                  onConfirm={resetLearningInfo}
+                />
       </div>
     </main>
   );

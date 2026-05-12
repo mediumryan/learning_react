@@ -35,10 +35,16 @@ export default function HomeSelectCourse() {
       // 2. On success, update local Jotai state
       setCurrentUser({ ...currentUser, course: selectedCourse });
 
-      toast.success("コースが変更されました");
+      toast.success(t("home_message.change_course_success"));
+
+      const timer = setTimeout(() => {
+        window.location.reload();
+      }, 500);
+
+      return () => clearTimeout(timer);
     } catch (error) {
       console.error("Failed to update course:", error);
-      toast.error("コースの変更に失敗しました。");
+      toast.error(t("home_message.change_course_fail"));
     }
   };
 
@@ -61,13 +67,16 @@ export default function HomeSelectCourse() {
         ))}
       </ButtonGroup>
       <CommonAlert
+        customClassName="w-full"
         buttonLabel={t("common.change")}
-        triggerVariant="ghost"
+        triggerVariant="outline"
         triggerDisabled={currentUser?.course === selectedCourse}
-        title="コース変更の確認"
+        title={t("home_message.change_course")}
         titleWithIcon="info"
-        description={`コースを「${selectedCourse}」に変更しますか？`}
+        description={`${t("home_message.change_course_1")}  「${selectedCourse}」 ${t("home_message.change_course_2")}`}
         onConfirm={handleClickChangeCourse}
+        cancleButtonLabel={t("common.cancel")}
+        confirmButtonLabel={t("common.change")}
       />
     </div>
   );

@@ -128,6 +128,25 @@ export const updateUserCourse = async (uid: string, newCourse: string) => {
   });
 };
 
+export const resetUserLearningInfo = async (uid: string) => {
+  const userDocRef = doc(firestore, "users", uid);
+  const contentStatusCollectionRef = collection(userDocRef, "contentStatus");
+    // 1. Reset main user document fields
+    await updateDoc(userDocRef, {
+      exp: 0,
+      grade: "Bronze",
+    }); 
+    
+    // 2. Delete all documents in the contentStatus subcollection
+    const querySnapshot = await getDocs(contentStatusCollectionRef);
+    const batch = writeBatch(firestore);
+    querySnapshot.docs.forEach((doc) => {
+      batch.delete(doc.ref);
+    }
+    );
+    await batch.commit();
+};
+
 export const getNotices = async (): Promise<Notice[]> => {
   try {
     const noticesRef = collection(firestore, "notices");

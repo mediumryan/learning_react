@@ -30,6 +30,7 @@ const resources = {
         complete_next_level_message_1: "다음 등급까지",
         complete_next_level_message_2: "남았습니다!",
         complete_continue_button: "계속 학습하기",
+        answer_placeholder: "답변을 입력해주세요.",
         correct: "정답입니다!",
         incorrect: "아쉽네요.",
         explanation_label: "해설",
@@ -40,6 +41,11 @@ const resources = {
         welcome: "환영합니다!",
         go_to_lecture: "학습하러 가기",
         go_to_community: "커뮤니티",
+        change_course: "코스 변경",
+        change_course_1 : "코스를",
+        change_course_2 : "로 변경하시겠습니까?",
+        change_course_success: "코스가 변경되었습니다!",
+        change_course_fail: "코스 변경에 실패했습니다.",
       },
       notice: {
         notice_add: "공지사항 작성",
@@ -116,6 +122,10 @@ const resources = {
         settings_error_invalid_file_type:
           "JPG, PNG, SVG 형식만 업로드 가능합니다.",
         settings_error_file_too_large: "파일 크기는 1MB 이하만 가능합니다.",
+        settings_reset_learning_info: "학습 정보 초기화",
+        settings_reset_learning_info_confirm: "학습 정보가 초기화됩니다. 계속하시겠습니까?",
+        settings_reset_learning_info_success: "학습 정보가 초기화되었습니다.",
+        settings_reset_learning_info_fail: "학습 정보 초기화에 실패했습니다.",
       },
       auth: {
         logout_confirm: "로그아웃 하시겠습니까?",
@@ -163,6 +173,7 @@ const resources = {
         complete_next_level_message_1: "次のレベルまで",
         complete_next_level_message_2: "あと少しです！",
         complete_continue_button: "学習を続ける",
+        answer_placeholder: "答えを入力してください。",
         correct: "正解です！",
         incorrect: "残念、不正解です。",
         explanation_label: "解説",
@@ -173,6 +184,11 @@ const resources = {
         welcome: "ようこそ！",
         go_to_lecture: "React学習へ",
         go_to_community: "コミュニティ",
+        change_course: "コース変更",
+        change_course_1 : "コースを",
+        change_course_2 : "に変更しますか？",
+        change_course_success: "コースが変更されました！",
+        change_course_fail: "コースの変更に失敗しました。",
       },
       notice: {
         notice_add: "お知らせを作成",
@@ -252,6 +268,10 @@ const resources = {
         settings_error_invalid_file_type:
           "JPG、PNG、SVG形式のみアップロード可能です。",
         settings_error_file_too_large: "ファイルサイズは1MB以下のみ可能です。",
+        settings_reset_learning_info: "学習情報のリセット",
+        settings_reset_learning_info_confirm: "学習情報がリセットされます。続行しますか？",
+        settings_reset_learning_info_success: "学習情報がリセットされました。",
+        settings_reset_learning_info_fail: "学習情報のリセットに失敗しました。",
       },
       auth: {
         login: "ログイン",

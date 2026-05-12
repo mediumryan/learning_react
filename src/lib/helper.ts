@@ -73,7 +73,7 @@ export const mappingTitlebySection = (section: number) => {
     case 6:
       return "Form";
     case 7:
-      return "Immutability";
+      return "Array & Object";
     case 8:
       return "Todo List Project";
     case 9:

@@ -163,7 +163,7 @@ export default function ContentQuiz({ quiz }: ContentQuizProps) {
               showFeedback && isSubmitted && !isCorrect && "border-red-500",
             )}
             type="text"
-            placeholder="解答を入力してください"
+            placeholder={t("contents.answer_placeholder")}
             value={userAnswer}
             onChange={(e) => handleAnswerChange(e.target.value)}
             disabled={isSubmitted}

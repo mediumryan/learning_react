@@ -4,7 +4,7 @@ import {
   signOut,
   onAuthStateChanged,
   setPersistence,
-  browserSessionPersistence,
+  browserLocalPersistence,
 } from "firebase/auth";
 import { auth } from "./firebase";
 import { getAllUsers, getUserProfile } from "./firestore_utils";
@@ -14,7 +14,7 @@ import { appStore } from "~/data/store";
 // 회원가입
 export const signUp = async (email: string, password: string) => {
   try {
-    await setPersistence(auth, browserSessionPersistence);
+    await setPersistence(auth, browserLocalPersistence);
 
     return createUserWithEmailAndPassword(auth, email, password);
   } catch (error) {
@@ -26,7 +26,7 @@ export const signUp = async (email: string, password: string) => {
 // 로그인
 export const signIn = async (email: string, password: string) => {
   try {
-    await setPersistence(auth, browserSessionPersistence);
+    await setPersistence(auth, browserLocalPersistence);
 
     return signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
@@ -69,7 +69,5 @@ export function initAuthListener() {
     });
   } catch (error) {
     console.error("Failed to initialize auth listener:", error);
-  } finally {
-    appStore.set(authLoadingAtom, false);
   }
 }

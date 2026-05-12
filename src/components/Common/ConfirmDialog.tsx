@@ -16,6 +16,7 @@ import { Button } from "~/components/ui/button";
 import { Ban, Info, TriangleAlert } from "lucide-react";
 
 interface CommonAlertProps {
+  customClassName?: string;
   buttonLabel?: React.ReactNode;
   triggerVariant?:
     | "default"
@@ -35,6 +36,7 @@ interface CommonAlertProps {
 }
 
 export function CommonAlert({
+  customClassName = "",
   buttonLabel = "",
   triggerVariant = "default",
   triggerDisabled = false,
@@ -50,6 +52,7 @@ export function CommonAlert({
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
+          className={customClassName}
           variant={triggerVariant}
           disabled={triggerDisabled}
           size={triggerSize}
